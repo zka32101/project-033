@@ -1,0 +1,83 @@
+name: anzet
+description: "安心企業研修アンゼット（Anzet）— 業種プロファイルからAIが必要な教育コンテンツを自動選定する中小企業向け教育アプリ"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+
+  # Firebase
+  firebase_core: ^3.0.0
+  firebase_auth: ^5.0.0
+  cloud_firestore: ^5.0.0
+  cloud_functions: ^5.0.0
+  firebase_analytics: ^11.0.0
+  firebase_crashlytics: ^4.0.0
+  firebase_remote_config: ^5.0.0
+  firebase_messaging: ^15.0.0
+
+  # Payments
+  purchases_flutter: ^10.4.0
+
+  # Visual
+  lottie: ^3.1.0
+  google_fonts: ^6.2.1
+  fl_chart: ^0.69.0
+
+  # マイ成長・レポート出力
+  csv: ^6.0.0
+  pdf: ^3.11.1
+  printing: ^5.13.1
+  share_plus: ^10.1.2
+
+  # Local Storage
+  shared_preferences: ^2.2.3
+  flutter_secure_storage: ^9.0.0
+
+  # Utilities
+  equatable: ^2.0.5
+  intl: ^0.19.0
+  uuid: ^4.5.1
+  connectivity_plus: ^6.0.5
+  package_info_plus: ^8.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+  fake_cloud_firestore: ^3.1.0
+  firebase_auth_mocks: ^0.14.1
+  flutter_launcher_icons: ^0.14.2
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/animations/
+    - assets/images/
+    - assets/images/branding/
+    - assets/images/onboarding/
+    - assets/images/categories/
+    - assets/images/empty_states/
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/branding/app_icon.png"
+  # AI生成画像は背景が透明ではないため、Android側は角丸マスクに合わせて
+  # 背景色を敷いた適応アイコンを別途用意する(生成画像そのままを前景として使う)。
+  adaptive_icon_background: "#AFC1D6"
+  adaptive_icon_foreground: "assets/images/branding/app_icon.png"

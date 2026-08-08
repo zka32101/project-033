@@ -1,0 +1,180 @@
+import '../models/module_model.dart';
+import '../models/category_model.dart';
+
+/// 研修モジュール種データ。6カテゴリ×3モジュール=18モジュール。
+/// 各カテゴリの1つ目をisFreeTrial=trueとし、無料体験→追加課金訴求(設計書 Step3.5 R④)の対象とする。
+const List<Module> seedModules = [
+  // ①情報モラル
+  Module(
+    id: 'm_ethics_sns',
+    categoryId: CategoryId.infoMorals,
+    title: 'SNS利用と情報発信のリスク',
+    description: '個人アカウントでの発言が会社の信用に影響するケースと、炎上を防ぐための基本ルールを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: true,
+    sortOrder: 1,
+  ),
+  Module(
+    id: 'm_ethics_harassment',
+    categoryId: CategoryId.infoMorals,
+    title: '職場のハラスメント防止とコミュニケーション倫理',
+    description: 'ハラスメントの類型と、社内コミュニケーションで気をつけるべき基本姿勢を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 2,
+  ),
+  Module(
+    id: 'm_ethics_customer',
+    categoryId: CategoryId.infoMorals,
+    title: '顧客対応におけるマナーと誠実なコミュニケーション',
+    description: 'クレーム対応や接客の場面で信頼を損なわないための言葉遣いと誠実な対応姿勢を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 3,
+  ),
+
+  // ②セキュリティ
+  Module(
+    id: 'm_security_basics',
+    categoryId: CategoryId.security,
+    title: 'パスワード管理と多要素認証',
+    description: '安全なパスワード運用と多要素認証(MFA)の必要性を、実際の被害事例とともに学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: true,
+    sortOrder: 1,
+  ),
+  Module(
+    id: 'm_security_phishing',
+    categoryId: CategoryId.security,
+    title: 'フィッシング詐欺・標的型攻撃メールの見分け方',
+    description: '巧妙化する詐欺メールの特徴と、受信時にとるべき初動対応を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 2,
+  ),
+  Module(
+    id: 'm_security_device',
+    categoryId: CategoryId.security,
+    title: '業務用デバイスの管理と紛失・盗難対策',
+    description: 'ノートPC・スマートフォンの持ち出しルールと、紛失・盗難時の初動対応を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 3,
+  ),
+
+  // ③個人情報保護
+  Module(
+    id: 'm_privacy_basics',
+    categoryId: CategoryId.privacy,
+    title: '個人情報保護法の基礎と社内対応',
+    description: '個人情報・要配慮個人情報の定義と、取得・利用・提供の基本ルールを学びます。',
+    passThresholdDefault: 90,
+    isFreeTrial: true,
+    sortOrder: 1,
+  ),
+  Module(
+    id: 'm_privacy_customer',
+    categoryId: CategoryId.privacy,
+    title: '顧客情報の取り扱いと安全管理措置',
+    description: '顧客名簿・取引履歴などの安全管理措置と、漏えい時の初動対応を学びます。',
+    passThresholdDefault: 90,
+    isFreeTrial: false,
+    sortOrder: 2,
+  ),
+  Module(
+    id: 'm_privacy_employee',
+    categoryId: CategoryId.privacy,
+    title: '従業員の個人情報(人事データ)の取り扱い',
+    description: '人事評価・給与・健康診断結果など、従業員に関する機密性の高い情報の管理ルールを学びます。',
+    passThresholdDefault: 90,
+    isFreeTrial: false,
+    sortOrder: 3,
+  ),
+
+  // ④情報マネジメント
+  Module(
+    id: 'm_infomgmt_document',
+    categoryId: CategoryId.infoManagement,
+    title: '文書管理と情報の分類・保存ルール',
+    description: '社内文書の機密レベル分類と、保存期間・廃棄ルールの基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: true,
+    sortOrder: 1,
+  ),
+  Module(
+    id: 'm_infomgmt_incident',
+    categoryId: CategoryId.infoManagement,
+    title: 'インシデント対応と報告フロー',
+    description: '情報漏えい・システム障害が起きた際の初動対応と社内報告フローを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 2,
+  ),
+  Module(
+    id: 'm_infomgmt_access',
+    categoryId: CategoryId.infoManagement,
+    title: 'アクセス権限管理とID・パスワードの棚卸し',
+    description: '退職者・異動者のアカウント削除漏れなど、権限管理の抜け漏れが招くリスクを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 3,
+  ),
+
+  // ⑤コンプライアンス
+  Module(
+    id: 'm_compliance_basics',
+    categoryId: CategoryId.compliance,
+    title: 'コンプライアンス基礎と社内規程の理解',
+    description: 'コンプライアンス違反が会社に与える影響と、社内規程を守る意義を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: true,
+    sortOrder: 1,
+  ),
+  Module(
+    id: 'm_compliance_labor',
+    categoryId: CategoryId.compliance,
+    title: '下請法・労務コンプライアンス',
+    description: '下請代金の支払いルールや労働時間管理など、取引・労務面の基本ルールを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 2,
+  ),
+  Module(
+    id: 'm_compliance_bribery',
+    categoryId: CategoryId.compliance,
+    title: '贈収賄防止と接待交際費のルール',
+    description: '取引先との会食・贈答が不正な利益供与とみなされないための社内ルールを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 3,
+  ),
+
+  // ⑥AI活用
+  Module(
+    id: 'm_ai_basics',
+    categoryId: CategoryId.aiUsage,
+    title: '生成AIの業務活用と注意点',
+    description: '生成AIを業務で使う際のメリットと、誤情報・情報漏えいなどのリスクを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: true,
+    sortOrder: 1,
+  ),
+  Module(
+    id: 'm_ai_ethics',
+    categoryId: CategoryId.aiUsage,
+    title: 'AI利用における著作権・情報漏洩リスク',
+    description: '生成AIへの入力データの取り扱いと、著作権侵害を避けるための注意点を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 2,
+  ),
+  Module(
+    id: 'm_ai_data',
+    categoryId: CategoryId.aiUsage,
+    title: '業務データを使ったAI活用と社内ガイドライン',
+    description: '社内データをAIで分析・活用する際に必要な社内ガイドライン整備の考え方を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 3,
+  ),
+];

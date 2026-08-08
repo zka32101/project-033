@@ -1,0 +1,26 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:anzet/main.dart';
+
+void main() {
+  testWidgets('初回起動時はオンボーディングが表示される', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+
+    await tester.pumpWidget(const ProviderScope(child: AnzetApp()));
+    await tester.pumpAndSettle();
+
+    expect(find.text('業種に合わせて自動で優先度を提案'), findsOneWidget);
+  });
+
+  testWidgets('オンボーディング完了済みなら招待コード入力画面が表示される', (tester) async {
+    SharedPreferences.setMockInitialValues({'onboarding_completed': true});
+
+    await tester.pumpWidget(const ProviderScope(child: AnzetApp()));
+    await tester.pumpAndSettle();
+
+    expect(find.text('チームIDで参加する'), findsOneWidget);
+    expect(find.text('個人で始める'), findsOneWidget);
+  });
+}
