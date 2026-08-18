@@ -6,6 +6,7 @@ Subscription _subscription({
   required List<String> moduleIds,
   bool fullSet = false,
   SubscriptionStatus status = SubscriptionStatus.active,
+  ModulePlanTier planTier = ModulePlanTier.upper,
   PremiumTier premiumTier = PremiumTier.none,
 }) {
   return Subscription(
@@ -16,6 +17,7 @@ Subscription _subscription({
     fullSet: fullSet,
     headcount: 20,
     status: status,
+    planTier: planTier,
     premiumTier: premiumTier,
     startedAt: DateTime(2026, 1, 1),
   );
@@ -93,6 +95,52 @@ void main() {
           moduleId: 'm1',
         ),
         isFalse,
+      );
+    });
+
+    test('基本プランは選択モジュールを含んでいてもアクセス不可(無料体験のみが対象)', () {
+      final sub = _subscription(
+        moduleIds: ['m1'],
+        planTier: ModulePlanTier.basic,
+      );
+      expect(
+        AccessControl.moduleAccessGranted(
+          isFreeTrial: false,
+          subscription: sub,
+          moduleId: 'm1',
+        ),
+        isFalse,
+      );
+    });
+
+    test('基本プランでもfullSetが立っていればアクセス不可(upperプラン限定)', () {
+      final sub = _subscription(
+        moduleIds: [],
+        fullSet: true,
+        planTier: ModulePlanTier.basic,
+      );
+      expect(
+        AccessControl.moduleAccessGranted(
+          isFreeTrial: false,
+          subscription: sub,
+          moduleId: 'm-anything',
+        ),
+        isFalse,
+      );
+    });
+
+    test('上位プランに切り替えると同じ選択モジュールにアクセス可になる', () {
+      final sub = _subscription(
+        moduleIds: ['m1'],
+        planTier: ModulePlanTier.upper,
+      );
+      expect(
+        AccessControl.moduleAccessGranted(
+          isFreeTrial: false,
+          subscription: sub,
+          moduleId: 'm1',
+        ),
+        isTrue,
       );
     });
   });

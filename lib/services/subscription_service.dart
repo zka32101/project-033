@@ -8,28 +8,35 @@ class SubscriptionService {
   final FirebaseFirestore _db;
   SubscriptionService([FirebaseFirestore? db]) : _db = db ?? FirebaseFirestore.instance;
 
-  /// 設計書 Section2 モジュール制＋人数ボリュームディスカウント
-  static int moduleUnitPriceYen(int headcount) {
+  /// 利用者数(headcount)に応じた課金体系。モジュール数に関わらず定額
+  /// (basic=無料体験モジュール相当のみ、upper=カテゴリごとに選択したモジュールが対象)。
+  /// 人数が増えるほど1人あたり単価が下がるボリュームディスカウントは維持する。
+  static int basicPlanUnitPriceYen(int headcount) {
     if (headcount <= 20) return 100;
     if (headcount <= 50) return 90;
     if (headcount <= 100) return 80;
     return 0; // 101名以上は個別見積(価格未確定)
   }
 
-  static int fullSetUnitPriceYen(int headcount) {
+  static int upperPlanUnitPriceYen(int headcount) {
     if (headcount <= 20) return 400;
     if (headcount <= 50) return 360;
     if (headcount <= 100) return 320;
     return 0; // 101名以上は個別見積
   }
 
+  static int planUnitPriceYen(ModulePlanTier tier, int headcount) {
+    return tier == ModulePlanTier.upper
+        ? upperPlanUnitPriceYen(headcount)
+        : basicPlanUnitPriceYen(headcount);
+  }
+
+  /// 月額料金 = 1人あたり単価 × 人数。選択したモジュール数では変動しない。
   static int monthlyPriceYen({
     required int headcount,
-    required int moduleCount,
-    required bool fullSet,
+    required ModulePlanTier planTier,
   }) {
-    if (fullSet) return fullSetUnitPriceYen(headcount) * headcount;
-    return moduleUnitPriceYen(headcount) * moduleCount * headcount;
+    return planUnitPriceYen(planTier, headcount) * headcount;
   }
 
   /// オリジナルコンテンツ機能(プレミアムプラン)の月額固定料金。
@@ -67,6 +74,9 @@ class SubscriptionService {
     return subscription;
   }
 
+  /// 基本プラン(basic)への加入・維持、または上位プラン(upper)でのモジュール選択更新に使う。
+  /// planTier未指定時は既存の契約段階を維持する(他の更新でbasic/upperが意図せず
+  /// リセットされないようにするため。新規契約時のデフォルトはbasic)。
   Future<Subscription> upsertSubscription({
     required String companyId,
     required SubscriptionOwnerType ownerType,
@@ -74,6 +84,7 @@ class SubscriptionService {
     required List<String> subscribedModuleIds,
     required bool fullSet,
     required int headcount,
+    ModulePlanTier? planTier,
     PremiumTier? premiumTier,
   }) async {
     final ref = _db.doc(
@@ -89,6 +100,7 @@ class SubscriptionService {
       fullSet: fullSet,
       headcount: headcount,
       status: SubscriptionStatus.active,
+      planTier: planTier ?? existing?.planTier ?? ModulePlanTier.basic,
       // premiumTier未指定の場合は既存契約の値を維持する(モジュール追加購入がプレミアム
       // プランを意図せずnoneへリセットしてしまわないようにするため)。
       premiumTier: premiumTier ?? existing?.premiumTier ?? PremiumTier.none,
@@ -99,7 +111,7 @@ class SubscriptionService {
   }
 
   /// プレミアムプラン(オリジナルコンテンツ機能)単体のアップグレード用。
-  /// モジュール契約状態(subscribedModuleIds/fullSet)には触れない。
+  /// モジュール受講プラン(planTier/subscribedModuleIds/fullSet)には触れない。
   Future<Subscription> upsertPremiumTier({
     required String companyId,
     required SubscriptionOwnerType ownerType,
@@ -120,6 +132,7 @@ class SubscriptionService {
       fullSet: existing?.fullSet ?? false,
       headcount: headcount,
       status: SubscriptionStatus.active,
+      planTier: existing?.planTier ?? ModulePlanTier.basic,
       premiumTier: premiumTier,
       startedAt: existing?.startedAt ?? DateTime.now(),
     );

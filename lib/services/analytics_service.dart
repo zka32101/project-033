@@ -1,4 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
+import '../data/models/subscription_model.dart';
 
 /// KPIイベント計測（設計書 Step4.5）。
 /// aha_moment_reached / module_completed / employee_invited /
@@ -42,14 +43,14 @@ class AnalyticsService {
 
   Future<void> logSubscriptionUpgraded({
     required String companyId,
-    required bool fullSet,
+    required ModulePlanTier planTier,
     required int moduleCount,
   }) {
     return _analytics.logEvent(
       name: 'subscription_upgraded',
       parameters: {
         'company_id': companyId,
-        'full_set': fullSet,
+        'plan_tier': planTier.name,
         'module_count': moduleCount,
       },
     );
