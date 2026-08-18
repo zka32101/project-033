@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/core/category_priority_resolver.dart';
-import 'package:anzet/data/models/category_model.dart';
-import 'package:anzet/data/models/industry_model.dart';
+import 'package:safy/core/category_priority_resolver.dart';
+import 'package:safy/data/models/category_model.dart';
+import 'package:safy/data/models/industry_model.dart';
 
 void main() {
   final industry = const Industry(

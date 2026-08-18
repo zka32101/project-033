@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/core/streak_calculator.dart';
+import 'package:safy/core/streak_calculator.dart';
 
 void main() {
   group('StreakCalculator.currentStreak', () {

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/core/deadline_status.dart';
+import 'package:safy/core/deadline_status.dart';
 
 void main() {
   group('DeadlineStatusEvaluator.evaluate', () {

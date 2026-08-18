@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/services/subscription_service.dart';
+import 'package:safy/services/subscription_service.dart';
 
 void main() {
   group('SubscriptionService pricing (設計書 Section2)', () {

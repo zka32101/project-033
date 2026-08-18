@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/core/access_control.dart';
-import 'package:anzet/data/models/subscription_model.dart';
+import 'package:safy/core/access_control.dart';
+import 'package:safy/data/models/subscription_model.dart';
 
 Subscription _subscription({
   required List<String> moduleIds,

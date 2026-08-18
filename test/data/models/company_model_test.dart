@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/data/models/company_model.dart';
+import 'package:safy/data/models/company_model.dart';
 
 void main() {
   group('Company.recommendedPassThreshold', () {

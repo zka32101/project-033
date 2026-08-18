@@ -1,5 +1,5 @@
-name: anzet
-description: "安心企業研修アンゼット（Anzet）— 業種プロファイルからAIが必要な教育コンテンツを自動選定する中小企業向け教育アプリ"
+name: safy
+description: "安心企業研修Safy — 業種プロファイルからAIが必要な教育コンテンツを自動選定する中小企業向け教育アプリ"
 publish_to: 'none'
 
 version: 1.0.0+1

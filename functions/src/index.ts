@@ -1,5 +1,5 @@
 /**
- * 安心企業研修アンゼット(Anzet) Cloud Functions
+ * 安心企業研修Safy Cloud Functions
  *
  * 前提: Firebase Console本設定・`firebase deploy --only functions`実行後に有効化される。
  * ローカルではflutter analyze/testの対象外(Node.js/TypeScript側は別途 `npm run build` で検証)。
@@ -170,7 +170,7 @@ export const onReminderCreated = onDocumentCreated(
       token: employee.fcmToken,
       notification: {
         title: "研修のリマインド",
-        body: "未受講の研修があります。安心企業研修アンゼットでご確認ください。",
+        body: "未受講の研修があります。安心企業研修Safyでご確認ください。",
       },
     });
   }
@@ -224,7 +224,7 @@ export const checkModuleDeadlinesAndNotify = onSchedule(
               token: employee.fcmToken,
               notification: {
                 title: "受講期限のお知らせ",
-                body: `未受講の研修があります。${statusLabel}。安心企業研修アンゼットでご確認ください。`,
+                body: `未受講の研修があります。${statusLabel}。安心企業研修Safyでご確認ください。`,
               },
             });
           } catch (error) {
@@ -280,14 +280,14 @@ export const sendMonthlyReports = onSchedule(
         await sgMail.send({
           to: contactEmail,
           from: fromEmail,
-          subject: `【安心企業研修アンゼット】${reportMonthLabel} 履修状況レポート`,
+          subject: `【安心企業研修Safy】${reportMonthLabel} 履修状況レポート`,
           text:
             `${company.name ?? ""} 様\n\n` +
             `${reportMonthLabel}時点の履修状況をお知らせします。\n\n` +
             `対象社員数: ${totalEmployees}名\n` +
             `1件以上の研修を完了した社員数: ${employeesWithProgress}名\n\n` +
             `詳細はアプリの「レポート出力」画面からPDF/CSVでご確認いただけます。\n\n` +
-            `安心企業研修アンゼット`,
+            `安心企業研修Safy`,
         });
       } catch (error) {
         logger.warn(`月次レポートメール送信に失敗しました companyId=${companyId}`, error);

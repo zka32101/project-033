@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/core/version_compare.dart';
+import 'package:safy/core/version_compare.dart';
 
 void main() {
   group('VersionCompare.isUpdateRequired', () {

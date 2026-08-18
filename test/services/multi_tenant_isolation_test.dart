@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:anzet/services/company_service.dart';
-import 'package:anzet/services/employee_service.dart';
-import 'package:anzet/services/enrollment_service.dart';
-import 'package:anzet/services/invite_service.dart';
-import 'package:anzet/services/subscription_service.dart';
-import 'package:anzet/data/models/company_model.dart';
-import 'package:anzet/data/models/subscription_model.dart';
+import 'package:safy/services/company_service.dart';
+import 'package:safy/services/employee_service.dart';
+import 'package:safy/services/enrollment_service.dart';
+import 'package:safy/services/invite_service.dart';
+import 'package:safy/services/subscription_service.dart';
+import 'package:safy/data/models/company_model.dart';
+import 'package:safy/data/models/subscription_model.dart';
 
 /// マルチテナント分離検証(設計書 Step6: 「他社データが見えないことの確認は必須」)。
 /// 実Firebaseの代わりにfake_cloud_firestoreを使い、companies/{companyId}配下の

@@ -10,16 +10,16 @@ import 'widgets/force_update_gate.dart';
 // Firebase Console作業が完了するまではここに追加しない。
 
 void main() {
-  runApp(const ProviderScope(child: AnzetApp()));
+  runApp(const ProviderScope(child: SafyApp()));
 }
 
-class AnzetApp extends StatelessWidget {
-  const AnzetApp({super.key});
+class SafyApp extends StatelessWidget {
+  const SafyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '安心企業研修アンゼット',
+      title: '安心企業研修Safy',
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
       builder: (context, child) => OfflineBanner(

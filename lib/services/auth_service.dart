@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'secure_storage_service.dart';
 
-/// AuthService for Anzet
+/// AuthService for Safy
 ///
 /// Manages user authentication for both employees and admins,
 /// with secure token storage and Firestore user profiles.

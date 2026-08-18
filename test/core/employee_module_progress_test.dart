@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/core/employee_module_progress.dart';
-import 'package:anzet/data/models/module_model.dart';
-import 'package:anzet/data/models/enrollment_model.dart';
-import 'package:anzet/data/models/quiz_attempt_model.dart';
-import 'package:anzet/data/models/category_model.dart';
+import 'package:safy/core/employee_module_progress.dart';
+import 'package:safy/data/models/module_model.dart';
+import 'package:safy/data/models/enrollment_model.dart';
+import 'package:safy/data/models/quiz_attempt_model.dart';
+import 'package:safy/data/models/category_model.dart';
 
 Module _module(String id) {
   return Module(

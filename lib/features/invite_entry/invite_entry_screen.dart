@@ -113,7 +113,7 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('安心企業研修アンゼット')),
+      appBar: AppBar(title: const Text('安心企業研修Safy')),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
         children: [

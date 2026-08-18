@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/core/review_recommender.dart';
-import 'package:anzet/core/growth_analytics.dart';
-import 'package:anzet/data/models/category_model.dart';
+import 'package:safy/core/review_recommender.dart';
+import 'package:safy/core/growth_analytics.dart';
+import 'package:safy/data/models/category_model.dart';
 
 void main() {
   group('ReviewRecommender.recommendForReview', () {

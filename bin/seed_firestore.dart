@@ -16,11 +16,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'package:anzet/data/seed/industries_seed.dart';
-import 'package:anzet/data/seed/modules_seed.dart';
-import 'package:anzet/data/seed/lessons_seed.dart';
-import 'package:anzet/data/seed/quiz_questions_seed.dart';
-// import 'package:anzet/firebase_options.dart'; // flutterfire configure実行後にコメント解除
+import 'package:safy/data/seed/industries_seed.dart';
+import 'package:safy/data/seed/modules_seed.dart';
+import 'package:safy/data/seed/lessons_seed.dart';
+import 'package:safy/data/seed/quiz_questions_seed.dart';
+// import 'package:safy/firebase_options.dart'; // flutterfire configure実行後にコメント解除
 
 Future<void> main() async {
   // firebase_options.dart生成後は以下に差し替えること:

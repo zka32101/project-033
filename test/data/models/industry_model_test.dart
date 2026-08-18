@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/data/models/industry_model.dart';
-import 'package:anzet/data/models/category_model.dart';
+import 'package:safy/data/models/industry_model.dart';
+import 'package:safy/data/models/category_model.dart';
 
 void main() {
   group('Industry.priorityOf', () {

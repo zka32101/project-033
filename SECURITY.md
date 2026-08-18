@@ -1,9 +1,9 @@
-﻿# anzet - Security Policy
+﻿# safy - Security Policy
 
 ## Project Information
 
-- **Project Name:** anzet
-- **Repository:** https://github.com/yourwishapps/anzet
+- **Project Name:** safy
+- **Repository:** https://github.com/yourwishapps/safy
 - **Primary Language:** Dart/Flutter
 - **Target Platforms:** Android / iOS
 - **Data Classification:** Confidential
@@ -49,7 +49,7 @@
 ## Reporting Security Issues
 
 Email: funvestment1@gmail.com
-Subject: [SECURITY] anzet - [Brief Description]
+Subject: [SECURITY] safy - [Brief Description]
 
 Response Times:
 - Critical (P0): 4 hours

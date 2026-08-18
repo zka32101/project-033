@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/core/monthly_focus.dart';
-import 'package:anzet/data/models/module_model.dart';
-import 'package:anzet/data/models/enrollment_model.dart';
-import 'package:anzet/data/models/category_model.dart';
+import 'package:safy/core/monthly_focus.dart';
+import 'package:safy/data/models/module_model.dart';
+import 'package:safy/data/models/enrollment_model.dart';
+import 'package:safy/data/models/category_model.dart';
 
 Module _module(String id) {
   return Module(

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/core/churn_risk.dart';
+import 'package:safy/core/churn_risk.dart';
 
 void main() {
   group('ChurnRisk.evaluate', () {
