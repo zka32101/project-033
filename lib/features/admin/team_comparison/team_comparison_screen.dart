@@ -33,7 +33,9 @@ class _TeamComparisonScreenState extends ConsumerState<TeamComparisonScreen> {
       if (industry == null) return 0;
       final modules =
           await ref.read(contentServiceProvider).listModulesForIndustry(industry);
-      return modules.length;
+      final customModules =
+          await ref.read(customContentServiceProvider).listCustomModules(company.id);
+      return modules.length + customModules.length;
     });
     _teamsFuture = ref
         .read(firestoreProvider)

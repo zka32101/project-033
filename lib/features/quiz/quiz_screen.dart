@@ -70,10 +70,28 @@ class QuizScreen extends ConsumerWidget {
     );
   }
 
+  Future<List<QuizQuestion>> _fetchQuizQuestions(WidgetRef ref) {
+    final companyId = ref.read(sessionProvider).company?.id;
+    if (module.isCustom) {
+      // オリジナルモジュールはcustomModules配下にのみクイズ問題が存在する。
+      return ref
+          .read(customContentServiceProvider)
+          .listCustomModuleQuizQuestions(companyId!, module.id);
+    }
+    if (companyId == null) {
+      return ref.read(contentServiceProvider).listQuizQuestions(module.id);
+    }
+    // グローバル問題+会社が追加したオリジナル問題(あれば)を連結する。
+    // submitQuizAttempt Cloud Function側の合算順序(グローバル→追加)と一致させること。
+    return ref
+        .read(contentServiceProvider)
+        .listQuizQuestionsForCompany(module.id, companyId);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return FutureBuilder<List<QuizQuestion>>(
-      future: ref.read(contentServiceProvider).listQuizQuestions(module.id),
+      future: _fetchQuizQuestions(ref),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Scaffold(

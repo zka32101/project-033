@@ -48,6 +48,18 @@ class ContentService {
     final snap = await _db.collection(FirestorePaths.modules).get();
     final modules =
         snap.docs.map((d) => Module.fromMap(d.id, d.data())).toList();
+    sortModulesByPriority(modules, industry, categoryPriorityOverride);
+    return modules;
+  }
+
+  /// [modules]を業種の優先度順(高→中→低、同順位はsortOrder昇順)に破壊的にソートする。
+  /// listModulesForIndustryと、オリジナルモジュールを合流させた一覧の並び替えの両方で使う
+  /// (社員のホーム画面で通常モジュールとオリジナルモジュールを同じ基準で混在表示するため)。
+  static void sortModulesByPriority(
+    List<Module> modules,
+    Industry industry,
+    Map<String, int> categoryPriorityOverride,
+  ) {
     modules.sort((a, b) {
       final pa = CategoryPriorityResolver.resolve(
         industry: industry,
@@ -62,7 +74,6 @@ class ContentService {
       if (pa != pb) return pb.compareTo(pa); // 優先度高い順
       return a.sortOrder.compareTo(b.sortOrder);
     });
-    return modules;
   }
 
   Future<List<Lesson>> listLessons(String moduleId) async {
@@ -79,5 +90,32 @@ class ContentService {
     return snap.docs
         .map((d) => QuizQuestion.fromMap(d.id, d.data()))
         .toList();
+  }
+
+  /// グローバルモジュールのレッスンに、会社がオリジナルコンテンツ機能(プレミアムプラン)で
+  /// 追加したレッスンがあれば末尾に連結して返す。
+  /// カスタムモジュール(Module.isCustom)には使わないこと(CustomContentServiceを使う)。
+  Future<List<Lesson>> listLessonsForCompany(String moduleId, String companyId) async {
+    final base = await listLessons(moduleId);
+    final extensionSnap = await _db
+        .collection(FirestorePaths.moduleExtensionLessons(companyId, moduleId))
+        .orderBy('sortOrder')
+        .get();
+    final extension =
+        extensionSnap.docs.map((d) => Lesson.fromMap(d.id, d.data())).toList();
+    return [...base, ...extension];
+  }
+
+  /// listLessonsForCompanyのクイズ問題版。submitQuizAttempt Cloud Function側の
+  /// 採点ロジック(グローバル問題→追加問題の順で合算)と並び順を一致させること。
+  Future<List<QuizQuestion>> listQuizQuestionsForCompany(
+      String moduleId, String companyId) async {
+    final base = await listQuizQuestions(moduleId);
+    final extensionSnap = await _db
+        .collection(FirestorePaths.moduleExtensionQuizQuestions(companyId, moduleId))
+        .get();
+    final extension =
+        extensionSnap.docs.map((d) => QuizQuestion.fromMap(d.id, d.data())).toList();
+    return [...base, ...extension];
   }
 }

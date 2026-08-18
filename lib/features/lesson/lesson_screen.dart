@@ -27,7 +27,24 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     super.initState();
     // futureをbuild()内で毎回生成すると、ページ送りのsetStateのたびに再取得され
     // 本文がロード中表示に戻ってしまうため、モジュールごとに一度だけ取得してキャッシュする。
-    _lessonsFuture = ref.read(contentServiceProvider).listLessons(widget.module.id);
+    _lessonsFuture = _fetchLessons();
+  }
+
+  Future<List<Lesson>> _fetchLessons() {
+    final companyId = ref.read(sessionProvider).company?.id;
+    if (widget.module.isCustom) {
+      // オリジナルモジュールはcustomModules配下にのみレッスンが存在する。
+      return ref
+          .read(customContentServiceProvider)
+          .listCustomModuleLessons(companyId!, widget.module.id);
+    }
+    if (companyId == null) {
+      return ref.read(contentServiceProvider).listLessons(widget.module.id);
+    }
+    // グローバルモジュール+会社が追加したオリジナルコンテンツ(あれば)を連結する。
+    return ref
+        .read(contentServiceProvider)
+        .listLessonsForCompany(widget.module.id, companyId);
   }
 
   Future<void> _ensureEnrollmentStarted() async {
@@ -79,8 +96,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             return ErrorRetryView(
               message: 'レッスンの読み込みに失敗しました',
               onRetry: () => setState(() {
-                _lessonsFuture =
-                    ref.read(contentServiceProvider).listLessons(widget.module.id);
+                _lessonsFuture = _fetchLessons();
               }),
             );
           }

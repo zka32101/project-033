@@ -13,6 +13,10 @@
  *       firebase functions:secrets:set SENDGRID_API_KEY
  *       firebase functions:secrets:set SENDGRID_FROM_EMAIL  (SendGridで送信元認証済みのアドレス)
  *     (Firebase Extensions「Trigger Email」は2027-03-31に廃止予定のため採用しない)
+ *   - generateOriginalContent: プレミアムプラン向けオリジナルコンテンツ(レッスン+クイズ)を
+ *     Claude APIでAI生成する(管理者向け、生成結果は保存前にクライアント側で確認・編集させる)。
+ *     デプロイ前に以下のSecretを設定すること:
+ *       firebase functions:secrets:set ANTHROPIC_API_KEY
  */
 
 import * as admin from "firebase-admin";
@@ -22,6 +26,9 @@ import { onSchedule } from "firebase-functions/v2/scheduler";
 import { defineSecret } from "firebase-functions/params";
 import { logger } from "firebase-functions/v2";
 import sgMail from "@sendgrid/mail";
+import Anthropic from "@anthropic-ai/sdk";
+import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
+import { z } from "zod";
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -29,6 +36,7 @@ const messaging = admin.messaging();
 
 const sendgridApiKey = defineSecret("SENDGRID_API_KEY");
 const sendgridFromEmail = defineSecret("SENDGRID_FROM_EMAIL");
+const anthropicApiKey = defineSecret("ANTHROPIC_API_KEY");
 
 // JST(UTC+9)固定。本アプリは現状JST圏のみを対象とするため、date-onlyの比較は
 // すべてJSTの暦日基準で行う(サーバーのDateはUTC基準のため、そのまま日数差を
@@ -92,11 +100,10 @@ export const submitQuizAttempt = onCall(async (request) => {
     throw new HttpsError("permission-denied", "本人以外のクイズ結果は送信できません");
   }
 
-  const [companySnap, employeeSnap, moduleSnap, questionsSnap] = await Promise.all([
+  const [companySnap, employeeSnap, globalModuleSnap] = await Promise.all([
     db.doc(`companies/${companyId}`).get(),
     db.doc(`companies/${companyId}/employees/${employeeId}`).get(),
     db.doc(`modules/${moduleId}`).get(),
-    db.collection(`modules/${moduleId}/quizQuestions`).get(),
   ]);
 
   if (!companySnap.exists) {
@@ -108,23 +115,54 @@ export const submitQuizAttempt = onCall(async (request) => {
   if (!employeeSnap.exists) {
     throw new HttpsError("permission-denied", "この会社に所属する社員が見つかりません");
   }
-  if (questionsSnap.empty) {
-    throw new HttpsError("failed-precondition", "この研修にはまだクイズ問題が登録されていません");
-  }
 
   const company = companySnap.data() as CompanyDoc;
-  const module = (moduleSnap.data() as ModuleDoc | undefined) ?? {};
-  const correctIndexes = questionsSnap.docs.map(
-    (d) => (d.data() as QuizQuestionDoc).correctIndex
-  );
+
+  // moduleIdはグローバルモジュール、または(プレミアムプランの)会社独自のオリジナル
+  // モジュールのいずれか。オリジナルモジュールの場合はcustomModules配下から解決する。
+  // グローバルモジュールの場合も、会社が追加したオリジナル問題(moduleExtensions)が
+  // あればクライアント側の表示順(既存→追加)と揃えて合算する。
+  let passThresholdDefault = 80;
+  let correctIndexes: number[];
+
+  if (globalModuleSnap.exists) {
+    const module = globalModuleSnap.data() as ModuleDoc;
+    passThresholdDefault = module.passThresholdDefault ?? 80;
+
+    const [baseQuestionsSnap, extensionQuestionsSnap] = await Promise.all([
+      db.collection(`modules/${moduleId}/quizQuestions`).get(),
+      db.collection(`companies/${companyId}/moduleExtensions/${moduleId}/quizQuestions`).get(),
+    ]);
+    if (baseQuestionsSnap.empty && extensionQuestionsSnap.empty) {
+      throw new HttpsError("failed-precondition", "この研修にはまだクイズ問題が登録されていません");
+    }
+    correctIndexes = [
+      ...baseQuestionsSnap.docs.map((d) => (d.data() as QuizQuestionDoc).correctIndex),
+      ...extensionQuestionsSnap.docs.map((d) => (d.data() as QuizQuestionDoc).correctIndex),
+    ];
+  } else {
+    const customModuleSnap = await db.doc(`companies/${companyId}/customModules/${moduleId}`).get();
+    if (!customModuleSnap.exists) {
+      throw new HttpsError("not-found", "研修モジュールが見つかりません");
+    }
+    const customModule = customModuleSnap.data() as { passThresholdDefault?: number };
+    passThresholdDefault = customModule.passThresholdDefault ?? 80;
+
+    const questionsSnap = await db
+      .collection(`companies/${companyId}/customModules/${moduleId}/quizQuestions`)
+      .get();
+    if (questionsSnap.empty) {
+      throw new HttpsError("failed-precondition", "この研修にはまだクイズ問題が登録されていません");
+    }
+    correctIndexes = questionsSnap.docs.map((d) => (d.data() as QuizQuestionDoc).correctIndex);
+  }
 
   const correctCount = correctIndexes.reduce(
     (count, correct, i) => (selectedAnswers[i] === correct ? count + 1 : count),
     0
   );
   const score = Math.round((correctCount / correctIndexes.length) * 100);
-  const thresholdApplied =
-    company.customPassThreshold?.[moduleId] ?? module.passThresholdDefault ?? 80;
+  const thresholdApplied = company.customPassThreshold?.[moduleId] ?? passThresholdDefault;
   const passed = score >= thresholdApplied;
   const answeredAt = admin.firestore.FieldValue.serverTimestamp();
 
@@ -324,5 +362,151 @@ export const sendMonthlyReports = onSchedule(
         logger.warn(`月次レポートメール送信に失敗しました companyId=${companyId}`, error);
       }
     }
+  }
+);
+
+// ─────────────────────────────────────────────
+// generateOriginalContent: プレミアムプラン向けオリジナルコンテンツAI生成
+// ─────────────────────────────────────────────
+const GENERATION_MODES = ["extend", "create"] as const;
+type GenerationMode = (typeof GENERATION_MODES)[number];
+
+const THEME_MAX_LENGTH = 200;
+
+export const generateOriginalContent = onCall(
+  { secrets: [anthropicApiKey], timeoutSeconds: 120 },
+  async (request) => {
+    const auth = request.auth;
+    if (!auth) {
+      throw new HttpsError("unauthenticated", "サインインが必要です");
+    }
+
+    const { companyId, mode, theme, categoryId, targetModuleId } = request.data as {
+      companyId?: string;
+      mode?: GenerationMode;
+      theme?: string;
+      categoryId?: string;
+      targetModuleId?: string;
+    };
+
+    if (!companyId || !mode || !theme) {
+      throw new HttpsError("invalid-argument", "companyId/mode/themeが必要です");
+    }
+    if (!GENERATION_MODES.includes(mode)) {
+      throw new HttpsError("invalid-argument", "modeはextendまたはcreateである必要があります");
+    }
+    if (theme.trim().length === 0 || theme.length > THEME_MAX_LENGTH) {
+      throw new HttpsError("invalid-argument", `テーマは1〜${THEME_MAX_LENGTH}文字で入力してください`);
+    }
+    if (mode === "create" && !categoryId) {
+      throw new HttpsError("invalid-argument", "新規モジュール作成にはcategoryIdが必要です");
+    }
+    if (mode === "extend" && !targetModuleId) {
+      throw new HttpsError("invalid-argument", "既存モジュール追加にはtargetModuleIdが必要です");
+    }
+
+    // 本人が実際にそのcompanyIdの管理者であることを確認する(他社のオリジナルコンテンツを
+    // 汚染できないよう、submitQuizAttemptと同様にcompanyId所属をサーバー側で検証する)。
+    const employeeSnap = await db.doc(`companies/${companyId}/employees/${auth.uid}`).get();
+    const employee = employeeSnap.data() as { role?: string } | undefined;
+    if (!employeeSnap.exists || employee?.role !== "admin") {
+      throw new HttpsError("permission-denied", "この会社の管理者のみ実行できます");
+    }
+
+    // プレミアムプランの契約状態はサーバー側で再確認する(クライアントの自己申告を信用しない)。
+    const subscriptionSnap = await db
+      .doc(`companies/${companyId}/subscriptions/company_${companyId}`)
+      .get();
+    const subscription = subscriptionSnap.data() as
+      | { status?: string; premiumTier?: string; expiresAt?: admin.firestore.Timestamp }
+      | undefined;
+    const isActive =
+      subscription?.status === "active" &&
+      (!subscription.expiresAt || subscription.expiresAt.toDate() > new Date());
+    const tier = isActive ? subscription?.premiumTier ?? "none" : "none";
+    const hasAccess =
+      mode === "create" ? tier === "moduleCreation" : tier === "moduleExtension" || tier === "moduleCreation";
+    if (!hasAccess) {
+      throw new HttpsError(
+        "permission-denied",
+        mode === "create"
+          ? "新規モジュール作成にはプレミアムプラン(上位)の契約が必要です"
+          : "オリジナルコンテンツ追加にはプレミアムプランの契約が必要です"
+      );
+    }
+
+    let targetModuleContext = "";
+    if (mode === "extend" && targetModuleId) {
+      const moduleSnap = await db.doc(`modules/${targetModuleId}`).get();
+      if (!moduleSnap.exists) {
+        throw new HttpsError("not-found", "対象のモジュールが見つかりません");
+      }
+      const moduleData = moduleSnap.data() as { title?: string; description?: string };
+      targetModuleContext =
+        `追加先の既存モジュール:「${moduleData.title ?? ""}」\n` +
+        `既存モジュールの説明: ${moduleData.description ?? ""}\n` +
+        "このモジュールの補足として自然につながる、重複しない内容にしてください。\n\n";
+    }
+
+    const lessonCount = mode === "create" ? 3 : 2;
+    const quizCount = mode === "create" ? 6 : 4;
+
+    const lessonSchema = z.object({
+      title: z.string().describe("レッスンのタイトル(20文字程度)"),
+      body: z
+        .string()
+        .describe("レッスン本文。200〜400文字程度で、具体的な職場での事例を交えて解説する"),
+    });
+    const quizQuestionSchema = z.object({
+      question: z.string().describe("クイズの問題文"),
+      choices: z.array(z.string()).length(4).describe("4択の選択肢(正解を1つ含む)"),
+      correctIndex: z.number().int().min(0).max(3).describe("正解の選択肢のインデックス(0始まり)"),
+      explanation: z.string().describe("なぜその選択肢が正解か、他が不正解かの解説"),
+    });
+
+    const schema =
+      mode === "create"
+        ? z.object({
+            moduleTitle: z.string().describe("モジュールのタイトル(20文字程度)"),
+            moduleDescription: z.string().describe("モジュールの説明文(50〜100文字程度)"),
+            lessons: z.array(lessonSchema).length(lessonCount),
+            quizQuestions: z.array(quizQuestionSchema).length(quizCount),
+          })
+        : z.object({
+            lessons: z.array(lessonSchema).length(lessonCount),
+            quizQuestions: z.array(quizQuestionSchema).length(quizCount),
+          });
+
+    const anthropic = new Anthropic({ apiKey: anthropicApiKey.value() });
+
+    const prompt =
+      "あなたは中小企業向け教育アプリ「安心企業研修Safy」のコンテンツ作成者です。\n" +
+      "以下のテーマについて、社員研修用のレッスンとクイズ問題を作成してください。\n\n" +
+      `テーマ: ${theme}\n\n` +
+      targetModuleContext +
+      `レッスン${lessonCount}本(導入→具体例→まとめ・行動指針、の流れが望ましい)と、` +
+      `クイズ${quizCount}問(4択・正解1つ・解説付き)を作成してください。\n` +
+      "実際の職場で起こりうる具体的な事例を交え、専門用語は平易に説明してください。\n" +
+      "クイズは本文の内容を踏まえた設問にし、正解の位置(0〜3)は偏らせず、" +
+      "不正解の選択肢も「もっともらしいが誤り」であるようにしてください。";
+
+    let parsed: z.infer<typeof schema>;
+    try {
+      const response = await anthropic.beta.messages.parse({
+        model: "claude-opus-5",
+        max_tokens: 8000,
+        messages: [{ role: "user", content: prompt }],
+        output_format: betaZodOutputFormat(schema),
+      });
+      if (!response.parsed_output) {
+        throw new Error("parsed_output is null");
+      }
+      parsed = response.parsed_output;
+    } catch (error) {
+      logger.error(`AIコンテンツ生成に失敗しました companyId=${companyId}`, error);
+      throw new HttpsError("internal", "AIによるコンテンツ生成に失敗しました。もう一度お試しください");
+    }
+
+    return parsed;
   }
 );

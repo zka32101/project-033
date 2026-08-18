@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/module_model.dart';
+import '../../data/models/industry_model.dart';
+import '../../data/models/company_model.dart';
 import '../../data/models/subscription_model.dart';
 import '../../data/models/enrollment_model.dart';
 import '../../core/access_control.dart';
@@ -9,6 +11,7 @@ import '../../core/monthly_focus.dart';
 import '../../core/deadline_status.dart';
 import '../../providers/service_providers.dart';
 import '../../providers/session_provider.dart';
+import '../../services/content_service.dart';
 import '../lesson/lesson_screen.dart';
 import '../my_growth/my_growth_screen.dart';
 import '../certificates/my_certificates_screen.dart';
@@ -38,18 +41,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     if (_isNavigating) return;
     _isNavigating = true;
     try {
-      final subscription = await ref
-          .read(subscriptionServiceProvider)
-          .getActiveSubscription(
-            companyId: companyId,
-            ownerType: SubscriptionOwnerType.company,
-            ownerId: companyId,
+      // オリジナルモジュール(会社が作成したコンテンツ)はモジュール個別課金の対象外。
+      // 作成時点でプレミアムプランの支払いが発生しているため、社員は追加課金なしで閲覧できる。
+      final hasAccess = module.isCustom ||
+          AccessControl.moduleAccessGranted(
+            isFreeTrial: module.isFreeTrial,
+            subscription: await ref
+                .read(subscriptionServiceProvider)
+                .getActiveSubscription(
+                  companyId: companyId,
+                  ownerType: SubscriptionOwnerType.company,
+                  ownerId: companyId,
+                ),
+            moduleId: module.id,
           );
-      final hasAccess = AccessControl.moduleAccessGranted(
-        isFreeTrial: module.isFreeTrial,
-        subscription: subscription,
-        moduleId: module.id,
-      );
       if (!mounted) return;
       await Navigator.of(context).push(
         MaterialPageRoute(
@@ -61,6 +66,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     } finally {
       _isNavigating = false;
     }
+  }
+
+  /// グローバルモジュールに、会社が作成したオリジナルモジュール(プレミアムプラン)を
+  /// 合流させて優先度順に並べる。
+  Future<List<Module>> _loadModules(Industry industry, Company company) async {
+    final modules = await ref.read(contentServiceProvider).listModulesForIndustry(
+          industry,
+          categoryPriorityOverride: company.categoryPriorityOverride,
+        );
+    final customModules =
+        await ref.read(customContentServiceProvider).listCustomModules(company.id);
+    final merged = [
+      ...modules,
+      ...customModules.map((m) => m.toModule()),
+    ];
+    ContentService.sortModulesByPriority(merged, industry, company.categoryPriorityOverride);
+    return merged;
   }
 
   @override
@@ -113,10 +135,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             return const Center(child: Text('業種情報が見つかりませんでした'));
           }
           return FutureBuilder<List<Module>>(
-            future: ref.read(contentServiceProvider).listModulesForIndustry(
-                  industry,
-                  categoryPriorityOverride: company.categoryPriorityOverride,
-                ),
+            future: _loadModules(industry, company),
             builder: (context, modulesSnapshot) {
               if (modulesSnapshot.hasError) {
                 return const ErrorRetryView(message: '研修モジュールの読み込みに失敗しました');

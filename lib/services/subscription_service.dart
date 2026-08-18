@@ -32,6 +32,19 @@ class SubscriptionService {
     return moduleUnitPriceYen(headcount) * moduleCount * headcount;
   }
 
+  /// オリジナルコンテンツ機能(プレミアムプラン)の月額固定料金。
+  /// コンテンツ作成は会社単位の機能のため、モジュール課金と異なり人数割引は適用しない。
+  static int premiumTierMonthlyPriceYen(PremiumTier tier) {
+    switch (tier) {
+      case PremiumTier.none:
+        return 0;
+      case PremiumTier.moduleExtension:
+        return 15000; // 既存モジュールへのレッスン/クイズ追加
+      case PremiumTier.moduleCreation:
+        return 30000; // 新規オリジナルモジュール作成(既存モジュール追加も含む)
+    }
+  }
+
   /// owner(個人 or 企業)につき有効な契約は1件のみという前提を、決定的なドキュメントIDで
   /// 保証する。read→writeの競合で重複した有効サブスクリプションが生まれることを防ぐ
   /// (旧実装はクエリで既存確認→ランダムIDで新規作成しており、同時書き込みで重複しうった)。
@@ -61,6 +74,7 @@ class SubscriptionService {
     required List<String> subscribedModuleIds,
     required bool fullSet,
     required int headcount,
+    PremiumTier? premiumTier,
   }) async {
     final ref = _db.doc(
         '${FirestorePaths.subscriptions(companyId)}/${_subscriptionDocId(ownerType, ownerId)}');
@@ -75,6 +89,38 @@ class SubscriptionService {
       fullSet: fullSet,
       headcount: headcount,
       status: SubscriptionStatus.active,
+      // premiumTier未指定の場合は既存契約の値を維持する(モジュール追加購入がプレミアム
+      // プランを意図せずnoneへリセットしてしまわないようにするため)。
+      premiumTier: premiumTier ?? existing?.premiumTier ?? PremiumTier.none,
+      startedAt: existing?.startedAt ?? DateTime.now(),
+    );
+    await ref.set(subscription.toMap());
+    return subscription;
+  }
+
+  /// プレミアムプラン(オリジナルコンテンツ機能)単体のアップグレード用。
+  /// モジュール契約状態(subscribedModuleIds/fullSet)には触れない。
+  Future<Subscription> upsertPremiumTier({
+    required String companyId,
+    required SubscriptionOwnerType ownerType,
+    required String ownerId,
+    required PremiumTier premiumTier,
+    required int headcount,
+  }) async {
+    final ref = _db.doc(
+        '${FirestorePaths.subscriptions(companyId)}/${_subscriptionDocId(ownerType, ownerId)}');
+    final existingDoc = await ref.get();
+    final existing =
+        existingDoc.exists ? Subscription.fromMap(existingDoc.id, existingDoc.data()!) : null;
+    final subscription = Subscription(
+      id: ref.id,
+      ownerType: ownerType,
+      ownerId: ownerId,
+      subscribedModuleIds: existing?.subscribedModuleIds ?? const [],
+      fullSet: existing?.fullSet ?? false,
+      headcount: headcount,
+      status: SubscriptionStatus.active,
+      premiumTier: premiumTier,
       startedAt: existing?.startedAt ?? DateTime.now(),
     );
     await ref.set(subscription.toMap());

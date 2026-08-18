@@ -26,6 +26,27 @@ class FirestorePaths {
   static String reminders(String companyId) =>
       '${company(companyId)}/reminders';
 
+  // --- オリジナルコンテンツ(プレミアムプラン。会社単位で完全に分離) ---
+  /// 新規オリジナルモジュール一式(モジュール本体はここに保存。中身はグローバルmodulesと同じ形)
+  static String customModules(String companyId) =>
+      '${company(companyId)}/customModules';
+  static String customModule(String companyId, String moduleId) =>
+      '${customModules(companyId)}/$moduleId';
+  static String customModuleLessons(String companyId, String moduleId) =>
+      '${customModule(companyId, moduleId)}/lessons';
+  static String customModuleQuizQuestions(String companyId, String moduleId) =>
+      '${customModule(companyId, moduleId)}/quizQuestions';
+
+  /// 既存(グローバル)モジュールへの追加コンテンツ。moduleIdはmodules/{moduleId}を指す。
+  static String moduleExtensions(String companyId) =>
+      '${company(companyId)}/moduleExtensions';
+  static String moduleExtension(String companyId, String moduleId) =>
+      '${moduleExtensions(companyId)}/$moduleId';
+  static String moduleExtensionLessons(String companyId, String moduleId) =>
+      '${moduleExtension(companyId, moduleId)}/lessons';
+  static String moduleExtensionQuizQuestions(String companyId, String moduleId) =>
+      '${moduleExtension(companyId, moduleId)}/quizQuestions';
+
   // --- 招待コード（Join前はテナント文脈が無いためトップレベル） ---
   static const String inviteCodes = 'inviteCodes';
 

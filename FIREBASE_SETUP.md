@@ -102,7 +102,8 @@ void main() async {
 
 デプロイ対象(`functions/src/index.ts`): `submitQuizAttempt`（クイズ採点・改ざん防止の要）、
 `onReminderCreated`（個別リマインド通知）、`checkModuleDeadlinesAndNotify`（期限通知・毎日9時JST）、
-`sendMonthlyReports`（前月分レポートメール送信・毎月1日9時JST）。
+`sendMonthlyReports`（前月分レポートメール送信・毎月1日9時JST）、
+`generateOriginalContent`（プレミアムプラン向けオリジナルコンテンツAI生成、Claude API使用）。
 
 - [ ] Node.js 20系がインストール済みであること（`functions/package.json`の`engines.node`指定）
 - [ ] `sendMonthlyReports`用にSendGridのSecretを設定:
@@ -111,6 +112,13 @@ void main() async {
   firebase functions:secrets:set SENDGRID_FROM_EMAIL
   ```
   （`SENDGRID_FROM_EMAIL`はSendGrid側で送信元認証済みのアドレスであること）
+- [ ] `generateOriginalContent`用にAnthropicのSecretを設定:
+  ```bash
+  firebase functions:secrets:set ANTHROPIC_API_KEY
+  ```
+  （[console.anthropic.com](https://console.anthropic.com/)で発行したAPIキー。
+  このSecretが無いとオリジナルコンテンツのAI生成機能のみデプロイ・実行に失敗する
+  ―他の関数には影響しない）
 - [ ] Blazeプラン（従量課金）へのアップグレード（Cloud FunctionsはSparkプランでは
       デプロイ不可）
 - [ ] ビルド・デプロイ:
@@ -154,6 +162,8 @@ void main() async {
       即時確認したい場合はCloud Functionsコンソールから手動トリガーするか、
       Firebase Emulator Suiteでのテストを検討）
 - [ ] クイズ提出→`submitQuizAttempt`経由で採点・合否判定・修了証発行がされること
+- [ ] 管理者ダッシュボード→「オリジナルコンテンツ管理」→プレミアムプラン契約後、
+      テーマ入力→AI生成→保存→社員側ホーム画面にオリジナルモジュールが表示されること
 
 ---
 

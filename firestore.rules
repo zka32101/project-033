@@ -123,6 +123,39 @@ service cloud.firestore {
         allow update: if false;
         allow delete: if false;
       }
+
+      // オリジナルコンテンツ(プレミアムプラン)。契約段階のサーバー側再検証は
+      // generateOriginalContent Cloud Functionで行うため、ここでは他社データからの
+      // 分離と「管理者のみ書き込み・全社員が閲覧可」という権限分離のみを担保する。
+      match /customModules/{moduleId} {
+        allow read: if isCompanyMember(companyId);
+        allow write: if isAdmin(companyId);
+
+        match /lessons/{lessonId} {
+          allow read: if isCompanyMember(companyId);
+          allow write: if isAdmin(companyId);
+        }
+
+        match /quizQuestions/{questionId} {
+          allow read: if isCompanyMember(companyId);
+          allow write: if isAdmin(companyId);
+        }
+      }
+
+      match /moduleExtensions/{moduleId} {
+        allow read: if isCompanyMember(companyId);
+        allow write: if isAdmin(companyId);
+
+        match /lessons/{lessonId} {
+          allow read: if isCompanyMember(companyId);
+          allow write: if isAdmin(companyId);
+        }
+
+        match /quizQuestions/{questionId} {
+          allow read: if isCompanyMember(companyId);
+          allow write: if isAdmin(companyId);
+        }
+      }
     }
   }
 }
