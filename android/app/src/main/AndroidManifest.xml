@@ -1,4 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 期限通知・個別リマインドの表示用(Android 13+はランタイム許可も必要。
+         FirebaseMessaging.requestPermission()がAndroid側でもこの許可をリクエストする)。 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
         android:label="safy"
         android:name="${applicationName}"

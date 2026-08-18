@@ -25,6 +25,9 @@ dependencies:
   firebase_crashlytics: ^4.0.0
   firebase_remote_config: ^5.0.0
   firebase_messaging: ^15.0.0
+  # フォアグラウンド時(FirebaseMessaging.onMessageで受信)にプッシュ通知を
+  # 画面上に表示するためのローカル通知プラグイン(バックグラウンド/終了時はFCMが自動表示するため不要)
+  flutter_local_notifications: ^22.3.0
 
   # Payments
   purchases_flutter: ^10.4.0
