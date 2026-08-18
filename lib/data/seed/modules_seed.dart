@@ -1,7 +1,7 @@
 import '../models/module_model.dart';
 import '../models/category_model.dart';
 
-/// 研修モジュール種データ。6カテゴリ×3モジュール=18モジュール。
+/// 研修モジュール種データ。6カテゴリ×4モジュール=24モジュール。
 /// 各カテゴリの1つ目をisFreeTrial=trueとし、無料体験→追加課金訴求(設計書 Step3.5 R④)の対象とする。
 const List<Module> seedModules = [
   // ①情報モラル
@@ -32,6 +32,15 @@ const List<Module> seedModules = [
     isFreeTrial: false,
     sortOrder: 3,
   ),
+  Module(
+    id: 'm_ethics_remote',
+    categoryId: CategoryId.infoMorals,
+    title: 'リモートワーク・オンライン会議での情報モラル',
+    description: '在宅勤務やオンライン会議特有のマナーと、映り込み・録画による情報漏えいリスクを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 4,
+  ),
 
   // ②セキュリティ
   Module(
@@ -60,6 +69,15 @@ const List<Module> seedModules = [
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 3,
+  ),
+  Module(
+    id: 'm_security_ransomware',
+    categoryId: CategoryId.security,
+    title: 'ランサムウェア対策とバックアップの基本',
+    description: 'ファイルを暗号化され身代金を要求される被害を防ぐための予防策と、バックアップの重要性を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 4,
   ),
 
   // ③個人情報保護
@@ -90,6 +108,15 @@ const List<Module> seedModules = [
     isFreeTrial: false,
     sortOrder: 3,
   ),
+  Module(
+    id: 'm_privacy_mynumber',
+    categoryId: CategoryId.privacy,
+    title: 'マイナンバーの適切な取り扱い',
+    description: '特定個人情報であるマイナンバーの収集・保管・廃棄における法令上の注意点を学びます。',
+    passThresholdDefault: 90,
+    isFreeTrial: false,
+    sortOrder: 4,
+  ),
 
   // ④情報マネジメント
   Module(
@@ -118,6 +145,15 @@ const List<Module> seedModules = [
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 3,
+  ),
+  Module(
+    id: 'm_infomgmt_byod',
+    categoryId: CategoryId.infoManagement,
+    title: '私物端末利用(BYOD)時の情報管理ルール',
+    description: '私物のスマートフォン・PCで業務を行う際に必要な情報管理ルールとリスクを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 4,
   ),
 
   // ⑤コンプライアンス
@@ -148,6 +184,15 @@ const List<Module> seedModules = [
     isFreeTrial: false,
     sortOrder: 3,
   ),
+  Module(
+    id: 'm_compliance_insider',
+    categoryId: CategoryId.compliance,
+    title: 'インサイダー取引・利益相反の防止',
+    description: '未公開の重要情報を用いた株取引の禁止と、私的利益と会社の利益が衝突する場面での行動指針を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 4,
+  ),
 
   // ⑥AI活用
   Module(
@@ -176,5 +221,14 @@ const List<Module> seedModules = [
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 3,
+  ),
+  Module(
+    id: 'm_ai_deepfake',
+    categoryId: CategoryId.aiUsage,
+    title: 'ディープフェイク・AI生成コンテンツを見抜くリテラシー',
+    description: 'AIで生成された偽の画像・音声・動画による詐欺やなりすましの手口と、見抜くためのポイントを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 4,
   ),
 ];
