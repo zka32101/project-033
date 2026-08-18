@@ -1,37 +1,52 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:safy/services/subscription_service.dart';
+import 'package:safy/data/models/subscription_model.dart';
 
 void main() {
-  group('SubscriptionService pricing (設計書 Section2)', () {
-    test('20名以下はモジュール単価100円・セット400円', () {
-      expect(SubscriptionService.moduleUnitPriceYen(20), 100);
-      expect(SubscriptionService.fullSetUnitPriceYen(20), 400);
+  group('SubscriptionService pricing (利用者数に応じた課金体系)', () {
+    test('20名以下は基本プラン単価100円・上位プラン単価400円', () {
+      expect(SubscriptionService.basicPlanUnitPriceYen(20), 100);
+      expect(SubscriptionService.upperPlanUnitPriceYen(20), 400);
     });
 
     test('21〜50名は10%引き(90円/360円)', () {
-      expect(SubscriptionService.moduleUnitPriceYen(50), 90);
-      expect(SubscriptionService.fullSetUnitPriceYen(50), 360);
+      expect(SubscriptionService.basicPlanUnitPriceYen(50), 90);
+      expect(SubscriptionService.upperPlanUnitPriceYen(50), 360);
     });
 
     test('51〜100名は20%引き(80円/320円)', () {
-      expect(SubscriptionService.moduleUnitPriceYen(100), 80);
-      expect(SubscriptionService.fullSetUnitPriceYen(100), 320);
+      expect(SubscriptionService.basicPlanUnitPriceYen(100), 80);
+      expect(SubscriptionService.upperPlanUnitPriceYen(100), 320);
     });
 
-    test('monthlyPriceYen: モジュール個別選択は 単価×モジュール数×人数', () {
+    test('101名以上は個別見積(0円)', () {
+      expect(SubscriptionService.basicPlanUnitPriceYen(101), 0);
+      expect(SubscriptionService.upperPlanUnitPriceYen(101), 0);
+    });
+
+    test('planUnitPriceYen: プラン段階に応じて単価を切り替える', () {
+      expect(
+        SubscriptionService.planUnitPriceYen(ModulePlanTier.basic, 20),
+        100,
+      );
+      expect(
+        SubscriptionService.planUnitPriceYen(ModulePlanTier.upper, 20),
+        400,
+      );
+    });
+
+    test('monthlyPriceYen: 基本プランは単価×人数(モジュール数によらない定額)', () {
       final price = SubscriptionService.monthlyPriceYen(
         headcount: 20,
-        moduleCount: 3,
-        fullSet: false,
+        planTier: ModulePlanTier.basic,
       );
-      expect(price, 100 * 3 * 20);
+      expect(price, 100 * 20);
     });
 
-    test('monthlyPriceYen: セット契約は セット単価×人数', () {
+    test('monthlyPriceYen: 上位プランは単価×人数(選択モジュール数によらない定額)', () {
       final price = SubscriptionService.monthlyPriceYen(
         headcount: 50,
-        moduleCount: 6,
-        fullSet: true,
+        planTier: ModulePlanTier.upper,
       );
       expect(price, 360 * 50);
     });
