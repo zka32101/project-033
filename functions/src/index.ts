@@ -30,6 +30,18 @@ const messaging = admin.messaging();
 const sendgridApiKey = defineSecret("SENDGRID_API_KEY");
 const sendgridFromEmail = defineSecret("SENDGRID_FROM_EMAIL");
 
+// JST(UTC+9)固定。本アプリは現状JST圏のみを対象とするため、date-onlyの比較は
+// すべてJSTの暦日基準で行う(サーバーのDateはUTC基準のため、そのまま日数差を
+// 取るとFlutter側 DeadlineStatusEvaluator の日付のみ比較と最大1日ズレる)。
+const JST_OFFSET_MS = 9 * 60 * 60 * 1000;
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/// [date]のJSTでの暦日(年月日)を、その暦日0時ちょうどを表すUTCミリ秒として返す。
+function jstDateOnlyMs(date: Date): number {
+  const jst = new Date(date.getTime() + JST_OFFSET_MS);
+  return Date.UTC(jst.getUTCFullYear(), jst.getUTCMonth(), jst.getUTCDate());
+}
+
 // ─────────────────────────────────────────────
 // 型(Flutter側のモデルと対応。Cloud Functions側は緩めのバリデーションに留める)
 // ─────────────────────────────────────────────
@@ -80,14 +92,21 @@ export const submitQuizAttempt = onCall(async (request) => {
     throw new HttpsError("permission-denied", "本人以外のクイズ結果は送信できません");
   }
 
-  const [companySnap, moduleSnap, questionsSnap] = await Promise.all([
+  const [companySnap, employeeSnap, moduleSnap, questionsSnap] = await Promise.all([
     db.doc(`companies/${companyId}`).get(),
+    db.doc(`companies/${companyId}/employees/${employeeId}`).get(),
     db.doc(`modules/${moduleId}`).get(),
     db.collection(`modules/${moduleId}/quizQuestions`).get(),
   ]);
 
   if (!companySnap.exists) {
     throw new HttpsError("not-found", "会社情報が見つかりません");
+  }
+  // employeeIdはauth.uidと一致するだけでなく、実際にこのcompanyId配下に
+  // 所属している(=正規の招待フローでjoinしている)ことも確認する。これが無いと
+  // 認証済みユーザーが無関係な他社companyIdを指定してクイズ結果を捏造できてしまう。
+  if (!employeeSnap.exists) {
+    throw new HttpsError("permission-denied", "この会社に所属する社員が見つかりません");
   }
   if (questionsSnap.empty) {
     throw new HttpsError("failed-precondition", "この研修にはまだクイズ問題が登録されていません");
@@ -206,8 +225,10 @@ export const checkModuleDeadlinesAndNotify = onSchedule(
 
       for (const [moduleId, dueDateTimestamp] of Object.entries(deadlines)) {
         const dueDate = dueDateTimestamp.toDate();
-        const daysRemaining = Math.floor(
-          (dueDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)
+        // Flutter側 DeadlineStatusEvaluator と同様、JSTの暦日のみで比較する
+        // (時刻・タイムゾーンを含めたミリ秒差だと期限日当日に1日早くoverdue判定されてしまう)。
+        const daysRemaining = Math.round(
+          (jstDateOnlyMs(dueDate) - jstDateOnlyMs(new Date())) / DAY_MS
         );
         // リマインド期間より先、または大幅に過ぎた古い期限は対象外(通知の送りすぎを防ぐ)
         if (daysRemaining > REMINDER_WINDOW_DAYS || daysRemaining < -30) continue;
@@ -250,6 +271,17 @@ export const sendMonthlyReports = onSchedule(
     sgMail.setApiKey(sendgridApiKey.value());
     const fromEmail = sendgridFromEmail.value();
 
+    // 「前月分」レポートなので、実行時点(当月1日)ではなく前月のJST暦日区間で集計する。
+    const jstNow = new Date(Date.now() + JST_OFFSET_MS);
+    const periodStart = new Date(
+      Date.UTC(jstNow.getUTCFullYear(), jstNow.getUTCMonth() - 1, 1) - JST_OFFSET_MS
+    );
+    const periodEnd = new Date(
+      Date.UTC(jstNow.getUTCFullYear(), jstNow.getUTCMonth(), 1) - JST_OFFSET_MS
+    );
+    const periodStartJst = new Date(periodStart.getTime() + JST_OFFSET_MS);
+    const reportMonthLabel = `${periodStartJst.getUTCFullYear()}年${periodStartJst.getUTCMonth() + 1}月`;
+
     const companiesSnap = await db.collection("companies").get();
 
     for (const companyDoc of companiesSnap.docs) {
@@ -268,13 +300,12 @@ export const sendMonthlyReports = onSchedule(
       for (const doc of enrollmentsSnap.docs) {
         const data = doc.data();
         if (data.status !== "completed") continue;
+        const completedAt = (data.completedAt as admin.firestore.Timestamp | undefined)?.toDate();
+        if (!completedAt || completedAt < periodStart || completedAt >= periodEnd) continue;
         const employeeId = data.employeeId as string;
         completedByEmployee.set(employeeId, (completedByEmployee.get(employeeId) ?? 0) + 1);
       }
       const employeesWithProgress = completedByEmployee.size;
-
-      const now = new Date();
-      const reportMonthLabel = `${now.getFullYear()}年${now.getMonth() + 1}月`;
 
       try {
         await sgMail.send({
@@ -285,7 +316,7 @@ export const sendMonthlyReports = onSchedule(
             `${company.name ?? ""} 様\n\n` +
             `${reportMonthLabel}時点の履修状況をお知らせします。\n\n` +
             `対象社員数: ${totalEmployees}名\n` +
-            `1件以上の研修を完了した社員数: ${employeesWithProgress}名\n\n` +
+            `${reportMonthLabel}中に1件以上の研修を完了した社員数: ${employeesWithProgress}名\n\n` +
             `詳細はアプリの「レポート出力」画面からPDF/CSVでご確認いただけます。\n\n` +
             `安心企業研修Safy`,
         });

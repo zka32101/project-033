@@ -51,6 +51,11 @@ class _DeadlineSettingsScreenState extends ConsumerState<DeadlineSettingsScreen>
             moduleId: moduleId,
             dueDate: picked,
           );
+      ref.read(sessionProvider.notifier).updateCompany(
+            company.copyWith(
+              moduleDeadlines: {...company.moduleDeadlines, moduleId: picked},
+            ),
+          );
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('期限を設定しました')),
@@ -74,6 +79,10 @@ class _DeadlineSettingsScreenState extends ConsumerState<DeadlineSettingsScreen>
       await ref.read(companyServiceProvider).clearModuleDeadline(
             companyId: company.id,
             moduleId: moduleId,
+          );
+      final updatedDeadlines = {...company.moduleDeadlines}..remove(moduleId);
+      ref.read(sessionProvider.notifier).updateCompany(
+            company.copyWith(moduleDeadlines: updatedDeadlines),
           );
     } catch (_) {
       if (mounted) {
