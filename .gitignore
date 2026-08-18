@@ -56,6 +56,9 @@ app.*.map.json
 google-services.json
 GoogleService-Info.plist
 firebase*.json
+# firebase.jsonはFirebase CLIのプロジェクト設定(rules/functionsソースの参照先のみ)で
+# 秘密情報を含まないため、上記の広いパターンから明示的に除外してコミット対象にする。
+!firebase.json
 
 # SSH/SSL Keys
 *.pem
@@ -88,6 +91,9 @@ appstore_api_key.p8
 google-services.json
 GoogleService-Info.plist
 firebase*.json
+# firebase.jsonはFirebase CLIのプロジェクト設定(rules/functionsソースの参照先のみ)で
+# 秘密情報を含まないため、上記の広いパターンから明示的に除外してコミット対象にする。
+!firebase.json
 
 # SSH/SSL Keys
 *.pem
