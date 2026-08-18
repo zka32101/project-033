@@ -5,9 +5,10 @@
 特にチャネル・スコープの検証を重視する。
 
 ## A. 実施前の技術的前提条件
-- [ ] Firebase Console本設定完了（[flutter-firebase-setup]スキル参照）
-- [ ] `flutterfire configure` 実行、`firebase_options.dart` 生成、main.dartにFirebase.initializeApp()追加
-- [ ] `safy/firestore.rules` をFirebase Consoleへデプロイ
+- [ ] Firebase Console本設定完了（手順は`FIREBASE_SETUP.md`参照。プロジェクト作成・
+      アプリ登録・`flutterfire configure`実行・`firebase_options.dart`生成・
+      main.dartへのFirebase.initializeApp()追加・匿名認証有効化を含む）
+- [ ] `firestore.rules` をFirebase Consoleへデプロイ（`FIREBASE_SETUP.md`セクション6）
 - [ ] Cloud Functions `submitQuizAttempt` をデプロイ（QuizService.submitAttemptの本経路）
 - [ ] `bin/seed_firestore.dart` 実行（業種8/モジュール18/レッスン54/クイズ108問の投入）
 - [ ] Cloud Functions `sendMonthlyReports` 用のSecret設定（`firebase functions:secrets:set SENDGRID_API_KEY`・`SENDGRID_FROM_EMAIL`、SendGridで送信元認証済みのアドレス）
