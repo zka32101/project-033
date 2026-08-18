@@ -4,6 +4,7 @@ import '../../data/models/module_model.dart';
 import '../../data/models/subscription_model.dart';
 import '../../data/models/enrollment_model.dart';
 import '../../core/access_control.dart';
+import '../../core/category_priority_resolver.dart';
 import '../../core/monthly_focus.dart';
 import '../../core/deadline_status.dart';
 import '../../providers/service_providers.dart';
@@ -188,7 +189,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                         ),
                       ...modules.map((module) {
-                        final priority = industry.priorityOf(module.categoryId);
+                        // 業種の初期優先度ではなく、管理者がcategory_priority_settings画面で
+                        // 上書きした値(company.categoryPriorityOverride)を優先して解決する。
+                        // これを使わずindustry.priorityOfだけ見ると、管理者が「必須」に
+                        // 変更しても社員側の必須/任意バッジに反映されない不具合になる。
+                        final priority = CategoryPriorityResolver.resolve(
+                          industry: industry,
+                          categoryId: module.categoryId,
+                          overrides: company.categoryPriorityOverride,
+                        );
                         final isRequired = priority == 2;
                         final enrollments = enrollmentSnapshot.data ?? const [];
                         final isCompleted = enrollments.any((e) =>
