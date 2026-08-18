@@ -56,7 +56,7 @@ class MyCertificatesScreen extends ConsumerWidget {
                 pw.SizedBox(height: 8),
                 pw.Text(companyName, style: const pw.TextStyle(fontSize: 12)),
                 pw.SizedBox(height: 24),
-                pw.Text('安心企業研修アンゼット', style: const pw.TextStyle(fontSize: 10)),
+                pw.Text('安心企業研修Safy', style: const pw.TextStyle(fontSize: 10)),
               ],
             ),
           ),

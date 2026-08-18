@@ -1,4 +1,4 @@
-package com.yourwish.anzet
+package com.yourwish.safy
 
 import io.flutter.embedding.android.FlutterActivity
 

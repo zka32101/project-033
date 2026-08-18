@@ -1,6 +1,6 @@
 rules_version = '2';
 
-// 安心企業研修アンゼット(Anzet) Firestoreセキュリティルール
+// 安心企業研修Safy Firestoreセキュリティルール
 // 設計書 Step5: 企業単位のデータ分離必須・監査ログ(quizAttempts/certificates)は
 // Cloud Functions(Admin SDK)経由の書き込みのみ許可・管理者/受講者の権限分離。
 //

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/data/models/quiz_attempt_model.dart';
+import 'package:safy/data/models/quiz_attempt_model.dart';
 
 void main() {
   group('QuizAttempt.evaluate', () {

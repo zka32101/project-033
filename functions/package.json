@@ -1,6 +1,6 @@
 {
-  "name": "anzet-functions",
-  "description": "安心企業研修アンゼット(Anzet) Cloud Functions",
+  "name": "safy-functions",
+  "description": "安心企業研修Safy Cloud Functions",
   "scripts": {
     "build": "tsc",
     "serve": "npm run build && firebase emulators:start --only functions",

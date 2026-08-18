@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/core/growth_analytics.dart';
-import 'package:anzet/data/models/quiz_attempt_model.dart';
-import 'package:anzet/data/models/category_model.dart';
+import 'package:safy/core/growth_analytics.dart';
+import 'package:safy/data/models/quiz_attempt_model.dart';
+import 'package:safy/data/models/category_model.dart';
 
 QuizAttempt _attempt(String moduleId, int score, DateTime at) {
   return QuizAttempt(

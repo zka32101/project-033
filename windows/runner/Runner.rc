@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.yourwish" "\0"
-            VALUE "FileDescription", "anzet" "\0"
+            VALUE "FileDescription", "safy" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "anzet" "\0"
+            VALUE "InternalName", "safy" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 com.yourwish. All rights reserved." "\0"
-            VALUE "OriginalFilename", "anzet.exe" "\0"
-            VALUE "ProductName", "anzet" "\0"
+            VALUE "OriginalFilename", "safy.exe" "\0"
+            VALUE "ProductName", "safy" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

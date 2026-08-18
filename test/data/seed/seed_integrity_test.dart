@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/data/seed/industries_seed.dart';
-import 'package:anzet/data/seed/modules_seed.dart';
-import 'package:anzet/data/seed/lessons_seed.dart';
-import 'package:anzet/data/seed/quiz_questions_seed.dart';
-import 'package:anzet/data/models/category_model.dart';
+import 'package:safy/data/seed/industries_seed.dart';
+import 'package:safy/data/seed/modules_seed.dart';
+import 'package:safy/data/seed/lessons_seed.dart';
+import 'package:safy/data/seed/quiz_questions_seed.dart';
+import 'package:safy/data/models/category_model.dart';
 
 void main() {
   group('Seed data integrity (手書きデータの機械検証)', () {

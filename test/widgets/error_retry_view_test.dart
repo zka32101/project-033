@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/widgets/error_retry_view.dart';
+import 'package:safy/widgets/error_retry_view.dart';
 
 void main() {
   testWidgets('メッセージを表示する', (tester) async {

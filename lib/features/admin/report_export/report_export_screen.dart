@@ -55,7 +55,7 @@ class ReportExportScreen extends ConsumerWidget {
         ),
       ),
     );
-    await Printing.sharePdf(bytes: await doc.save(), filename: 'anzet_report.pdf');
+    await Printing.sharePdf(bytes: await doc.save(), filename: 'safy_report.pdf');
   }
 
   /// 法令監査での二次利用(表計算ソフトでの再集計等)向けにCSVでも出力できるようにする。
@@ -73,7 +73,7 @@ class ReportExportScreen extends ConsumerWidget {
     // BOM付きUTF-8で保存し、Excel等で日本語が文字化けしないようにする。
     final bytes = <int>[0xEF, 0xBB, 0xBF, ...utf8.encode(csvContent)];
 
-    final file = File('${Directory.systemTemp.path}/anzet_report.csv');
+    final file = File('${Directory.systemTemp.path}/safy_report.csv');
     await file.writeAsBytes(bytes);
     await Share.shareXFiles([XFile(file.path)], subject: '$companyName 履修状況レポート(CSV)');
   }

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anzet/core/dashboard_analytics.dart';
-import 'package:anzet/data/models/employee_model.dart';
-import 'package:anzet/data/models/enrollment_model.dart';
+import 'package:safy/core/dashboard_analytics.dart';
+import 'package:safy/data/models/employee_model.dart';
+import 'package:safy/data/models/enrollment_model.dart';
 
 Employee _employee(String id, String name) {
   return Employee(
