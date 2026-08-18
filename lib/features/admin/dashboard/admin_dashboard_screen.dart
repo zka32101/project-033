@@ -12,6 +12,7 @@ import '../pass_threshold/pass_threshold_settings_screen.dart';
 import '../deadline_settings/deadline_settings_screen.dart';
 import '../report_email_settings/report_email_settings_screen.dart';
 import '../category_priority_settings/category_priority_settings_screen.dart';
+import '../original_content/original_content_screen.dart';
 import '../employee_detail/employee_detail_screen.dart';
 import '../team_comparison/team_comparison_screen.dart';
 import '../../../widgets/error_retry_view.dart';
@@ -41,7 +42,9 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
       if (industry == null) return 0;
       final modules =
           await ref.read(contentServiceProvider).listModulesForIndustry(industry);
-      return modules.length;
+      final customModules =
+          await ref.read(customContentServiceProvider).listCustomModules(company.id);
+      return modules.length + customModules.length;
     });
   }
 
@@ -98,6 +101,10 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const CategoryPrioritySettingsScreen()),
                 );
+              } else if (value == 'original_content') {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const OriginalContentScreen()),
+                );
               }
             },
             itemBuilder: (context) => const [
@@ -105,6 +112,8 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
               PopupMenuItem(value: 'deadline', child: Text('受講期限設定')),
               PopupMenuItem(value: 'report_email', child: Text('月次レポート送付先設定')),
               PopupMenuItem(value: 'category_priority', child: Text('業種プロファイル調整')),
+              PopupMenuItem(
+                  value: 'original_content', child: Text('オリジナルコンテンツ管理(プレミアム)')),
             ],
           ),
         ],

@@ -30,9 +30,13 @@ class _EmployeeDetailScreenState extends ConsumerState<EmployeeDetailScreen> {
     _modulesFuture = ref
         .read(contentServiceProvider)
         .getIndustry(company.industryId)
-        .then((industry) {
+        .then((industry) async {
       if (industry == null) return <Module>[];
-      return ref.read(contentServiceProvider).listModulesForIndustry(industry);
+      final modules =
+          await ref.read(contentServiceProvider).listModulesForIndustry(industry);
+      final customModules =
+          await ref.read(customContentServiceProvider).listCustomModules(company.id);
+      return [...modules, ...customModules.map((m) => m.toModule())];
     });
   }
 

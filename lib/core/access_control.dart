@@ -13,4 +13,17 @@ class AccessControl {
     if (subscription.status != SubscriptionStatus.active) return false;
     return subscription.hasAccessToModule(moduleId);
   }
+
+  /// オリジナルコンテンツ機能(既存モジュールへの追加/新規モジュール作成)の利用可否判定。
+  static bool canExtendExistingModules(Subscription? subscription) {
+    if (subscription == null) return false;
+    if (subscription.status != SubscriptionStatus.active) return false;
+    return subscription.canExtendExistingModules;
+  }
+
+  static bool canCreateOriginalModules(Subscription? subscription) {
+    if (subscription == null) return false;
+    if (subscription.status != SubscriptionStatus.active) return false;
+    return subscription.canCreateOriginalModules;
+  }
 }

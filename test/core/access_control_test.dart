@@ -6,6 +6,7 @@ Subscription _subscription({
   required List<String> moduleIds,
   bool fullSet = false,
   SubscriptionStatus status = SubscriptionStatus.active,
+  PremiumTier premiumTier = PremiumTier.none,
 }) {
   return Subscription(
     id: 's1',
@@ -15,6 +16,7 @@ Subscription _subscription({
     fullSet: fullSet,
     headcount: 20,
     status: status,
+    premiumTier: premiumTier,
     startedAt: DateTime(2026, 1, 1),
   );
 }
@@ -92,6 +94,47 @@ void main() {
         ),
         isFalse,
       );
+    });
+  });
+
+  group('AccessControl.canExtendExistingModules / canCreateOriginalModules', () {
+    test('契約がなければどちらも不可', () {
+      expect(AccessControl.canExtendExistingModules(null), isFalse);
+      expect(AccessControl.canCreateOriginalModules(null), isFalse);
+    });
+
+    test('premiumTier=noneならどちらも不可', () {
+      final sub = _subscription(moduleIds: const []);
+      expect(AccessControl.canExtendExistingModules(sub), isFalse);
+      expect(AccessControl.canCreateOriginalModules(sub), isFalse);
+    });
+
+    test('premiumTier=moduleExtensionは追加のみ可・新規作成は不可', () {
+      final sub = _subscription(
+        moduleIds: const [],
+        premiumTier: PremiumTier.moduleExtension,
+      );
+      expect(AccessControl.canExtendExistingModules(sub), isTrue);
+      expect(AccessControl.canCreateOriginalModules(sub), isFalse);
+    });
+
+    test('premiumTier=moduleCreationはどちらも可(上位互換)', () {
+      final sub = _subscription(
+        moduleIds: const [],
+        premiumTier: PremiumTier.moduleCreation,
+      );
+      expect(AccessControl.canExtendExistingModules(sub), isTrue);
+      expect(AccessControl.canCreateOriginalModules(sub), isTrue);
+    });
+
+    test('expired状態ならpremiumTierに関わらず不可', () {
+      final sub = _subscription(
+        moduleIds: const [],
+        status: SubscriptionStatus.expired,
+        premiumTier: PremiumTier.moduleCreation,
+      );
+      expect(AccessControl.canExtendExistingModules(sub), isFalse);
+      expect(AccessControl.canCreateOriginalModules(sub), isFalse);
     });
   });
 }

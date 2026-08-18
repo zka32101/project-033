@@ -10,6 +10,8 @@ import '../services/subscription_service.dart';
 import '../services/analytics_service.dart';
 import '../services/reminder_service.dart';
 import '../services/push_notification_service.dart';
+import '../services/custom_content_service.dart';
+import '../services/content_generation_service.dart';
 
 final companyServiceProvider = Provider<CompanyService>((ref) {
   return CompanyService(ref.watch(firestoreProvider));
@@ -52,4 +54,12 @@ final reminderServiceProvider = Provider<ReminderService>((ref) {
 
 final pushNotificationServiceProvider = Provider<PushNotificationService>((ref) {
   return PushNotificationService(db: ref.watch(firestoreProvider));
+});
+
+final customContentServiceProvider = Provider<CustomContentService>((ref) {
+  return CustomContentService(ref.watch(firestoreProvider));
+});
+
+final contentGenerationServiceProvider = Provider<ContentGenerationService>((ref) {
+  return ContentGenerationService(ref.watch(functionsProvider));
 });
