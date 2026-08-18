@@ -40,6 +40,14 @@ class _CategoryPrioritySettingsScreenState
             categoryId: categoryId,
             priority: priority,
           );
+      ref.read(sessionProvider.notifier).updateCompany(
+            company.copyWith(
+              categoryPriorityOverride: {
+                ...company.categoryPriorityOverride,
+                categoryId: priority,
+              },
+            ),
+          );
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -58,6 +66,10 @@ class _CategoryPrioritySettingsScreenState
       await ref.read(companyServiceProvider).clearCategoryPriorityOverride(
             companyId: company.id,
             categoryId: categoryId,
+          );
+      final updatedOverride = {...company.categoryPriorityOverride}..remove(categoryId);
+      ref.read(sessionProvider.notifier).updateCompany(
+            company.copyWith(categoryPriorityOverride: updatedOverride),
           );
     } catch (_) {
       if (mounted) {

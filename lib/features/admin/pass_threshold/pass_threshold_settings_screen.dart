@@ -67,6 +67,14 @@ class _PassThresholdSettingsScreenState
             moduleId: moduleId,
             threshold: value,
           );
+      ref.read(sessionProvider.notifier).updateCompany(
+            company.copyWith(
+              customPassThreshold: {
+                ...company.customPassThreshold,
+                moduleId: value,
+              },
+            ),
+          );
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('合格ラインを更新しました')),

@@ -30,6 +30,14 @@ class SessionNotifier extends StateNotifier<SessionState> {
   void signOut() {
     state = const SessionState();
   }
+
+  /// 管理者設定画面などでCompanyServiceによりFirestoreへ部分更新をかけた直後、
+  /// セッション上のcompanyスナップショットにも同じ変更を反映する。
+  /// これを呼ばないと、次にwatchCompanyで再取得する(=サインアウト/インするまで)
+  /// 画面上の表示が保存前の値のまま残ってしまう。
+  void updateCompany(Company company) {
+    state = state.copyWith(company: company);
+  }
 }
 
 final sessionProvider =

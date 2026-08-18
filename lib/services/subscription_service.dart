@@ -49,6 +49,8 @@ class SubscriptionService {
     if (!doc.exists) return null;
     final subscription = Subscription.fromMap(doc.id, doc.data()!);
     if (subscription.status != SubscriptionStatus.active) return null;
+    final expiresAt = subscription.expiresAt;
+    if (expiresAt != null && !expiresAt.isAfter(DateTime.now())) return null;
     return subscription;
   }
 

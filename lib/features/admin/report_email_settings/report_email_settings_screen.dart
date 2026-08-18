@@ -41,6 +41,9 @@ class _ReportEmailSettingsScreenState
             companyId: company.id,
             contactEmail: email,
           );
+      ref.read(sessionProvider.notifier).updateCompany(
+            company.copyWith(contactEmail: email),
+          );
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('送付先メールアドレスを更新しました')),
