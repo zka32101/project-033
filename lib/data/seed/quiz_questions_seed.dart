@@ -1,6 +1,6 @@
 import '../models/quiz_question_model.dart';
 
-/// クイズ問題種データ。全18モジュールで各6問(選択肢4つ・正解1つ)。
+/// クイズ問題種データ。全24モジュールで各6問(選択肢4つ・正解1つ)。
 const Map<String, List<QuizQuestion>> seedQuizQuestionsByModule = {
   'm_ethics_sns': [
     QuizQuestion(
@@ -1440,6 +1440,498 @@ const Map<String, List<QuizQuestion>> seedQuizQuestionsByModule = {
       ],
       correctIndex: 0,
       explanation: '人手では気づきにくい傾向やパターンを発見できる点が、業務データ活用の大きな利点と説明されています。',
+    ),
+  ],
+
+  // ①情報モラル(追加)
+  'm_ethics_remote': [
+    QuizQuestion(
+      id: 'q_ethics_remote_1',
+      moduleId: 'm_ethics_remote',
+      question: 'オンライン会議での映り込み対策として本文で紹介されているものはどれですか。',
+      choices: [
+        'カメラをできるだけ広角にする',
+        '機密資料が映らない場所・角度を選び、必要ならバーチャル背景を使う',
+        '背景はいつも自宅のリビングにする',
+        '会議中はカメラを常にオフにする',
+      ],
+      correctIndex: 1,
+      explanation: '機密資料が映らない場所・角度を選び、必要に応じてバーチャル背景を使うことが紹介されています。',
+    ),
+    QuizQuestion(
+      id: 'q_ethics_remote_2',
+      moduleId: 'm_ethics_remote',
+      question: '画面共有をする前にしておくべきこととして本文で紹介されているものはどれですか。',
+      choices: [
+        '関係のないウィンドウやチャット通知を閉じておく',
+        'すべてのアプリを一度起動しておく',
+        '共有前に必ず録画を開始する',
+        '参加者を増やしておく',
+      ],
+      correctIndex: 0,
+      explanation: '画面共有時に関係のないウィンドウやチャット通知が映らないよう、事前に閉じておくことが紹介されています。',
+    ),
+    QuizQuestion(
+      id: 'q_ethics_remote_3',
+      moduleId: 'm_ethics_remote',
+      question: '会議を録画する際のマナーとして正しいものはどれですか。',
+      choices: [
+        '録画は主催者の判断だけで自由に行ってよい',
+        '開始前に参加者全員へ目的と用途を伝え、同意を得る',
+        '録画したことは伝えない方がスムーズに進む',
+        '録画は常に無編集でそのまま全社に共有する',
+      ],
+      correctIndex: 1,
+      explanation: '会議を録画・録音する際は、開始前に参加者全員へ目的と用途を伝え、同意を得るのがマナーとされています。',
+    ),
+    QuizQuestion(
+      id: 'q_ethics_remote_4',
+      moduleId: 'm_ethics_remote',
+      question: '録画データの扱いとして本文で紹介されているものはどれですか。',
+      choices: [
+        '誰でも見られる共有フォルダに永続保存する',
+        '会議関係者以外がアクセスできない場所に保存し、不要になれば削除する',
+        '個人のパソコンにだけ保存すればよい',
+        '録画データは削除せず全て残しておく',
+      ],
+      correctIndex: 1,
+      explanation: '録画データは会議関係者以外がアクセスできない場所に保存し、不要になれば削除することが紹介されています。',
+    ),
+    QuizQuestion(
+      id: 'q_ethics_remote_5',
+      moduleId: 'm_ethics_remote',
+      question: '社外秘の話題がある会議に参加する場所として適切なのはどれですか。',
+      choices: [
+        '人通りの多いカフェ',
+        '新幹線などの車内',
+        '個室や自宅など人の目・耳を気にせず済む環境',
+        'どこでも内容が漏れることはないので気にしなくてよい',
+      ],
+      correctIndex: 2,
+      explanation: '社外秘の話題がある会議は、個室や自宅など人の目・耳を気にせずに済む環境で参加すべきとされています。',
+    ),
+    QuizQuestion(
+      id: 'q_ethics_remote_6',
+      moduleId: 'm_ethics_remote',
+      question: 'リモートワーク中に離席する際に忘れてはいけないことは何ですか。',
+      choices: [
+        '画面ロックをする',
+        'パソコンの電源を完全に切る',
+        '会議アプリをアンインストールする',
+        '特に何もしなくてよい',
+      ],
+      correctIndex: 0,
+      explanation: '離席時は画面ロックを忘れず行うことが基本として紹介されています。',
+    ),
+  ],
+
+  // ②セキュリティ(追加)
+  'm_security_ransomware': [
+    QuizQuestion(
+      id: 'q_security_ransomware_1',
+      moduleId: 'm_security_ransomware',
+      question: 'ランサムウェアの説明として正しいものはどれですか。',
+      choices: [
+        'ファイルを暗号化し、元に戻す代わりに身代金を要求するマルウェア',
+        'パソコンの動作を高速化するソフト',
+        '自動でパスワードを生成するツール',
+        'メールの誤送信を防ぐアプリ',
+      ],
+      correctIndex: 0,
+      explanation: 'ランサムウェアは、ファイルを暗号化して使えなくし、元に戻す代わりに身代金を要求するマルウェアです。',
+    ),
+    QuizQuestion(
+      id: 'q_security_ransomware_2',
+      moduleId: 'm_security_ransomware',
+      question: 'ランサムウェアの感染経路として本文で紹介されているものはどれですか。',
+      choices: [
+        '不審なメールの添付ファイルを開く、偽サイトからソフトをダウンロードする',
+        '会社の固定電話を使う',
+        '紙の書類をコピーする',
+        '社内の対面会議に参加する',
+      ],
+      correctIndex: 0,
+      explanation: '不審なメールの添付ファイルを開く、偽サイトからソフトをダウンロードするといった経路が紹介されています。',
+    ),
+    QuizQuestion(
+      id: 'q_security_ransomware_3',
+      moduleId: 'm_security_ransomware',
+      question: 'バックアップの基本的な考え方として本文で紹介されているものはどれですか。',
+      choices: [
+        'すべて1つの媒体にまとめて保存する',
+        'データを2種類以上の媒体に保存し、うち1つはネットワークから切り離して保管する',
+        'バックアップは月に一度だけで十分',
+        'バックアップは不要である',
+      ],
+      correctIndex: 1,
+      explanation: 'データを2種類以上の媒体に保存し、うち1つは社内ネットワークから切り離した場所に保管することが基本とされています。',
+    ),
+    QuizQuestion(
+      id: 'q_security_ransomware_4',
+      moduleId: 'm_security_ransomware',
+      question: 'ネットワークにつながったままのバックアップのリスクとして本文で説明されているものはどれですか。',
+      choices: [
+        'それ自体も暗号化される危険がある',
+        '容量が自動的に減っていく',
+        'バックアップ速度が遅くなるだけ',
+        '特にリスクはない',
+      ],
+      correctIndex: 0,
+      explanation: 'ネットワークにつながったままのバックアップは、それ自体も暗号化される危険があると説明されています。',
+    ),
+    QuizQuestion(
+      id: 'q_security_ransomware_5',
+      moduleId: 'm_security_ransomware',
+      question: '感染が疑われるパソコンを見つけた際の初動対応として正しいものはどれですか。',
+      choices: [
+        'そのまま使い続けて様子を見る',
+        '直ちにネットワークから切り離し、情報システム部門や管理者へ報告する',
+        '自分でファイルの復元を試みる',
+        '同僚に他言しないよう頼む',
+      ],
+      correctIndex: 1,
+      explanation: '被害拡大を防ぐため直ちにネットワークから切り離し、速やかに情報システム部門や管理者へ報告することが紹介されています。',
+    ),
+    QuizQuestion(
+      id: 'q_security_ransomware_6',
+      moduleId: 'm_security_ransomware',
+      question: '身代金の支払いについて本文で説明されている考え方はどれですか。',
+      choices: [
+        '支払えば確実に復旧できる',
+        '復旧する保証はなく、自己判断で支払わないことが原則',
+        '支払いは会社の義務である',
+        '支払いは犯罪ではない'
+      ],
+      correctIndex: 1,
+      explanation: '身代金を支払っても復旧する保証はなく、犯罪者への資金提供にもなるため、自己判断で支払わないことが原則とされています。',
+    ),
+  ],
+
+  // ③個人情報保護(追加)
+  'm_privacy_mynumber': [
+    QuizQuestion(
+      id: 'q_privacy_mynumber_1',
+      moduleId: 'm_privacy_mynumber',
+      question: 'マイナンバーの法律上の位置づけとして正しいものはどれですか。',
+      choices: [
+        '通常の個人情報と同じ扱いでよい',
+        '「特定個人情報」として通常の個人情報よりも厳しい規制がある',
+        '会社が自由に利用目的を決めてよい',
+        '公開情報として扱われる',
+      ],
+      correctIndex: 1,
+      explanation: 'マイナンバーは「特定個人情報」として、通常の個人情報よりも厳しい法律上の規制が定められています。',
+    ),
+    QuizQuestion(
+      id: 'q_privacy_mynumber_2',
+      moduleId: 'm_privacy_mynumber',
+      question: 'マイナンバーを利用してよい場面として正しいものはどれですか。',
+      choices: [
+        '税務・社会保険など法律で定められた目的の手続き',
+        '社内の懇親会の参加者名簿作成',
+        '取引先へのダイレクトメール送付',
+        '社員の福利厚生ポイント管理',
+      ],
+      correctIndex: 0,
+      explanation: '税務・社会保険の手続きなど法律で定められた目的以外には利用できないとされています。',
+    ),
+    QuizQuestion(
+      id: 'q_privacy_mynumber_3',
+      moduleId: 'm_privacy_mynumber',
+      question: '従業員からマイナンバーを収集する際に明示すべきこととして本文で紹介されているものはどれですか。',
+      choices: [
+        '利用目的',
+        '本人の趣味',
+        '家族構成',
+        '過去の勤務先'
+      ],
+      correctIndex: 0,
+      explanation: '収集する際は、利用目的を明示したうえで必要な範囲だけを取得することが紹介されています。',
+    ),
+    QuizQuestion(
+      id: 'q_privacy_mynumber_4',
+      moduleId: 'm_privacy_mynumber',
+      question: 'マイナンバーが記載された書類の保管方法として適切なものはどれですか。',
+      choices: [
+        '誰でも開けられる棚にまとめて置く',
+        '鍵のかかるキャビネットに保管し、担当者以外が閲覧できないようにする',
+        'デスクの上に常時置いておく',
+        '共有フォルダに誰でもアクセスできる形で保存する',
+      ],
+      correctIndex: 1,
+      explanation: '保管する書類は鍵のかかるキャビネットに保管し、担当者以外が閲覧できない状態を維持することが基本です。',
+    ),
+    QuizQuestion(
+      id: 'q_privacy_mynumber_5',
+      moduleId: 'm_privacy_mynumber',
+      question: 'マイナンバーが不要になった場合の対応として正しいものはどれですか。',
+      choices: [
+        '念のためそのまま保管し続ける',
+        '法律で定められた保管期間の経過後、速やかに廃棄する',
+        '担当者の判断で永久保存する',
+        '他の書類と一緒にまとめて保存し続ける',
+      ],
+      correctIndex: 1,
+      explanation: '法律で定められた保管期間の経過後、速やかに廃棄しなければならないとされています。',
+    ),
+    QuizQuestion(
+      id: 'q_privacy_mynumber_6',
+      moduleId: 'm_privacy_mynumber',
+      question: 'マイナンバーが記載された紙の書類を廃棄する適切な方法はどれですか。',
+      choices: [
+        'そのまま燃えるゴミに出す',
+        'シュレッダーで裁断する',
+        '裏紙としてメモ用に再利用する',
+        '机の引き出しに入れておく',
+      ],
+      correctIndex: 1,
+      explanation: '紙の書類はシュレッダーで裁断し、電子データは復元できない方法で消去することが紹介されています。',
+    ),
+  ],
+
+  // ④情報マネジメント(追加)
+  'm_infomgmt_byod': [
+    QuizQuestion(
+      id: 'q_infomgmt_byod_1',
+      moduleId: 'm_infomgmt_byod',
+      question: 'BYODの説明として正しいものはどれですか。',
+      choices: [
+        '会社支給のパソコンだけを使う制度',
+        '私物のスマートフォンやパソコンを業務に利用すること',
+        '複数人で1台の端末を共有すること',
+        '社外への端末持ち出しを一切禁止する制度',
+      ],
+      correctIndex: 1,
+      explanation: 'BYOD(Bring Your Own Device)とは、私物のスマートフォンやパソコンを業務に利用することです。',
+    ),
+    QuizQuestion(
+      id: 'q_infomgmt_byod_2',
+      moduleId: 'm_infomgmt_byod',
+      question: '私物端末を業務利用する際のリスクとして本文で説明されているものはどれですか。',
+      choices: [
+        '会社の管理が及びにくく、紛失・盗難時の情報漏えいリスクが高まる',
+        '通信費が必ず会社負担になる',
+        '端末の動作が必ず遅くなる',
+        '特にリスクは存在しない',
+      ],
+      correctIndex: 0,
+      explanation: '私物端末は会社の管理が及びにくく、紛失・盗難時の情報漏えいやウイルス感染のリスクが高まるとされています。',
+    ),
+    QuizQuestion(
+      id: 'q_infomgmt_byod_3',
+      moduleId: 'm_infomgmt_byod',
+      question: '私物端末利用時にしてはいけないこととして本文で紹介されているものはどれですか。',
+      choices: [
+        '会社のファイルを個人用クラウドストレージに保存すること',
+        'OSやアプリを最新の状態に保つこと',
+        '画面ロックを設定すること',
+        '公衆Wi-Fiでの業務データのやり取りを避けること',
+      ],
+      correctIndex: 0,
+      explanation: '会社のファイルを私物端末の個人用クラウドストレージに保存したり、個人メールに転送したりしてはいけません。',
+    ),
+    QuizQuestion(
+      id: 'q_infomgmt_byod_4',
+      moduleId: 'm_infomgmt_byod',
+      question: '私物端末で必ず設定すべきこととして本文で紹介されているものはどれですか。',
+      choices: [
+        '画面ロック(パスコードや生体認証)',
+        '壁紙のカスタマイズ',
+        'アプリの自動更新を無効にすること',
+        '常時位置情報を公開すること',
+      ],
+      correctIndex: 0,
+      explanation: '画面ロック(パスコードや生体認証)を必ず設定することが紹介されています。',
+    ),
+    QuizQuestion(
+      id: 'q_infomgmt_byod_5',
+      moduleId: 'm_infomgmt_byod',
+      question: '退職時・機種変更時に私物端末に対して行うべきことはどれですか。',
+      choices: [
+        '会社のデータやアプリを確実に削除する',
+        '特に何もしなくてよい',
+        '端末を売却してから報告する',
+        '会社のデータをそのまま個人利用として使い続ける',
+      ],
+      correctIndex: 0,
+      explanation: '退職時や機種変更時には、会社のデータやアプリを確実に削除する必要があるとされています。',
+    ),
+    QuizQuestion(
+      id: 'q_infomgmt_byod_6',
+      moduleId: 'm_infomgmt_byod',
+      question: '会社がMDM(モバイル端末管理)ツールを導入している場合、従業員が協力すべきことはどれですか。',
+      choices: [
+        'リモートでのデータ消去に協力する',
+        'MDMアプリを削除する',
+        '会社に無断で設定を変更する',
+        '特に対応する必要はない',
+      ],
+      correctIndex: 0,
+      explanation: '会社がMDMツールを導入している場合は、リモートでのデータ消去に協力することが求められます。',
+    ),
+  ],
+
+  // ⑤コンプライアンス(追加)
+  'm_compliance_insider': [
+    QuizQuestion(
+      id: 'q_compliance_insider_1',
+      moduleId: 'm_compliance_insider',
+      question: 'インサイダー取引の説明として正しいものはどれですか。',
+      choices: [
+        '公表前の重要な会社情報をもとに関連会社の株式を売買すること',
+        '公表済みの決算情報をもとに株式投資を行うこと',
+        '会社の許可を得て株式投資セミナーに参加すること',
+        '証券会社に相談しながら投資すること',
+      ],
+      correctIndex: 0,
+      explanation: '公表前の重要な会社情報(未公開情報)をもとに関連会社の株式を売買することはインサイダー取引として禁止されています。',
+    ),
+    QuizQuestion(
+      id: 'q_compliance_insider_2',
+      moduleId: 'm_compliance_insider',
+      question: 'インサイダー取引で処罰の対象となりうるのは誰ですか。',
+      choices: [
+        '情報を知った本人のみ',
+        '本人だけでなく、情報を伝えて家族や知人に取引させた場合も対象',
+        '証券会社の担当者のみ',
+        '会社の代表者のみ',
+      ],
+      correctIndex: 1,
+      explanation: '本人だけでなく、その情報を家族や知人に伝えて取引させることも同様に処罰の対象とされています。',
+    ),
+    QuizQuestion(
+      id: 'q_compliance_insider_3',
+      moduleId: 'm_compliance_insider',
+      question: '利益相反の説明として正しいものはどれですか。',
+      choices: [
+        '会社の利益と自分自身(または家族)の利益がぶつかる状況',
+        '会社の利益が常に最大化される状況',
+        '取引先同士が競合している状況',
+        '株価が変動している状況',
+      ],
+      correctIndex: 0,
+      explanation: '利益相反とは、会社の利益と自分自身(または家族)の利益がぶつかる状況のことです。',
+    ),
+    QuizQuestion(
+      id: 'q_compliance_insider_4',
+      moduleId: 'm_compliance_insider',
+      question: '利益相反の例として本文で紹介されているものはどれですか。',
+      choices: [
+        '自分が経営に関わる会社を取引先として選ぶこと',
+        '取引先を公平な基準で選定すること',
+        '会社の規程に沿って発注すること',
+        '複数の取引先から相見積もりを取ること',
+      ],
+      correctIndex: 0,
+      explanation: '自分が経営に関わる会社を取引先として選んだり、副業先の利益を優先したりする行為が利益相反の例として紹介されています。',
+    ),
+    QuizQuestion(
+      id: 'q_compliance_insider_5',
+      moduleId: 'm_compliance_insider',
+      question: '未公表の重要な会社情報を偶然知ってしまった場合の対応として正しいものはどれですか。',
+      choices: [
+        'その情報が公表されるまで関連する株式の売買を控える',
+        '公表前でも少額なら取引してよい',
+        '家族にだけこっそり伝える',
+        '早めに株式を購入しておく',
+      ],
+      correctIndex: 0,
+      explanation: 'その情報が公表されるまで関連する株式の売買を控えることが紹介されています。',
+    ),
+    QuizQuestion(
+      id: 'q_compliance_insider_6',
+      moduleId: 'm_compliance_insider',
+      question: '取引先との関係で個人的な利害が生じそうな場合にとるべき行動はどれですか。',
+      choices: [
+        '自己判断で進めず、上長やコンプライアンス担当へ事前に相談・申告する',
+        '誰にも言わずに進める',
+        '取引先にだけ事情を説明する',
+        '一旦保留にしたまま放置する',
+      ],
+      correctIndex: 0,
+      explanation: '個人的な利害関係がある取引には関与せず、事前に会社へ申告することが求められるとされています。',
+    ),
+  ],
+
+  // ⑥AI活用(追加)
+  'm_ai_deepfake': [
+    QuizQuestion(
+      id: 'q_ai_deepfake_1',
+      moduleId: 'm_ai_deepfake',
+      question: 'ディープフェイクの説明として正しいものはどれですか。',
+      choices: [
+        'AIによって作られた本物そっくりの偽の画像・音声・動画',
+        '手作業で作成された合成写真の総称',
+        '古い映像を高画質化する技術',
+        '実在しない架空のキャラクターイラスト',
+      ],
+      correctIndex: 0,
+      explanation: 'ディープフェイクとは、AIによって作られた本物そっくりの偽の画像・音声・動画のことです。',
+    ),
+    QuizQuestion(
+      id: 'q_ai_deepfake_2',
+      moduleId: 'm_ai_deepfake',
+      question: 'ディープフェイクの悪用事例として本文で紹介されているものはどれですか。',
+      choices: [
+        '経営者の声を模倣した偽の音声で緊急送金を指示する詐欺',
+        '公式サイトでの新商品発表',
+        '本人が出演する公式のCM映像',
+        '社内報でのインタビュー記事',
+      ],
+      correctIndex: 0,
+      explanation: '経営者の声を模倣した偽の音声で緊急送金を指示する詐欺被害が報告されていると紹介されています。',
+    ),
+    QuizQuestion(
+      id: 'q_ai_deepfake_3',
+      moduleId: 'm_ai_deepfake',
+      question: 'AI生成音声・動画を見抜くポイントとして本文で紹介されているものはどれですか。',
+      choices: [
+        '不自然な瞬きの少なさや、口の動きと音声のわずかなズレ',
+        '画質が必ず低いこと',
+        '必ずモノクロで再生されること',
+        '音声が全く聞こえないこと',
+      ],
+      correctIndex: 0,
+      explanation: '不自然な瞬きの少なさ・口の動きと音声のわずかなズレなどの違和感が残ることがあると紹介されています。',
+    ),
+    QuizQuestion(
+      id: 'q_ai_deepfake_4',
+      moduleId: 'm_ai_deepfake',
+      question: '警戒すべき手口として本文で紹介されているものはどれですか。',
+      choices: [
+        '「今すぐ」「他言無用」など、確認する時間を与えず急がせる手口',
+        'じっくり検討する時間を十分に与える手口',
+        '複数人での確認を促す手口',
+        '公式な書面での通知'
+      ],
+      correctIndex: 0,
+      explanation: '「今すぐ」「他言無用」など、冷静に確認する時間を与えず急がせる手口には特に警戒すべきとされています。',
+    ),
+    QuizQuestion(
+      id: 'q_ai_deepfake_5',
+      moduleId: 'm_ai_deepfake',
+      question: '経営者や上司からの緊急指示に見える連絡を受けた場合の対応として正しいものはどれですか。',
+      choices: [
+        '内容だけで即断せず、別の連絡手段で本人に事実確認を取る',
+        '指示された内容をすぐに実行する',
+        '確認せずに周囲にだけ報告する',
+        'とりあえず無視する',
+      ],
+      correctIndex: 0,
+      explanation: '普段使っている別の連絡手段で本人に事実確認を取ることが紹介されています。',
+    ),
+    QuizQuestion(
+      id: 'q_ai_deepfake_6',
+      moduleId: 'm_ai_deepfake',
+      question: '本人確認が取れるまでの間、どう対応すべきですか。',
+      choices: [
+        '送金や情報開示などの重要な対応は保留する',
+        '念のため一部だけ先に実行する',
+        '確認は不要なのでそのまま進める',
+        '担当者を変更して進める',
+      ],
+      correctIndex: 0,
+      explanation: '確認が取れるまで送金や情報開示などの重要な対応は保留することが被害防止の鍵とされています。',
     ),
   ],
 };
