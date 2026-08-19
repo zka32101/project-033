@@ -1,6 +1,6 @@
 import '../models/lesson_model.dart';
 
-/// レッスン種データ。モジュールごとに4レッスン(導入→具体例→注意点/応用→まとめ・行動指針)。
+/// レッスン種データ。既存45モジュールは各5レッスン、新規9モジュールは各4レッスン(導入→具体例→注意点/応用→まとめ・行動指針)。
 const Map<String, List<Lesson>> seedLessonsByModule = {
   'm_ethics_sns': [
     Lesson(
@@ -49,6 +49,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_ethics_sns_5',
+      moduleId: 'm_ethics_sns',
+      title: '「一度投稿した情報は消えない」というデジタルタトゥーの意識',
+      body:
+          'インターネット上に投稿した内容は、後から削除しても他者にスクリーンショットで保存・拡散されている場合があり、'
+          '完全に消し去ることはできません。これを「デジタルタトゥー」と呼び、将来の自分や会社の信用に影響し得ることを意識して発信することが大切です。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_ethics_harassment': [
     Lesson(
@@ -94,6 +104,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           '会社としての対応方針に従い、上長や相談窓口に共有し、組織として対応することが大切です。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_ethics_harassment_5',
+      moduleId: 'm_ethics_harassment',
+      title: '同僚から相談を受けた際の対応と二次被害の防止',
+      body:
+          '同僚からハラスメントの相談を受けた際は、まず話を最後まで聞き、憶測で判断したり他の人に話を広めたりしないことが重要です。'
+          '相談内容を安易に共有すると二次被害(セカンドハラスメント)につながるため、本人の意向を確認したうえで相談窓口へつなぎましょう。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
   'm_security_basics': [
@@ -141,6 +161,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_security_basics_5',
+      moduleId: 'm_security_basics',
+      title: 'パスキー(生体認証)という新しい選択肢',
+      body:
+          'パスキーは、指紋や顔認証などの生体情報を使い、パスワードを入力せずに安全にログインできる新しい認証方式です。'
+          'パスワードそのものを持たないためフィッシングによる盗用リスクが低く、主要なサービスで導入が進んでいます。利用できるサービスでは積極的に活用を検討しましょう。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_security_phishing': [
     Lesson(
@@ -184,6 +214,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           '心当たりのない連絡を受けたら、公式サイトや正規の電話番号で改めて確認しましょう。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_security_phishing_5',
+      moduleId: 'm_security_phishing',
+      title: 'ビジネスメール詐欺(BEC)による振込先変更の手口',
+      body:
+          '取引先や経営者になりすまし、「振込先口座が変更になった」といった偽の連絡で送金させる詐欺をビジネスメール詐欺(BEC)と呼びます。'
+          'メールの文面が完璧でも油断せず、振込先変更の際は必ず電話など別の手段で本人に確認しましょう。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
   'm_privacy_basics': [
@@ -229,6 +269,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_privacy_basics_5',
+      moduleId: 'm_privacy_basics',
+      title: '要配慮個人情報の取り扱い',
+      body:
+          '人種、信条、病歴、犯罪歴などは「要配慮個人情報」とされ、取得には原則として本人の同意が必要です。'
+          '通常の個人情報より厳格な取得制限が課されており、社内で取り扱う際は特に注意が求められます。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_privacy_customer': [
     Lesson(
@@ -271,6 +321,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           '氏名を名乗られただけで信用せず、生年月日や会員番号など複数の情報で本人確認を行うことが大切です。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_privacy_customer_5',
+      moduleId: 'm_privacy_customer',
+      title: 'Cookie等の個人関連情報の第三者提供',
+      body:
+          'Cookieや閲覧履歴などの「個人関連情報」は、それ自体では個人を特定できなくても、提供先で個人データと照合されることが想定される場合、'
+          '本人同意の確認が必要です。ウェブサイト運営やマーケティング委託の際は取り扱いに注意しましょう。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
   'm_infomgmt_document': [
@@ -317,6 +377,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_infomgmt_document_5',
+      moduleId: 'm_infomgmt_document',
+      title: 'ファイル名とバージョン管理の工夫',
+      body:
+          '同じ資料が複数の版で社内に散らばると、誤って古い情報を使ってしまう恐れがあります。'
+          '日付や版数をファイル名に含める、最新版の保管場所を統一するなど、誰が見てもわかる命名・管理ルールを徹底することが大切です。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_infomgmt_incident': [
     Lesson(
@@ -358,6 +428,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           '対応の過程を記録に残して振り返ることで、次に同様の事態が起きた際の対応スピードと精度を高めることができます。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_infomgmt_incident_5',
+      moduleId: 'm_infomgmt_incident',
+      title: 'インシデントの兆候に早く気づく',
+      body:
+          'インシデントは発生後の対応だけでなく、普段と違う挙動やアラートなど「予兆」に早く気づくことで被害を最小限に抑えられます。'
+          '少しの違和感でも自己判断せず、決められた窓口にすぐ相談する姿勢が被害拡大の防止につながります。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
   'm_compliance_basics': [
@@ -401,6 +481,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_compliance_basics_5',
+      moduleId: 'm_compliance_basics',
+      title: 'グレーゾーンの見極めと早めの相談',
+      body:
+          '業務の中には、違反とまでは言い切れない「グレーゾーン」の判断に迷う場面があります。'
+          '判断に迷ったときは自己判断で進めず、上司やコンプライアンス担当部署に早めに相談することが重要です。小さな迷いを放置すると、結果的に大きな違反につながる可能性があります。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_compliance_labor': [
     Lesson(
@@ -442,6 +532,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           '契約形態と実際の業務の進め方に矛盾がないか、日頃から確認することが大切です。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_compliance_labor_5',
+      moduleId: 'm_compliance_labor',
+      title: '職場のハラスメント防止',
+      body:
+          '労務コンプライアンスには、長時間労働の防止だけでなく、パワーハラスメントやセクシュアルハラスメントの防止も含まれます。'
+          '優越的な関係を背景にした言動で、業務上必要な範囲を超えるものはハラスメントに該当し得ます。被害を感じたときは一人で抱え込まず、社内の相談窓口を利用しましょう。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
   'm_ai_basics': [
@@ -485,6 +585,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_ai_basics_5',
+      moduleId: 'm_ai_basics',
+      title: 'AIの回答を業務で使う前のセルフチェック',
+      body:
+          '生成AIの回答は必ずしも正しいとは限らないため、業務に使う前に内容を自分の知識や社内資料と照らし合わせて確認する習慣を持ちましょう。'
+          '特に数値や固有名詞、法令に関する内容は、別の情報源でも裏付けを取ることが大切です。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_ai_ethics': [
     Lesson(
@@ -526,6 +636,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           '業務で使うAIツールは、会社が許可したものを利用することが大切です。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_ai_ethics_5',
+      moduleId: 'm_ai_ethics',
+      title: 'AI生成コンテンツ公開前の利用規約確認',
+      body:
+          '生成AIで作成した文章や画像を社外に公開したり商用利用したりする前には、利用しているAIサービスの利用規約で商用利用の可否やデータの取り扱いを確認しましょう。'
+          '規約を確認せずに公開すると、意図せず契約違反やトラブルにつながる可能性があります。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
   'm_ethics_customer': [
@@ -573,6 +693,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_ethics_customer_5',
+      moduleId: 'm_ethics_customer',
+      title: '口コミ・レビューサイトへの返信で気をつけること',
+      body:
+          '口コミサイトの返信は不特定多数が閲覧するため、一人の顧客への個別対応以上に、言葉遣いや情報の出し方に注意が必要です。'
+          '事実確認前に安易に非を認めたり、個人が特定される情報を書き込んだりしないよう、社内ルールに沿って返信しましょう。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_security_device': [
     Lesson(
@@ -619,6 +749,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_security_device_5',
+      moduleId: 'm_security_device',
+      title: 'デバイスの廃棄・返却時に行うべきデータ消去',
+      body:
+          'パソコンやスマートフォンを廃棄・機種変更・返却する際、ただ削除しただけではデータが復元される可能性があります。'
+          '専用ソフトによる完全消去や情報システム部門への引き渡しなど、正しい手順でデータを消去してから処分・返却しましょう。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_privacy_employee': [
     Lesson(
@@ -661,6 +801,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           '不要になった書類は定めた保管期間の経過後に適切に廃棄します。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_privacy_employee_5',
+      moduleId: 'm_privacy_employee',
+      title: '採用選考における応募者情報の取り扱い',
+      body:
+          '採用選考で取得する応募者の個人情報は、選考の目的以外に利用してはなりません。'
+          '本人の同意なくSNS等から収集した情報を選考に用いることは避け、必要最小限の情報のみを取得することが求められます。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
   'm_infomgmt_access': [
@@ -707,6 +857,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_infomgmt_access_5',
+      moduleId: 'm_infomgmt_access',
+      title: '特権ID(管理者権限)の慎重な管理',
+      body:
+          'システムの管理者権限を持つ特権IDは、悪用されると被害が非常に大きくなるため、利用者を必要最小限に絞り、利用目的や作業内容を記録して管理することが大切です。'
+          '日常業務では一般権限を使い、管理者権限は必要な時だけ使う運用が望まれます。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_compliance_bribery': [
     Lesson(
@@ -748,6 +908,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           '少額であっても問題となる場合があるため、相手が公務員である場合は必ず事前に社内ルールを確認してください。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_compliance_bribery_5',
+      moduleId: 'm_compliance_bribery',
+      title: '海外取引における贈収賄規制',
+      body:
+          '海外の公務員に対する贈賄行為は、不正競争防止法により禁止されており、日本国内だけでなく国外で行った行為も処罰の対象となります。'
+          '海外の商慣習だからと安易に金品を渡すことは許されません。海外拠点や現地代理店を通じた取引でも、社内ルールに従った確認が必要です。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
   'm_ai_data': [
@@ -791,6 +961,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           '人が公平性の観点から確認することが重要です。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_ai_data_5',
+      moduleId: 'm_ai_data',
+      title: '分析に使うデータの品質管理',
+      body:
+          'AIによるデータ分析の精度は、入力するデータの品質に大きく左右されます。'
+          '誤った数値や古い情報、欠損の多いデータをそのまま使うと、分析結果自体が不正確になるため、分析前にデータの整合性や最新性を確認することが大切です。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
 
@@ -840,6 +1020,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_ethics_remote_5',
+      moduleId: 'm_ethics_remote',
+      title: '画面共有時に社外秘情報を映さないための注意',
+      body:
+          'オンライン会議で画面共有をする際は、共有前に不要なアプリやファイルを閉じ、通知ポップアップをオフにしておきます。'
+          '共有する範囲を画面全体ではなく該当ウィンドウのみに限定することで、社外秘情報や個人情報の意図しない漏えいを防げます。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
 
   // ②セキュリティ(追加)
@@ -888,6 +1078,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_security_ransomware_5',
+      moduleId: 'm_security_ransomware',
+      title: '侵入口となりやすいVPN・リモートデスクトップの管理',
+      body:
+          '近年のランサムウェア感染は、社外から社内システムへ接続するVPN機器やリモートデスクトップ(RDP)の脆弱な設定を突かれるケースが増えています。'
+          '不要な外部公開の停止、機器のパスワード変更、最新状態への更新を徹底し、侵入口を減らしましょう。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
 
   // ③個人情報保護(追加)
@@ -934,6 +1134,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           'マイナンバーカードがあれば1枚で両方を確認でき、ない場合は通知カードと運転免許証など複数書類の組み合わせで確認します。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_privacy_mynumber_5',
+      moduleId: 'm_privacy_mynumber',
+      title: 'マイナンバーの利用範囲の制限',
+      body:
+          'マイナンバーは社会保障、税、災害対策に関する法定の手続きにのみ利用が認められており、社員番号や会員番号など他の目的に流用することはできません。'
+          '利用範囲を超えた取り扱いは法律違反となるため注意が必要です。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
 
@@ -983,6 +1193,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_infomgmt_byod_5',
+      moduleId: 'm_infomgmt_byod',
+      title: '私物端末を紛失・盗難にあった時の対応',
+      body:
+          '業務利用している私物端末を紛失・盗難にあった場合は、個人の判断で様子を見るのではなく、すぐに会社の窓口へ報告することが重要です。'
+          '遠隔ロックやデータ消去などの対応が遅れるほど、情報漏えいのリスクが高まります。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
 
   // ⑤コンプライアンス(追加)
@@ -1029,6 +1249,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           '家族や友人への何気ない会話がインサイダー取引や情報漏えいにつながるおそれがあるため、情報管理には常に注意が必要です。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_compliance_insider_5',
+      moduleId: 'm_compliance_insider',
+      title: '情報伝達行為・取引推奨行為の禁止',
+      body:
+          'インサイダー取引規制は、自ら売買する場合だけでなく、未公表の重要事実を家族や友人に伝えて取引を勧める「情報伝達行為・取引推奨行為」も規制対象です。'
+          '伝えた本人が売買していなくても法律違反となる場合があります。重要な情報は業務上必要な範囲を超えて話さないよう注意しましょう。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
 
@@ -1077,6 +1307,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_ai_deepfake_5',
+      moduleId: 'm_ai_deepfake',
+      title: 'なりすまし詐欺への警戒',
+      body:
+          '近年、AIで生成した音声や映像を使い、経営者や取引先になりすまして送金や情報提供を指示する詐欺が発生しています。'
+          '電話やビデオ通話であっても、金銭や機密情報に関わる指示は、別の連絡手段で本人に直接確認する習慣を持ちましょう。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
 
   // ①情報モラル(5つ目)
@@ -1122,6 +1362,54 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           '他社の文章を紹介する際は、出典を明記し、自分の文章が主で引用部分が従となる関係を保つことが著作権法上の「引用」の条件です。'
           '出典を書かずに他サイトの文章を丸ごと掲載すると、引用ではなく無断転載とみなされます。'
           '著作権・肖像権は「知らなかった」では済まされないため、迷ったら使用前に確認する習慣を持ちましょう。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_ethics_copyright_5',
+      moduleId: 'm_ethics_copyright',
+      title: '生成AIで作成した画像・文章を利用する際の注意点',
+      body:
+          '生成AIが作り出した画像や文章は、既存の著作物と類似してしまう場合があり、そのまま業務で使用すると権利侵害のリスクがあります。'
+          '利用前に社内ガイドラインや利用規約を確認し、既存作品との類似性がないか確認したうえで活用しましょう。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
+  ],
+  'm_ethics_official_sns': [
+    Lesson(
+      id: 'l_ethics_official_sns_1',
+      moduleId: 'm_ethics_official_sns',
+      title: '投稿前の複数人チェック体制',
+      body:
+          '企業公式アカウントの投稿は、担当者一人の判断だけで公開せず、必ず複数人で内容を確認します。誤字脱字だけでなく、誤解を招く表現や事実誤認がないかを客観的な視点でチェックすることが、炎上を未然に防ぐ第一歩です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ethics_official_sns_2',
+      moduleId: 'm_ethics_official_sns',
+      title: '炎上時の初期対応の判断',
+      body:
+          '投稿が批判を集めた場合は、まず事実関係を落ち着いて確認し、削除・訂正・謝罪のどれが適切かを判断します。安易な即時削除はかえって不信感を招くことがあるため、社内の対応フローに沿って上長や広報部門と連携して対応しましょう。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ethics_official_sns_3',
+      moduleId: 'm_ethics_official_sns',
+      title: '避けるべき話題への配慮',
+      body:
+          '公式アカウントは会社の見解として受け取られるため、他社への批判や比較、政治・宗教などの意見が分かれる話題への言及は控えます。個人の感想であっても、企業の立場を代表する発信として誤解される点に注意が必要です。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ethics_official_sns_4',
+      moduleId: 'm_ethics_official_sns',
+      title: 'コメント対応と担当者引き継ぎ',
+      body:
+          'コメント欄やDMへの返信は、社内で定めた対応ガイドラインに沿って行い、個人の判断で断定的な回答をしないようにします。担当者が交代する際は、過去の対応方針やトラブル事例を必ず引き継ぎ、対応の一貫性を保つことが大切です。',
       imageUrls: [],
       sortOrder: 4,
     ),
@@ -1172,6 +1460,54 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_security_patch_5',
+      moduleId: 'm_security_patch',
+      title: 'ルーターなどネットワーク機器の更新も忘れずに',
+      body:
+          'パソコンやスマートフォンだけでなく、ルーターや複合機、防犯カメラなどのネットワーク機器にも脆弱性が見つかり、ファームウェアの更新が必要になることがあります。'
+          '管理画面から更新状況を定期的に確認し、自社にある機器全体を更新対象として把握しておきましょう。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
+  ],
+  'm_security_cloud': [
+    Lesson(
+      id: 'l_security_cloud_1',
+      moduleId: 'm_security_cloud',
+      title: 'クラウド利用における責任共有モデル',
+      body:
+          'クラウドサービスでは、サーバーなど基盤部分の安全対策はサービス提供者が担い、データやアクセス権限の設定は利用者自身の責任となります。これを責任共有モデルと呼びます。「クラウドだから安全」と考えず、自社が担うべき範囲を理解しておきましょう。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_security_cloud_2',
+      moduleId: 'm_security_cloud',
+      title: '共有リンクの設定ミスによる情報漏えい',
+      body:
+          'クラウドストレージのファイルを共有する際、「リンクを知っている全員が閲覧可能」など公開範囲の設定を誤ると、社外の誰でも機密情報を閲覧できる状態になります。共有前に公開範囲や有効期限を必ず確認する習慣をつけましょう。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_security_cloud_3',
+      moduleId: 'm_security_cloud',
+      title: '退職者・異動者のクラウドアカウント整理',
+      body:
+          '業務で使うクラウドサービスは、退職や異動があっても解約・権限変更を忘れると、元社員が社外からデータへアクセスできる状態が残ってしまいます。人事異動の際は情報システム部門と連携し、SaaSごとの権限を速やかに見直しましょう。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_security_cloud_4',
+      moduleId: 'm_security_cloud',
+      title: 'MFA・シングルサインオンの活用とシャドーITへの注意',
+      body:
+          'クラウドサービスには多要素認証やシングルサインオン(SSO)を導入し、不正ログインのリスクを減らすことが重要です。また、会社の許可を得ずに従業員が無料クラウドサービスを業務で使う「シャドーIT」は、管理外の場所に情報が置かれ、漏えいの温床になります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
   ],
 
   // ③個人情報保護(5つ目)
@@ -1217,6 +1553,54 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_privacy_outsourcing_5',
+      moduleId: 'm_privacy_outsourcing',
+      title: '委託先に対する監督義務',
+      body:
+          '個人データの取り扱いを委託する場合、委託元には委託先に対する必要かつ適切な監督を行う義務があります。'
+          '契約締結後も、委託先での取り扱い状況を定期的に確認し、問題があれば是正を求めることが求められます。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
+  ],
+  'm_privacy_crossborder': [
+    Lesson(
+      id: 'l_privacy_crossborder_1',
+      moduleId: 'm_privacy_crossborder',
+      title: '越境移転の基本原則',
+      body:
+          '個人情報保護法では、個人データを外国にある第三者へ提供する場合、原則としてあらかじめ本人の同意を得る必要があります。国内での第三者提供とは異なる特有のルールが定められており、同意なく提供すると法違反となるため注意が必要です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_privacy_crossborder_2',
+      moduleId: 'm_privacy_crossborder',
+      title: '越境移転に該当するケース',
+      body:
+          '海外グループ会社への人事データ共有、海外の業務委託先へのデータ送付、海外に所在するクラウドサーバーへの保存も、内容によっては「越境移転」に該当します。データがどこに保存され、誰がアクセスできるかを社内で正確に把握することが重要です。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_privacy_crossborder_3',
+      moduleId: 'm_privacy_crossborder',
+      title: '同意取得時に説明すべき事項',
+      body:
+          '本人同意を得る際は、移転先の国名、その国の個人情報保護制度に関する情報、提供先が講じる保護措置などをあらかじめ本人に提供する必要があります。国名を特定できない場合は、その旨と理由も説明しなければなりません。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_privacy_crossborder_4',
+      moduleId: 'm_privacy_crossborder',
+      title: '同意によらない代替手段',
+      body:
+          '本人同意を得ない場合でも、個人情報保護委員会が定める基準に適合する体制を提供先と整備していれば提供できます。契約締結やグループ内規程(BCR)の整備が代表例で、同等水準と認められた国への提供など一定の例外もあります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
   ],
 
   // ④情報マネジメント(5つ目)
@@ -1259,6 +1643,54 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       body:
           '不要になった機密文書をそのままゴミ箱に捨てると、外部からの覗き見や持ち去りにより情報が漏えいする可能性があります。'
           'オフィスに設置されたシュレッダーや施錠式の機密文書回収ボックスを利用し、専門業者による溶解処理などの確実な廃棄ルートを使うことが重要です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_infomgmt_office_5',
+      moduleId: 'm_infomgmt_office',
+      title: '郵送物発送時の宛先確認',
+      body:
+          '個人情報や契約書類などを郵送する際は、宛先や同封物の入れ間違いがないか、発送前にダブルチェックすることが欠かせません。'
+          '宛名ラベルの貼り間違いや複数人分の書類を一つの封筒にまとめて入れてしまうミスは、重大な情報漏えいにつながります。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
+  ],
+  'm_infomgmt_changelog': [
+    Lesson(
+      id: 'l_infomgmt_changelog_1',
+      moduleId: 'm_infomgmt_changelog',
+      title: 'システム変更管理の必要性',
+      body:
+          '本番システムの設定を担当者の判断だけで場当たり的に変更すると、想定外の障害やサービス停止を招く恐れがあります。小さな変更のつもりが、他システムとの連携不具合や情報漏えいにつながることもあるため、変更には手順を踏むことが重要です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_infomgmt_changelog_2',
+      moduleId: 'm_infomgmt_changelog',
+      title: '影響確認と承認プロセス',
+      body:
+          'システムを変更する前には、影響範囲や関連システムへの波及を確認し、担当者以外の目でリスクを点検してもらうことが必要です。事前に承認を得てから変更を実施することで、独断による誤操作やトラブルを未然に防ぐことができます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_infomgmt_changelog_3',
+      moduleId: 'm_infomgmt_changelog',
+      title: '変更履歴を記録する重要性',
+      body:
+          '誰が・いつ・何を・なぜ変更したかを記録に残しておくと、不具合発生時の原因調査や、変更内容の妥当性を後から確認する際に役立ちます。記録がないと、トラブル対応が遅れたり、責任の所在があいまいになったりする恐れがあります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_infomgmt_changelog_4',
+      moduleId: 'm_infomgmt_changelog',
+      title: 'ログ管理の基本と改ざん防止',
+      body:
+          'システムの操作履歴(ログ)は一定期間保存し、不正アクセスや情報漏えいが疑われた際の調査に備えます。ログ自体もアクセス権限を限定し、不正な閲覧や改ざんができないよう管理することが、証跡としての信頼性を守るために欠かせません。',
       imageUrls: [],
       sortOrder: 4,
     ),
@@ -1308,6 +1740,54 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_compliance_antisocial_5',
+      moduleId: 'm_compliance_antisocial',
+      title: '契約書への反社条項の導入',
+      body:
+          '契約書に暴力団排除条項(反社条項)を盛り込むことで、取引先が反社会的勢力であると判明した場合に、契約を解除できる根拠を確保できます。'
+          '条項がないと、関係を断ち切りたくても契約上の解除が難しくなることがあります。新規契約時には条項の有無を必ず確認しましょう。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
+  ],
+  'm_compliance_whistleblowing': [
+    Lesson(
+      id: 'l_compliance_whistleblowing_1',
+      moduleId: 'm_compliance_whistleblowing',
+      title: '内部通報制度の目的',
+      body:
+          '内部通報制度とは、社内の不正行為やコンプライアンス違反を、従業員が安心して伝えられる仕組みです。不正を早期に発見し、被害が拡大する前に是正することを目的としています。社内窓口だけでなく、外部の弁護士など第三者が窓口となる場合もあります。日頃から制度の存在と利用方法を知っておくことが大切です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_compliance_whistleblowing_2',
+      moduleId: 'm_compliance_whistleblowing',
+      title: '公益通報者保護法による保護',
+      body:
+          '公益通報者保護法は、一定の要件を満たす通報を行った労働者を保護する法律です。通報したことを理由とする解雇は無効となり、降格や減給などの不利益な取扱いも禁止されています。労働者派遣契約の解除も同様に制限されます。安心して通報できる環境を法律が支えています。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_compliance_whistleblowing_3',
+      moduleId: 'm_compliance_whistleblowing',
+      title: '通報先の選び方',
+      body:
+          '通報先には、社内窓口、行政機関、報道機関などの外部があり、法律上求められる要件はこの順に厳しくなります。まずは社内窓口への通報が基本であり、行政機関や報道機関への通報は、証拠隠滅のおそれや内部通報では改善が見込めない等の事情がある場合に保護の対象となります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_compliance_whistleblowing_4',
+      moduleId: 'm_compliance_whistleblowing',
+      title: '通報者の秘密保持と報復の禁止',
+      body:
+          '通報者の氏名など個人が特定される情報を正当な理由なく漏らすことは禁じられており、担当者には刑事罰が科される場合もあります。通報を理由に嫌がらせや不当な配置転換などの報復を行うことも許されません。通報者を守る意識が制度全体の信頼につながります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
   ],
 
   // ⑥AI活用(5つ目)
@@ -1349,6 +1829,54 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       body:
           '顧客と対応しているのがAIか人かを偽ったり、あいまいにしたりすることは信頼を損ないます。'
           'チャット開始時に「AIが対応しています」と明示し、必要に応じて人による対応へ切り替えられる案内をしておくことが望まれます。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_ai_customer_5',
+      moduleId: 'm_ai_customer',
+      title: 'AIチャットボットの継続的な見直し',
+      body:
+          'AIチャットボットは導入して終わりではなく、実際の問い合わせ内容や誤回答の傾向を定期的に振り返り、回答内容や設定を見直すことが重要です。'
+          '継続的な改善を行うことで、顧客満足度の維持や誤回答リスクの低減につながります。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
+  ],
+  'm_ai_hr': [
+    Lesson(
+      id: 'l_ai_hr_1',
+      moduleId: 'm_ai_hr',
+      title: 'AI採用選考の広がりと基本的な考え方',
+      body:
+          '書類選考や適性検査の分析にAIを活用する企業が増えています。作業時間を短縮できる一方、AIはあくまで判断を補助する道具であり、採用や評価の最終責任は企業と担当者にあることを理解して導入することが大切です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ai_hr_2',
+      moduleId: 'm_ai_hr',
+      title: '過去データの偏りによるバイアスリスク',
+      body:
+          'AIは過去の採用データを学習するため、そのデータに性別や学歴などの偏りが含まれていると、特定の属性の応募者を不利に判定してしまう可能性があります。データの偏りに気づかないまま運用すると、知らぬ間に差別的な選考につながる恐れがあるため注意が必要です。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ai_hr_3',
+      moduleId: 'm_ai_hr',
+      title: '人による最終判断の必要性',
+      body:
+          'AIの判定結果だけを唯一の根拠として合否や評価を決めることは避けるべきです。AIのスコアや分析はあくまで参考情報とし、最終的な合否判断や評価の決定は必ず人が行い、総合的な視点で確認する体制を整えましょう。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ai_hr_4',
+      moduleId: 'm_ai_hr',
+      title: '説明責任と社内外への周知',
+      body:
+          'AIを使った選考や評価では、応募者や従業員から「なぜその評価になったのか」を問われることがあります。判断の根拠を説明できるよう記録を残すとともに、AIを活用している事実を事前に社内外へ周知しておくことが信頼確保につながります。',
       imageUrls: [],
       sortOrder: 4,
     ),
@@ -1399,6 +1927,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_mental_selfcare_5',
+      moduleId: 'm_mental_selfcare',
+      title: '考え方のクセに気づく',
+      body:
+          'ストレスが強い時、物事を悪い方向にばかり考える「認知の歪み」が起きやすくなります。'
+          '自分の思考パターンに気づき、事実と解釈を区別する習慣を持つことで、過度な思い込みによるストレスを和らげることができます。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_mental_linecare': [
     Lesson(
@@ -1441,6 +1979,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           'また、部下を支える上長自身が疲弊しないよう、自分自身のセルフケアや相談も忘れずに行いましょう。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_mental_linecare_5',
+      moduleId: 'm_mental_linecare',
+      title: 'リモートワーク下でのラインケア',
+      body:
+          '在宅勤務では表情や様子が見えにくく、いつもと違うサインに気づきにくくなります。'
+          'チャットの返信の遅れや会議での発言の減少など、オンラインならではの変化に注意し、定期的な1on1やこまめな声かけを意識することが大切です。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
   'm_mental_overwork': [
@@ -1485,6 +2033,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_mental_overwork_5',
+      moduleId: 'm_mental_overwork',
+      title: '勤務間インターバル制度',
+      body:
+          '勤務間インターバル制度とは、終業から翌日の始業までに一定の休息時間を確保する仕組みで、労働時間等設定改善法により企業の努力義務とされています。'
+          '十分な休息時間を確保することで、睡眠不足による健康リスクの蓄積を防ぐことができます。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_mental_return': [
     Lesson(
@@ -1527,6 +2085,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_mental_return_5',
+      moduleId: 'm_mental_return',
+      title: '復職後のフォローアップ',
+      body:
+          '復職はゴールではなく再スタートです。復職後も上司や産業医との定期的なフォローアップ面談を行い、業務負荷や体調の変化を確認することが再発防止につながります。'
+          '無理のない範囲で段階的に業務量を戻していく配慮が大切です。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_mental_psychsafety': [
     Lesson(
@@ -1566,6 +2134,58 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       body:
           '日常的に「良かった点」と「改善点」を率直に伝え合うフィードバック習慣は、信頼関係の土台になります。'
           '評価のタイミングだけでなく、日々の業務の中でこまめに声をかけ合うことで、意見を言いやすい雰囲気が自然と醸成されていきます。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_mental_psychsafety_5',
+      moduleId: 'm_mental_psychsafety',
+      title: '会議で発言しやすい場をつくる',
+      body:
+          '心理的安全性は普段の会議の進め方にも表れます。特定の人ばかりが発言する状態を避け、順番に意見を求めたり、少数意見にも耳を傾けたりするファシリテーションを行うことで、'
+          '多様な意見が出やすい場になります。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
+  ],
+  'm_mental_caregiving': [
+    Lesson(
+      id: 'l_mental_caregiving_1',
+      moduleId: 'm_mental_caregiving',
+      title: '介護休業・介護休暇制度の基本',
+      body:
+          '育児・介護休業法では、対象家族1人につき通算93日まで、3回を上限に分割取得できる介護休業と、年5日(対象家族2人以上は10日)取得できる介護休暇が定められています。'
+          '雇用保険の介護休業給付金など経済的支援もあり、会社は制度を周知し取得しやすい環境を整える必要があります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_mental_caregiving_2',
+      moduleId: 'm_mental_caregiving',
+      title: '一人で抱え込みやすい介護の悩み',
+      body:
+          '介護は先の見通しが立ちにくく、家族内の役割意識から一人で抱え込みやすい特徴があります。'
+          '働き盛りの世代ほど、介護と仕事の両立に悩んでいても職場に相談しづらいと感じがちです。上司や同僚が普段から声をかけやすい雰囲気を作ることが、早期の相談につながります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_mental_caregiving_3',
+      moduleId: 'm_mental_caregiving',
+      title: '外部の相談窓口を知っておく',
+      body:
+          '介護に関する困りごとは、社内の人事・総務窓口だけでなく、市区町村ごとに設置されている地域包括支援センターや、都道府県の介護保険相談窓口でも専門的な助言を受けられます。'
+          '会社としてこうした外部窓口の情報を従業員に周知しておくことが、早期対応の後押しになります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_mental_caregiving_4',
+      moduleId: 'm_mental_caregiving',
+      title: '突発的な休みへの業務体制の調整',
+      body:
+          '介護は急な体調変化や入院対応など、予測できない休みが発生しやすいという特徴があります。'
+          '特定の担当者に業務が集中しないよう、日頃から業務を共有・可視化し、代替対応できる体制を整えておくことで、介護中の従業員も周囲も安心して働けます。',
       imageUrls: [],
       sortOrder: 4,
     ),
@@ -1613,6 +2233,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_bcp_basics_5',
+      moduleId: 'm_bcp_basics',
+      title: 'BCPの実効性を高める見直しと訓練',
+      body:
+          'BCPは策定して終わりではなく、定期的な訓練や見直しを通じて実効性を高めることが重要です。'
+          '社会情勢や事業内容の変化に合わせて内容を更新し、PDCAサイクルで改善を続けることで、実際の危機発生時に計画が機能する状態を保つことができます。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_bcp_disaster': [
     Lesson(
@@ -1654,6 +2284,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           'クラウドサービスや遠隔地の拠点にデータを定期的にバックアップしておくことが有効です。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_bcp_disaster_5',
+      moduleId: 'm_bcp_disaster',
+      title: 'オフィス内の地震対策',
+      body:
+          '地震への備えは防災用品の備蓄だけでなく、オフィス内の安全対策も欠かせません。'
+          '棚やロッカーの転倒防止金具の設置、窓ガラスへの飛散防止フィルムの貼付など、什器や設備による二次被害を防ぐ対策を平時から進めておくことが、従業員の安全確保につながります。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
   'm_bcp_infectious': [
@@ -1697,6 +2337,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_bcp_infectious_5',
+      moduleId: 'm_bcp_infectious',
+      title: '職場の衛生管理ルールの整備',
+      body:
+          '感染症対策では、テレワーク整備に加えて職場における基本的な衛生管理のルール化も重要です。'
+          '手指消毒や換気、体調不良時の早期申告といった基本行動をあらかじめ社内ルールとして定めておくことで、出社を継続する従業員の感染リスクを抑え、事業の継続性を高めることができます。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_bcp_safety_confirm': [
     Lesson(
@@ -1739,6 +2389,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_bcp_safety_confirm_5',
+      moduleId: 'm_bcp_safety_confirm',
+      title: '帰宅困難時の対応ルール',
+      body:
+          '大規模災害時には交通機関の停止により帰宅困難者が発生することがあります。'
+          '従業員の安全確保のため、無理に帰宅させず社内や近隣の一時滞在施設に留まるルールをあらかじめ定め、水や食料等の備蓄と合わせて周知しておくことが、二次被害の防止につながります。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_bcp_supplychain': [
     Lesson(
@@ -1778,6 +2438,58 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       body:
           '自社の重要な取引先や仕入先がBCPを策定しているか、被災時にどの程度の期間で復旧できる見込みかを事前に確認しておくことも有効です。'
           '相互の状況を共有しておくことで、緊急時の連携がスムーズになります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_bcp_supplychain_5',
+      moduleId: 'm_bcp_supplychain',
+      title: 'サプライチェーンの可視化',
+      body:
+          'サプライチェーン寸断への備えとして、どの原材料や部品をどの仕入先に依存しているかを可視化しておくことが重要です。'
+          '取引の全体像を把握できていないと、寸断発生時に影響範囲の特定や代替調達の検討が遅れます。定期的にサプライチェーンマップを整理し更新しておきましょう。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
+  ],
+  'm_bcp_reputation': [
+    Lesson(
+      id: 'l_bcp_reputation_1',
+      moduleId: 'm_bcp_reputation',
+      title: '風評・情報リスクとは何か',
+      body:
+          '地震や水害と異なり、風評被害やSNS炎上は情報そのものが企業の信頼を脅かすリスクです。'
+          '事故や不祥事が発生していなくても、誤った情報や憶測が拡散するだけで売上や採用に深刻な影響を及ぼすことがあります。平時から情報リスクへの備えを事業継続計画に組み込むことが重要です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_bcp_reputation_2',
+      moduleId: 'm_bcp_reputation',
+      title: '初動対応の遅れが被害を拡大させる',
+      body:
+          '炎上や風評被害では、初動対応の遅れそのものが被害を拡大させる最大の要因になります。'
+          '「様子を見る」「反応しない」という判断が、隠蔽や無責任と受け取られ、批判をさらに強めることがあります。異変を察知した時点で速やかに社内で情報共有し、対応を検討する体制が欠かせません。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_bcp_reputation_3',
+      moduleId: 'm_bcp_reputation',
+      title: '断定的な発信を避け、適切なタイミングで説明する',
+      body:
+          '事実関係が確認できていない段階で断定的な発信をすると、後から訂正が必要になり、かえって信頼を損ないます。'
+          'まずは把握している事実と未確認の事項を分けて伝え、調査中であることを誠実に説明しましょう。謝罪や説明は、事実確認が一定程度進んだ適切なタイミングで行うことが大切です。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_bcp_reputation_4',
+      moduleId: 'm_bcp_reputation',
+      title: '窓口の一本化とエスカレーション体制',
+      body:
+          '風評被害やSNS炎上への対応は、担当者ごとにばらばらに発信すると混乱を招きます。'
+          '社外への発信窓口を広報担当者に一本化し、現場で異変を察知したら速やかに経営層へエスカレーションする体制をあらかじめ整えておきましょう。誰が最終判断を行うかを平時から明確にしておくことが重要です。',
       imageUrls: [],
       sortOrder: 4,
     ),
@@ -1825,6 +2537,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_sustainability_sdgs_5',
+      moduleId: 'm_sustainability_sdgs',
+      title: 'SDGsの取り組みを採用活動に活かす',
+      body:
+          '近年は求職者、特に若い世代がSDGsへの姿勢を企業選びの基準に含める傾向があります。'
+          '自社のSDGsへの取り組みを採用サイトや面接で具体的に伝えることは、企業の魅力を高め、人材確保にもつながる有効な手段です。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_sustainability_energy': [
     Lesson(
@@ -1866,6 +2588,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
           '「使わない電気は消す」「ゴミは分別する」といった小さな習慣が、職場全体の環境負荷を大きく減らします。定期的な声かけや目標の共有で、意識を継続させましょう。',
       imageUrls: [],
       sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_sustainability_energy_5',
+      moduleId: 'm_sustainability_energy',
+      title: '省エネ設備投資と補助金の活用',
+      body:
+          '照明のLED化や高効率空調への更新など、初期投資を伴う省エネ対策は、日々の心がけだけでは得られない大きな削減効果が期待できます。'
+          '国や自治体には中小企業向けの省エネ設備導入補助金もあり、活用することで投資負担を抑えられます。',
+      imageUrls: [],
+      sortOrder: 5,
     ),
   ],
   'm_sustainability_procurement': [
@@ -1909,6 +2641,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_sustainability_procurement_5',
+      moduleId: 'm_sustainability_procurement',
+      title: 'CSR調達に含まれる人権・労働への配慮',
+      body:
+          'CSR調達では、環境面だけでなく、強制労働や児童労働の排除、適正な労働時間管理といった人権・労働への配慮も重要な評価項目となります。'
+          '自社の労務管理が適切かどうかを日頃から点検しておくことが、取引先からの信頼維持につながります。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_sustainability_greenwash': [
     Lesson(
@@ -1951,6 +2693,16 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       imageUrls: [],
       sortOrder: 4,
     ),
+    Lesson(
+      id: 'l_sustainability_greenwash_5',
+      moduleId: 'm_sustainability_greenwash',
+      title: 'あいまいな環境表現を避けるための言い換え',
+      body:
+          '「地球に優しい」「サステナブル」といった抽象的な表現は避け、「再生プラスチックを30%使用」「CO2排出量を前年比10%削減」のように、'
+          '具体的な数値や事実に基づいた表現に言い換えることで、誤解を招くリスクを減らせます。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
   ],
   'm_sustainability_carbon': [
     Lesson(
@@ -1990,6 +2742,58 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       body:
           '排出量の算定は専門知識が必要で難しく感じるかもしれませんが、まずは自社の電力使用量やエネルギー使用状況を把握することから始められます。'
           '省エネの推進や再生可能エネルギーの活用など、できることから段階的に取り組む姿勢が大切です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+    Lesson(
+      id: 'l_sustainability_carbon_5',
+      moduleId: 'm_sustainability_carbon',
+      title: '取引先からのCO2排出量算定協力への対応',
+      body:
+          '取引先から自社のCO2排出量データの提供を求められた場合は、分かる範囲で誠実に回答し、算定方法が分からない場合は取引先や専門機関に相談しましょう。'
+          '協力を拒むのではなく、できる範囲で応じる姿勢が、今後の取引関係の維持につながります。',
+      imageUrls: [],
+      sortOrder: 5,
+    ),
+  ],
+  'm_sustainability_certification': [
+    Lesson(
+      id: 'l_sustainability_certification_1',
+      moduleId: 'm_sustainability_certification',
+      title: '環境認証とは',
+      body:
+          '環境認証とは、企業の環境への取り組みが一定の基準を満たしていることを第三者機関が認める制度です。'
+          '代表的なものに、中小企業でも取得しやすい「エコアクション21」や、国際規格である「ISO14001」があります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_sustainability_certification_2',
+      moduleId: 'm_sustainability_certification',
+      title: 'エコアクション21の特徴',
+      body:
+          'エコアクション21は、環境省が策定した日本独自の環境マネジメントシステムで、中小企業でも取り組みやすいよう簡易な手続きで認証を取得できます。'
+          '省エネ・省資源への取り組みや、環境目標の設定・実行・見直しといったPDCAサイクルの実践が求められます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_sustainability_certification_3',
+      moduleId: 'm_sustainability_certification',
+      title: '認証取得のメリット',
+      body:
+          '環境認証を取得すると、取引先からの信頼向上や、入札条件で加点評価を受けられる場合があるなど、営業面でのメリットが期待できます。'
+          '社内的にも、省エネや廃棄物削減の取り組みが体系化され、コスト削減にもつながります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_sustainability_certification_4',
+      moduleId: 'm_sustainability_certification',
+      title: '認証取得後に求められること',
+      body:
+          '認証は取得して終わりではなく、定期的な内部監査や外部審査を通じて、継続的に取り組みを維持・改善していくことが求められます。'
+          '全社員が自社の環境目標を理解し、日々の業務の中で意識することが、認証を形だけのものにしないために重要です。',
       imageUrls: [],
       sortOrder: 4,
     ),
