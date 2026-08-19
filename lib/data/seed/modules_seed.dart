@@ -1,7 +1,7 @@
 import '../models/module_model.dart';
 import '../models/category_model.dart';
 
-/// 研修モジュール種データ。6カテゴリ×4モジュール=24モジュール。
+/// 研修モジュール種データ。6カテゴリ×5モジュール=30モジュール。
 /// 各カテゴリの1つ目をisFreeTrial=trueとし、無料体験→追加課金訴求(設計書 Step3.5 R④)の対象とする。
 const List<Module> seedModules = [
   // ①情報モラル
@@ -41,6 +41,15 @@ const List<Module> seedModules = [
     isFreeTrial: false,
     sortOrder: 4,
   ),
+  Module(
+    id: 'm_ethics_copyright',
+    categoryId: CategoryId.infoMorals,
+    title: '業務における著作権・肖像権の基本モラル',
+    description: '他社の文章・画像・写真を無断で使用しないためのルールと、社内外での適切な引用・許諾の取り方を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 5,
+  ),
 
   // ②セキュリティ
   Module(
@@ -78,6 +87,15 @@ const List<Module> seedModules = [
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 4,
+  ),
+  Module(
+    id: 'm_security_patch',
+    categoryId: CategoryId.security,
+    title: 'ソフトウェア更新とパッチ管理の基本',
+    description: 'OSやアプリの更新を怠ることで生じる脆弱性のリスクと、日常業務でできる基本的な対策を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 5,
   ),
 
   // ③個人情報保護
@@ -117,6 +135,15 @@ const List<Module> seedModules = [
     isFreeTrial: false,
     sortOrder: 4,
   ),
+  Module(
+    id: 'm_privacy_outsourcing',
+    categoryId: CategoryId.privacy,
+    title: '個人情報の外部委託・クラウドサービス利用時の注意点',
+    description: '外部業者やクラウドサービスに個人情報を預ける際に必要な委託先管理と契約上の注意点を学びます。',
+    passThresholdDefault: 90,
+    isFreeTrial: false,
+    sortOrder: 5,
+  ),
 
   // ④情報マネジメント
   Module(
@@ -154,6 +181,15 @@ const List<Module> seedModules = [
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 4,
+  ),
+  Module(
+    id: 'm_infomgmt_office',
+    categoryId: CategoryId.infoManagement,
+    title: '紙媒体・複合機(コピー機)・FAXの情報管理',
+    description: 'FAXの誤送信や複合機の内部データ残存など、紙・オフィス機器特有の情報漏えいリスクと対策を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 5,
   ),
 
   // ⑤コンプライアンス
@@ -193,6 +229,15 @@ const List<Module> seedModules = [
     isFreeTrial: false,
     sortOrder: 4,
   ),
+  Module(
+    id: 'm_compliance_antisocial',
+    categoryId: CategoryId.compliance,
+    title: '反社会的勢力との関係遮断',
+    description: '暴力団排除条例など、反社会的勢力との取引・関係を防ぐために知っておくべき基本ルールを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 5,
+  ),
 
   // ⑥AI活用
   Module(
@@ -230,5 +275,14 @@ const List<Module> seedModules = [
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 4,
+  ),
+  Module(
+    id: 'm_ai_customer',
+    categoryId: CategoryId.aiUsage,
+    title: 'AIチャットボット・カスタマー対応でのAI活用と注意点',
+    description: '問い合わせ対応などにAIを活用する際のメリットと、誤回答・エスカレーションの必要性を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 5,
   ),
 ];
