@@ -12,14 +12,14 @@ void main() {
       expect(ids.toSet().length, ids.length, reason: 'モジュールID重複: $ids');
     });
 
-    test('全モジュールのcategoryIdが6カテゴリのいずれかである', () {
+    test('全モジュールのcategoryIdが9カテゴリのいずれかである', () {
       for (final module in seedModules) {
         expect(Category.all.map((c) => c.id), contains(module.categoryId),
             reason: '不正なcategoryId: ${module.id}');
       }
     });
 
-    test('6カテゴリすべてに少なくとも1モジュールが存在する', () {
+    test('9カテゴリすべてに少なくとも1モジュールが存在する', () {
       final coveredCategories = seedModules.map((m) => m.categoryId).toSet();
       for (final category in Category.all) {
         expect(coveredCategories, contains(category.id),
@@ -114,7 +114,7 @@ void main() {
       }
     });
 
-    test('各業種で6カテゴリ全てが高/中/低いずれかに分類されている', () {
+    test('各業種で9カテゴリ全てが高/中/低いずれかに分類されている', () {
       for (final industry in seedIndustries) {
         final all = {
           ...industry.highPriority,

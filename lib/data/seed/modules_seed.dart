@@ -1,7 +1,7 @@
 import '../models/module_model.dart';
 import '../models/category_model.dart';
 
-/// 研修モジュール種データ。6カテゴリ×5モジュール=30モジュール。
+/// 研修モジュール種データ。9カテゴリ×5モジュール=45モジュール。
 /// 各カテゴリの1つ目をisFreeTrial=trueとし、無料体験→追加課金訴求(設計書 Step3.5 R④)の対象とする。
 const List<Module> seedModules = [
   // ①情報モラル
@@ -281,6 +281,147 @@ const List<Module> seedModules = [
     categoryId: CategoryId.aiUsage,
     title: 'AIチャットボット・カスタマー対応でのAI活用と注意点',
     description: '問い合わせ対応などにAIを活用する際のメリットと、誤回答・エスカレーションの必要性を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 5,
+  ),
+
+  // ⑦メンタルヘルス・健康経営
+  Module(
+    id: 'm_mental_selfcare',
+    categoryId: CategoryId.mentalHealth,
+    title: 'セルフケアとストレスサインの気づき方',
+    description: '自分自身のストレスサインに早く気づき、悪化する前に対処するためのセルフケアの基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: true,
+    sortOrder: 1,
+  ),
+  Module(
+    id: 'm_mental_linecare',
+    categoryId: CategoryId.mentalHealth,
+    title: '職場のメンタルヘルス一次対応(ラインケア)',
+    description: '上長や同僚が部下・同僚の不調にいち早く気づき、適切に対応するためのラインケアの基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 2,
+  ),
+  Module(
+    id: 'm_mental_overwork',
+    categoryId: CategoryId.mentalHealth,
+    title: '過重労働と心身の健康リスク',
+    description: '長時間労働が心身の健康に与える影響と、労働時間管理の観点から会社が取るべき対応を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 3,
+  ),
+  Module(
+    id: 'm_mental_return',
+    categoryId: CategoryId.mentalHealth,
+    title: '休職・復職支援の基本',
+    description: 'メンタルヘルス不調により休職した従業員が安心して復職できるよう、会社が行う支援の基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 4,
+  ),
+  Module(
+    id: 'm_mental_psychsafety',
+    categoryId: CategoryId.mentalHealth,
+    title: '心理的安全性の高い職場づくり',
+    description: '意見や懸念を安心して発言できる職場づくりが、チームの成果とメンタルヘルスの両方を支えることを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 5,
+  ),
+
+  // ⑧BCP・危機管理/防災
+  Module(
+    id: 'm_bcp_basics',
+    categoryId: CategoryId.bcp,
+    title: 'BCP(事業継続計画)の基本と策定の考え方',
+    description: '災害や事故が起きても重要業務を止めない・早期に復旧するための事業継続計画(BCP)の基本的な考え方を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: true,
+    sortOrder: 1,
+  ),
+  Module(
+    id: 'm_bcp_disaster',
+    categoryId: CategoryId.bcp,
+    title: '地震・水害など自然災害への備え',
+    description: '地震・台風・水害など自然災害に備えて、日頃から準備しておくべき基本的な対策を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 2,
+  ),
+  Module(
+    id: 'm_bcp_infectious',
+    categoryId: CategoryId.bcp,
+    title: '感染症流行時の事業継続対応',
+    description: '感染症の流行時にも事業を継続できるよう、テレワーク体制や出社基準など事前に整えておくべき対応を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 3,
+  ),
+  Module(
+    id: 'm_bcp_safety_confirm',
+    categoryId: CategoryId.bcp,
+    title: '安否確認と緊急連絡網の整備',
+    description: '災害発生直後に従業員の安否を迅速に確認するための連絡網・安否確認システムの整備について学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 4,
+  ),
+  Module(
+    id: 'm_bcp_supplychain',
+    categoryId: CategoryId.bcp,
+    title: 'サプライチェーン寸断時の対応',
+    description: '取引先や仕入先が被災した場合に自社の事業へ与える影響と、事前にできる備えを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 5,
+  ),
+
+  // ⑨環境・サステナビリティ(SDGs)
+  Module(
+    id: 'm_sustainability_sdgs',
+    categoryId: CategoryId.sustainability,
+    title: 'SDGsと中小企業の関わり方',
+    description: 'SDGs(持続可能な開発目標)とは何か、中小企業が取り組む意義とできることから学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: true,
+    sortOrder: 1,
+  ),
+  Module(
+    id: 'm_sustainability_energy',
+    categoryId: CategoryId.sustainability,
+    title: '省エネ・廃棄物削減の職場での取り組み',
+    description: 'オフィスや現場でできる省エネルギー・廃棄物削減の具体的な取り組みを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 2,
+  ),
+  Module(
+    id: 'm_sustainability_procurement',
+    categoryId: CategoryId.sustainability,
+    title: '取引先から求められる環境配慮・CSR調達対応',
+    description: '大手取引先から求められるCSR調達基準やサプライヤーへの環境配慮要請への対応方法を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 3,
+  ),
+  Module(
+    id: 'm_sustainability_greenwash',
+    categoryId: CategoryId.sustainability,
+    title: 'グリーンウォッシュを避けた適切な情報発信',
+    description: '実態を伴わない環境配慮のアピール(グリーンウォッシュ)を避け、誠実に情報発信するための注意点を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 4,
+  ),
+  Module(
+    id: 'm_sustainability_carbon',
+    categoryId: CategoryId.sustainability,
+    title: 'カーボンニュートラルと中小企業の脱炭素対応',
+    description: 'カーボンニュートラルの基本概念と、中小企業が求められ始めている脱炭素対応の動きを学びます。',
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 5,

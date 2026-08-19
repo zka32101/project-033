@@ -7,15 +7,31 @@ const List<Industry> seedIndustries = [
   Industry(
     id: 'manufacturing',
     name: '製造業',
-    highPriority: [CategoryId.security, CategoryId.infoManagement, CategoryId.bcp],
-    midPriority: [CategoryId.compliance, CategoryId.privacy, CategoryId.sustainability],
-    lowPriority: [CategoryId.infoMorals, CategoryId.aiUsage, CategoryId.mentalHealth],
+    highPriority: [
+      CategoryId.security,
+      CategoryId.infoManagement,
+      CategoryId.bcp,
+    ],
+    midPriority: [
+      CategoryId.compliance,
+      CategoryId.privacy,
+      CategoryId.sustainability,
+    ],
+    lowPriority: [
+      CategoryId.infoMorals,
+      CategoryId.aiUsage,
+      CategoryId.mentalHealth,
+    ],
   ),
   Industry(
     id: 'construction',
     name: '建設業',
     highPriority: [CategoryId.compliance, CategoryId.bcp],
-    midPriority: [CategoryId.infoMorals, CategoryId.privacy, CategoryId.mentalHealth],
+    midPriority: [
+      CategoryId.infoMorals,
+      CategoryId.privacy,
+      CategoryId.mentalHealth,
+    ],
     lowPriority: [
       CategoryId.security,
       CategoryId.infoManagement,
@@ -26,9 +42,18 @@ const List<Industry> seedIndustries = [
   Industry(
     id: 'healthcare',
     name: '医療・福祉',
-    highPriority: [CategoryId.privacy, CategoryId.compliance, CategoryId.mentalHealth],
+    highPriority: [
+      CategoryId.privacy,
+      CategoryId.compliance,
+      CategoryId.mentalHealth,
+    ],
     midPriority: [CategoryId.security, CategoryId.bcp],
-    lowPriority: [CategoryId.infoMorals, CategoryId.infoManagement, CategoryId.aiUsage, CategoryId.sustainability],
+    lowPriority: [
+      CategoryId.infoMorals,
+      CategoryId.infoManagement,
+      CategoryId.aiUsage,
+      CategoryId.sustainability,
+    ],
   ),
   Industry(
     id: 'it',
@@ -47,7 +72,11 @@ const List<Industry> seedIndustries = [
     id: 'retail',
     name: '小売・飲食',
     highPriority: [CategoryId.infoMorals, CategoryId.privacy],
-    midPriority: [CategoryId.compliance, CategoryId.mentalHealth, CategoryId.bcp],
+    midPriority: [
+      CategoryId.compliance,
+      CategoryId.mentalHealth,
+      CategoryId.bcp,
+    ],
     lowPriority: [
       CategoryId.security,
       CategoryId.infoManagement,
@@ -71,7 +100,11 @@ const List<Industry> seedIndustries = [
   Industry(
     id: 'transport',
     name: '運輸業',
-    highPriority: [CategoryId.compliance, CategoryId.bcp, CategoryId.mentalHealth],
+    highPriority: [
+      CategoryId.compliance,
+      CategoryId.bcp,
+      CategoryId.mentalHealth,
+    ],
     midPriority: [CategoryId.infoMorals],
     lowPriority: [
       CategoryId.security,
@@ -85,7 +118,16 @@ const List<Industry> seedIndustries = [
     id: 'realestate',
     name: '不動産業',
     highPriority: [CategoryId.privacy, CategoryId.compliance],
-    midPriority: [CategoryId.infoMorals, CategoryId.bcp, CategoryId.sustainability],
-    lowPriority: [CategoryId.security, CategoryId.infoManagement, CategoryId.aiUsage, CategoryId.mentalHealth],
+    midPriority: [
+      CategoryId.infoMorals,
+      CategoryId.bcp,
+      CategoryId.sustainability,
+    ],
+    lowPriority: [
+      CategoryId.security,
+      CategoryId.infoManagement,
+      CategoryId.aiUsage,
+      CategoryId.mentalHealth,
+    ],
   ),
 ];
