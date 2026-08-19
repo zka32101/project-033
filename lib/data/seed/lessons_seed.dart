@@ -1353,4 +1353,645 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       sortOrder: 4,
     ),
   ],
+
+  // ⑦メンタルヘルス・健康経営
+  'm_mental_selfcare': [
+    Lesson(
+      id: 'l_mental_selfcare_1',
+      moduleId: 'm_mental_selfcare',
+      title: 'ストレスのサインに気づく',
+      body:
+          'ストレスは誰にでも起こる自然な反応です。睡眠の質の低下、食欲の変化、集中力の低下、いつもならしないミスの増加などは、心身からの重要なサインです。'
+          '「気合で乗り切れる」と我慢を続けると不調が進行しやすいため、小さな変化に早めに気づくことが最初の一歩です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_mental_selfcare_2',
+      moduleId: 'm_mental_selfcare',
+      title: 'ストレスチェック制度を知る',
+      body:
+          '労働者50人以上の事業場では、年1回のストレスチェックの実施が法律で義務付けられています。'
+          '結果は本人に直接通知され、会社が同意なく閲覧することはできません。'
+          '高ストレスと判定された場合は、希望すれば医師による面接指導を無料で受けられます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_mental_selfcare_3',
+      moduleId: 'm_mental_selfcare',
+      title: '日常のセルフケア習慣',
+      body:
+          '十分な睡眠、規則正しい食事、適度な運動は、ストレスへの耐性を高める基本です。'
+          '深呼吸や軽いストレッチ、趣味の時間を意識的に確保するなど、自分に合ったリラクゼーション方法を複数持っておくと、'
+          '忙しい時期でも心身のバランスを保ちやすくなります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_mental_selfcare_4',
+      moduleId: 'm_mental_selfcare',
+      title: '相談窓口を活用する',
+      body:
+          '不調を感じたら一人で抱え込まず、産業医や保健師、外部のEAP(従業員支援プログラム)などの相談窓口を早めに利用しましょう。'
+          '相談内容の秘密は守られ、利用したことで人事評価が下がることもありません。'
+          '早期の相談が、深刻化を防ぐ最も確実な方法です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_mental_linecare': [
+    Lesson(
+      id: 'l_mental_linecare_1',
+      moduleId: 'm_mental_linecare',
+      title: '「いつもと違う」に気づく',
+      body:
+          '部下の「いつもと違う」様子は不調の初期サインです。遅刻や欠勤の増加、表情の暗さ、業務ミスの増加、周囲との会話の減少などに気づいたら、'
+          'それは見過ごさず声をかけるべきタイミングです。日頃から部下の通常の状態を把握しておくことが、変化への気づきにつながります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_mental_linecare_2',
+      moduleId: 'm_mental_linecare',
+      title: '声のかけ方の基本',
+      body:
+          '声をかける際は、業務の話ではなく「最近眠れているか」など体調を気遣う言葉から始めましょう。'
+          '決めつけや詰問は避け、相手の話をさえぎらずに聴く姿勢が大切です。'
+          '場所やタイミングにも配慮し、周囲に内容が漏れないプライベートな環境を選びましょう。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_mental_linecare_3',
+      moduleId: 'm_mental_linecare',
+      title: '専門家へ繋ぐ',
+      body:
+          '上長だけで抱え込まず、産業医や保健師、人事部門、外部のEAPなど専門家へ早めに繋ぐことがラインケアの重要な役割です。'
+          '「専門家に相談してみないか」と提案するだけでも、本人の負担を大きく減らせます。専門的な判断や治療は専門家に委ねましょう。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_mental_linecare_4',
+      moduleId: 'm_mental_linecare',
+      title: '組織で支える・自分も守る',
+      body:
+          '部下の不調対応は上長一人の責任ではありません。対応に迷ったら人事や産業保健スタッフに相談し、組織として支えることが基本です。'
+          'また、部下を支える上長自身が疲弊しないよう、自分自身のセルフケアや相談も忘れずに行いましょう。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_mental_overwork': [
+    Lesson(
+      id: 'l_mental_overwork_1',
+      moduleId: 'm_mental_overwork',
+      title: '長時間労働がもたらす健康リスク',
+      body:
+          '長時間労働が続くと、睡眠不足や疲労の蓄積により、心疾患や脳血管疾患、メンタル不調のリスクが高まることが医学的にも知られています。'
+          '過重労働は個人の頑張りだけで乗り切れる問題ではなく、健康を損なう前に業務量そのものを見直す視点が欠かせません。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_mental_overwork_2',
+      moduleId: 'm_mental_overwork',
+      title: '時間外労働と健康リスクの目安',
+      body:
+          '医学的な知見では、時間外・休日労働がおおむね月80時間を超えると健康障害のリスクが高まり、月100時間に近づくとさらにリスクが増すとされています。'
+          'これは疲労の蓄積度合いを示す一つの目安であり、この水準に近づく前に業務分担の見直しが必要です。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_mental_overwork_3',
+      moduleId: 'm_mental_overwork',
+      title: '上長による早期の業務調整',
+      body:
+          '上長は部下の労働時間の推移を日頃から把握し、時間外労働が増加傾向にある部下には早めに声をかけ、業務量の調整や応援体制の検討を行うことが求められます。'
+          '「本人が頑張っているから」と放置せず、組織として業務の偏りを是正する姿勢が重要です。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_mental_overwork_4',
+      moduleId: 'm_mental_overwork',
+      title: '疲労蓄積のサインと休養',
+      body:
+          '慢性的な疲労は、だるさが取れない、休日も回復しない、ミスが増えるといった形で現れます。'
+          'こうしたサインが見られたら、十分な休養を取れる環境を整えることが優先されます。'
+          '疲労は「見えにくいリスク」であるからこそ、周囲が気づき対応する仕組みが必要です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_mental_return': [
+    Lesson(
+      id: 'l_mental_return_1',
+      moduleId: 'm_mental_return',
+      title: '休職中の連絡への配慮',
+      body:
+          '休職中の従業員への連絡は、療養を妨げないよう配慮が必要です。過度な業務連絡は控えつつ、給与や手続きに関する必要な連絡は定期的に行い、'
+          '本人に「見捨てられていない」という安心感を持ってもらうことが大切です。連絡の頻度や方法は事前に本人と相談して決めましょう。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_mental_return_2',
+      moduleId: 'm_mental_return',
+      title: '復職判定の考え方',
+      body:
+          '復職の可否は、主治医の診断書だけでなく、産業医が本人と面談し、実際の業務に耐えられる状態かを総合的に判断することが望まれます。'
+          '「主治医が復職可としたら即現場復帰」ではなく、職場の状況も踏まえた段階的な判断が重要です。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_mental_return_3',
+      moduleId: 'm_mental_return',
+      title: '試し出勤制度の考え方',
+      body:
+          '試し出勤制度は、本格的な復職の前に短時間勤務や軽作業から始め、段階的に元の業務に近づけていく仕組みです。'
+          '無理に元の業務量へ一気に戻すと再発のリスクが高まるため、本人の状態を見ながら勤務時間や業務内容を段階的に調整することが再発防止につながります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_mental_return_4',
+      moduleId: 'm_mental_return',
+      title: '周囲の理解とサポート体制',
+      body:
+          '復職した従業員が孤立しないよう、上長や同僚が状況を理解し、当面の業務量や役割を調整するなど職場全体でサポートする体制が必要です。'
+          '特別扱いのしすぎもかえって負担になる場合があるため、本人・産業医・人事で情報を共有しながら適切な受け入れ方を検討しましょう。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_mental_psychsafety': [
+    Lesson(
+      id: 'l_mental_psychsafety_1',
+      moduleId: 'm_mental_psychsafety',
+      title: '心理的安全性とは',
+      body:
+          '心理的安全性とは、チームの中で自分の意見や懸念、疑問を発言しても、否定されたり評価が下がったりしないという安心感を指します。'
+          'Googleの調査でも、心理的安全性の高いチームほど成果を出しやすいことが示されており、良い職場文化の基盤として注目されています。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_mental_psychsafety_2',
+      moduleId: 'm_mental_psychsafety',
+      title: '失敗を責めない文化',
+      body:
+          '失敗が起きた際に「誰が悪いか」を追及するのではなく、「なぜ起きたのか」「次にどう防ぐか」を建設的に振り返る文化が、心理的安全性を育てます。'
+          '失敗を過度に責める雰囲気があると、メンバーは問題やミスを報告しづらくなり、かえって深刻な事態を招きかねません。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_mental_psychsafety_3',
+      moduleId: 'm_mental_psychsafety',
+      title: '1on1の活用',
+      body:
+          '定期的な1on1ミーティングは、上長と部下が業務の進捗だけでなく、悩みやキャリアの考えを気軽に話せる場として有効です。'
+          '上長が聴く姿勢に徹し、部下の話をさえぎらず受け止めることで、日頃言いにくい懸念も表に出やすくなります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_mental_psychsafety_4',
+      moduleId: 'm_mental_psychsafety',
+      title: '日常のフィードバック習慣',
+      body:
+          '日常的に「良かった点」と「改善点」を率直に伝え合うフィードバック習慣は、信頼関係の土台になります。'
+          '評価のタイミングだけでなく、日々の業務の中でこまめに声をかけ合うことで、意見を言いやすい雰囲気が自然と醸成されていきます。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+
+  // ⑧BCP・危機管理/防災
+  'm_bcp_basics': [
+    Lesson(
+      id: 'l_bcp_basics_1',
+      moduleId: 'm_bcp_basics',
+      title: 'BCPとは何か',
+      body:
+          'BCP(事業継続計画)とは、地震や感染症などの緊急事態が発生した際にも、重要な事業を中断させない、または中断しても早期に復旧させるための方針や体制をあらかじめ定めておく計画です。'
+          '企業の存続と従業員・取引先の安心を守る土台となります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_bcp_basics_2',
+      moduleId: 'm_bcp_basics',
+      title: '中小企業の策定率が低い現状',
+      body:
+          '内閣府の調査では、大企業のBCP策定率は7割超に対し、中小企業は3割程度にとどまります。'
+          '「人手や時間が足りない」「何から始めればよいかわからない」という声が多く、未策定のまま被災すると廃業に至るケースも少なくありません。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_bcp_basics_3',
+      moduleId: 'm_bcp_basics',
+      title: '重要業務の洗い出し',
+      body:
+          'BCP策定の第一歩は、自社の事業の中から「止めてはいけない重要業務」を洗い出すことです。'
+          'すべての業務を平時と同じ水準で継続するのは困難なため、売上や取引先への影響が大きい業務から優先順位をつけて対応を検討します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_bcp_basics_4',
+      moduleId: 'm_bcp_basics',
+      title: '目標復旧時間(RTO)の考え方',
+      body:
+          '目標復旧時間(RTO)とは、重要業務を「発災から何時間・何日以内に復旧させるか」という目標です。'
+          'RTOを設定することで、必要な人員・設備・代替手段の準備水準が明確になり、実効性のあるBCPにつながります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_bcp_disaster': [
+    Lesson(
+      id: 'l_bcp_disaster_1',
+      moduleId: 'm_bcp_disaster',
+      title: '防災用品・備蓄の準備',
+      body:
+          '地震や水害などの災害発生時には、ライフラインの停止や交通の混乱で従業員が帰宅困難になることがあります。'
+          '飲料水・食料・簡易トイレ・懐中電灯などを最低3日分、社内に備蓄しておくことが推奨されています。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_bcp_disaster_2',
+      moduleId: 'm_bcp_disaster',
+      title: 'ハザードマップの確認',
+      body:
+          '自社の所在地が洪水・土砂災害・津波などのリスクにどの程度さらされているかは、市区町村が公開するハザードマップで確認できます。'
+          '浸水想定区域や避難指示の発令基準を事前に把握し、対策に反映することが重要です。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_bcp_disaster_3',
+      moduleId: 'm_bcp_disaster',
+      title: '避難経路・避難場所の周知',
+      body:
+          '避難経路や避難場所は決めているだけでは不十分で、従業員全員が日頃から把握していなければ緊急時に機能しません。'
+          '掲示や訓練を通じて周知を徹底し、複数の避難ルートを想定しておくことが望まれます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_bcp_disaster_4',
+      moduleId: 'm_bcp_disaster',
+      title: 'データのオフサイトバックアップ',
+      body:
+          '社内サーバーやパソコンのみにデータを保管していると、被災により機器が損壊した際に重要な情報を失うおそれがあります。'
+          'クラウドサービスや遠隔地の拠点にデータを定期的にバックアップしておくことが有効です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_bcp_infectious': [
+    Lesson(
+      id: 'l_bcp_infectious_1',
+      moduleId: 'm_bcp_infectious',
+      title: '感染症流行時特有のリスク',
+      body:
+          '感染症の流行時は、地震などと異なり施設や設備は無事でも、従業員の感染や濃厚接触により出社できる人員が大幅に減少する点が特有のリスクです。'
+          '特定の担当者しかできない業務があると、その業務自体が停止してしまいます。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_bcp_infectious_2',
+      moduleId: 'm_bcp_infectious',
+      title: 'テレワーク環境の事前整備',
+      body:
+          '出社が困難な状況でも事業を続けられるよう、平時からテレワークに必要な機器・通信環境・社内規程を整えておくことが有効です。'
+          '流行が拡大してから慌てて準備すると対応が後手に回り、業務停止の期間が長引きます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_bcp_infectious_3',
+      moduleId: 'm_bcp_infectious',
+      title: '出社基準の明確化',
+      body:
+          '発熱や咳などの症状がある従業員が無理に出社すると、社内で感染が拡大するおそれがあります。'
+          '体調不良時の出社・休業の基準や報告ルールをあらかじめ定め、従業員に周知しておくことが重要です。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_bcp_infectious_4',
+      moduleId: 'm_bcp_infectious',
+      title: '業務の属人化解消と代替要員',
+      body:
+          '特定の担当者しか対応できない業務は、感染症流行時にその担当者が不在になると業務全体が止まってしまいます。'
+          'マニュアル化や複数人での対応体制を整え、代替要員が業務を引き継げるようにしておくことが求められます。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_bcp_safety_confirm': [
+    Lesson(
+      id: 'l_bcp_safety_confirm_1',
+      moduleId: 'm_bcp_safety_confirm',
+      title: '安否確認が初動対応で重要な理由',
+      body:
+          '災害発生直後は、従業員の生命・安全の確認が最優先事項です。'
+          '安否が確認できなければ、事業再開に必要な人員配置や重要業務の継続可否を判断できず、初動対応全体が遅れてしまいます。安否確認はBCPの出発点と言えます。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_bcp_safety_confirm_2',
+      moduleId: 'm_bcp_safety_confirm',
+      title: '安否確認システムの整備',
+      body:
+          '電話がつながりにくい災害直後でも安否情報を集約できるよう、専用の安否確認システムやチャットツールなどをあらかじめ導入しておくことが有効です。'
+          '自動送信・自動集計機能により、迅速な状況把握につながります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_bcp_safety_confirm_3',
+      moduleId: 'm_bcp_safety_confirm',
+      title: '緊急連絡網の整備',
+      body:
+          '安否確認システムに加えて、システムが使えない場合を想定した緊急連絡網も整備しておく必要があります。'
+          '連絡先は定期的に更新し、家族の連絡先や複数の連絡手段も控えておくと確実性が高まります。異動や退職時の更新も忘れずに行いましょう。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_bcp_safety_confirm_4',
+      moduleId: 'm_bcp_safety_confirm',
+      title: '平時からの訓練の必要性',
+      body:
+          '安否確認の仕組みは、実際に使ってみなければ不具合や従業員の理解不足に気づけません。'
+          '定期的に安否確認訓練を実施し、回答率や所要時間を確認しながら仕組みを改善していくことが求められます。訓練を年に一度は行う企業もあります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_bcp_supplychain': [
+    Lesson(
+      id: 'l_bcp_supplychain_1',
+      moduleId: 'm_bcp_supplychain',
+      title: 'サプライチェーン寸断の影響',
+      body:
+          '自社が被災していなくても、原材料や部品を供給する仕入先が被災すると、調達が止まり自社の生産・販売に大きな影響が及ぶことがあります。'
+          '特定の仕入先に依存している場合、その影響はより深刻になります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_bcp_supplychain_2',
+      moduleId: 'm_bcp_supplychain',
+      title: '仕入先の複数化',
+      body:
+          '重要な原材料・部品を単一の仕入先のみに依存していると、その仕入先が被災した際に調達が完全に止まってしまいます。'
+          '地域やルートの異なる複数の仕入先を確保しておくことで、リスクを分散できます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_bcp_supplychain_3',
+      moduleId: 'm_bcp_supplychain',
+      title: '代替調達先の検討',
+      body:
+          '平時から代替となる調達先の候補をリストアップし、必要な発注量や品質基準を満たせるか確認しておくと、緊急時に速やかに切り替えが可能になります。'
+          '事前の情報収集と関係構築が対応の速さを左右します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_bcp_supplychain_4',
+      moduleId: 'm_bcp_supplychain',
+      title: '取引先とのBCP事前確認',
+      body:
+          '自社の重要な取引先や仕入先がBCPを策定しているか、被災時にどの程度の期間で復旧できる見込みかを事前に確認しておくことも有効です。'
+          '相互の状況を共有しておくことで、緊急時の連携がスムーズになります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+
+  // ⑨環境・サステナビリティ(SDGs)
+  'm_sustainability_sdgs': [
+    Lesson(
+      id: 'l_sustainability_sdgs_1',
+      moduleId: 'm_sustainability_sdgs',
+      title: 'SDGsとは何か',
+      body:
+          'SDGs(持続可能な開発目標)は、2015年に国連総会で採択された、2030年までに達成を目指す17の目標です。'
+          '貧困、気候変動、働きがいなど、世界が直面する幅広い課題を対象としています。まずは自社が17の目標のどれに関わっているかを考えてみましょう。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_sustainability_sdgs_2',
+      moduleId: 'm_sustainability_sdgs',
+      title: '大企業だけの話ではない',
+      body:
+          '「SDGsは大企業や海外の話」と考えがちですが、中小企業も社会や取引先とのつながりの中でSDGsと無関係ではいられません。'
+          '近年は取引先や金融機関がSDGsへの取り組みを評価する場面も増えています。規模の大小にかかわらず、できることから関わる姿勢が大切です。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_sustainability_sdgs_3',
+      moduleId: 'm_sustainability_sdgs',
+      title: '身近にできる取り組み',
+      body:
+          'SDGsへの取り組みは、特別な新事業を始めることだけではありません。省エネや働きやすい職場づくり、地域清掃への参加など、日常業務の延長でできることも数多くあります。'
+          'まずは自社の既存の活動をSDGsの視点で見直すことから始めましょう。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_sustainability_sdgs_4',
+      moduleId: 'm_sustainability_sdgs',
+      title: '取り組む意義とメリット',
+      body:
+          'SDGsに取り組むことは、企業イメージの向上や取引先からの信頼獲得、採用活動での評価につながります。'
+          '一方で、実態が伴わない一時的なアピールだけでは信頼を損なう恐れもあります。日々の業務に地道に取り入れ、継続することが重要です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_sustainability_energy': [
+    Lesson(
+      id: 'l_sustainability_energy_1',
+      moduleId: 'm_sustainability_energy',
+      title: '電力使用量の削減',
+      body:
+          'オフィスでの省エネは、照明のLED化や使用していない部屋の消灯、空調の温度設定の見直しなど、身近なところから始められます。'
+          '夏は28度、冬は20度を目安にするなど、無理のない範囲での節電が効果的です。日々の小さな積み重ねが電力使用量の削減につながります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_sustainability_energy_2',
+      moduleId: 'm_sustainability_energy',
+      title: 'ペーパーレス化',
+      body:
+          '紙の使用量削減は、印刷前に本当に必要か確認する、両面印刷を徹底する、資料をクラウドで共有するなどの工夫で進められます。'
+          '「とりあえず印刷する」習慣を見直すだけでも、紙代やインク代の削減、廃棄物の減少につながります。日々の業務フローの中で意識しましょう。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_sustainability_energy_3',
+      moduleId: 'm_sustainability_energy',
+      title: '廃棄物の分別・リサイクル',
+      body:
+          '職場から出るゴミは、可燃・不燃・資源物などのルールに従って正しく分別することが基本です。'
+          '産業廃棄物が発生する現場では、許可を持つ業者への委託など、法令に沿った適正処理が求められます。分別ルールを社内で共有し、誰もが守れる仕組みを作りましょう。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_sustainability_energy_4',
+      moduleId: 'm_sustainability_energy',
+      title: '社員一人ひとりの意識づけ',
+      body:
+          '省エネや廃棄物削減は、担当者だけでなく社員一人ひとりの日々の行動の積み重ねで実現します。'
+          '「使わない電気は消す」「ゴミは分別する」といった小さな習慣が、職場全体の環境負荷を大きく減らします。定期的な声かけや目標の共有で、意識を継続させましょう。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_sustainability_procurement': [
+    Lesson(
+      id: 'l_sustainability_procurement_1',
+      moduleId: 'm_sustainability_procurement',
+      title: 'CSR調達とは',
+      body:
+          'CSR調達とは、大手企業が製品やサービスを調達する際、価格や品質だけでなく、取引先の環境配慮や労働環境、法令遵守の状況も基準に含める考え方です。'
+          'サプライチェーン全体で社会的責任を果たすことが求められており、下請けとなる中小企業にも対応が波及しています。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_sustainability_procurement_2',
+      moduleId: 'm_sustainability_procurement',
+      title: '取引先からのアンケート・監査',
+      body:
+          '大手取引先から、環境方針の有無や廃棄物管理、労働時間管理などに関するアンケートや監査を求められることがあります。'
+          '回答内容は自社の取引継続や新規取引の判断材料になるため、事実に基づき誠実に回答することが重要です。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_sustainability_procurement_3',
+      moduleId: 'm_sustainability_procurement',
+      title: '対応できない場合のリスク',
+      body:
+          'CSR調達の基準を満たせない、あるいはアンケートに適切に回答できない場合、取引の縮小や新規取引の見送りにつながることがあります。'
+          '特に大手企業との取引比率が高い企業ほど、事業全体への影響が大きくなる点に注意が必要です。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_sustainability_procurement_4',
+      moduleId: 'm_sustainability_procurement',
+      title: '日頃からの備え',
+      body:
+          'CSR調達への対応は、求められてから慌てて準備するのではなく、日頃から環境方針や社内ルールを文書化し、実態を把握しておくことが大切です。'
+          '分からない項目は取引先に確認しながら、できる範囲で誠実に対応する姿勢を持ちましょう。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_sustainability_greenwash': [
+    Lesson(
+      id: 'l_sustainability_greenwash_1',
+      moduleId: 'm_sustainability_greenwash',
+      title: 'グリーンウォッシュとは',
+      body:
+          'グリーンウォッシュとは、実際の取り組みが伴っていないにもかかわらず、環境に配慮しているかのように見せかける情報発信のことです。'
+          '意図的でなくても、根拠のあいまいな表現が結果的にグリーンウォッシュとみなされることがあります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_sustainability_greenwash_2',
+      moduleId: 'm_sustainability_greenwash',
+      title: '根拠のない表示のリスク',
+      body:
+          '「エコ」「環境に優しい」といった表現を、具体的な根拠なく使うと、景品表示法上の優良誤認などの問題につながるおそれがあります。'
+          '消費者や取引先の信頼を損ない、企業の評判に悪影響を及ぼしかねません。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_sustainability_greenwash_3',
+      moduleId: 'm_sustainability_greenwash',
+      title: '事実に基づいた発信の重要性',
+      body:
+          '環境配慮をアピールする際は、具体的なデータや第三者認証など、客観的な根拠に基づいて説明することが大切です。'
+          '実態以上に良く見せようとする誇張表現は避け、できていることとできていないことを正直に伝えましょう。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_sustainability_greenwash_4',
+      moduleId: 'm_sustainability_greenwash',
+      title: '発信前のチェック体制',
+      body:
+          '環境に関する広告やウェブサイトの表現は、担当者一人の判断で公開せず、社内で複数人が確認する体制を作ることが望ましいです。'
+          '誰が見ても誤解を生まない表現かどうかを、公開前に必ずチェックしましょう。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_sustainability_carbon': [
+    Lesson(
+      id: 'l_sustainability_carbon_1',
+      moduleId: 'm_sustainability_carbon',
+      title: 'カーボンニュートラルとは',
+      body:
+          'カーボンニュートラルとは、温室効果ガスの排出量から、森林などによる吸収量を差し引き、実質的な排出量をゼロにする考え方です。'
+          '日本は2050年までのカーボンニュートラル実現を目標として掲げています。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_sustainability_carbon_2',
+      moduleId: 'm_sustainability_carbon',
+      title: 'Scope1・2・3の基本',
+      body:
+          '温室効果ガスの排出量は、自社での燃料燃焼などによる「Scope1」、購入した電力使用による「Scope2」、原材料調達や物流など取引先を含むサプライチェーン全体の「Scope3」に分けて把握されます。'
+          '特にScope3は自社以外の排出量も含む点が特徴です。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_sustainability_carbon_3',
+      moduleId: 'm_sustainability_carbon',
+      title: '中小企業への波及',
+      body:
+          '大手企業がScope3排出量を算定する際、取引先である中小企業に対しても排出量データの提供を求める動きが広がっています。'
+          '直接の規制対象でなくても、取引関係を通じて脱炭素対応が求められる場面が増えていくと考えられます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_sustainability_carbon_4',
+      moduleId: 'm_sustainability_carbon',
+      title: 'できることから始める',
+      body:
+          '排出量の算定は専門知識が必要で難しく感じるかもしれませんが、まずは自社の電力使用量やエネルギー使用状況を把握することから始められます。'
+          '省エネの推進や再生可能エネルギーの活用など、できることから段階的に取り組む姿勢が大切です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
 };
