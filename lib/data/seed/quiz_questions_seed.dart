@@ -303,7 +303,7 @@ const Map<String, List<QuizQuestion>> seedQuizQuestionsByModule = {
         '実際のメールアドレスを確認すると不自然な文字列になっていることが多い',
         '差出人名が正しければ内容を疑う必要はない',
         '差出人名は偽装できないため確認は不要',
-        '取引先名であれば添付ファイルは必ず安全'
+        '取引先名であれば添付ファイルは必ず安全',
       ],
       correctIndex: 0,
       explanation: '差出人名が取引先そっくりでも、実際のメールアドレスを確認すると不自然な文字列になっていることが多いと説明されています。',
@@ -1600,7 +1600,7 @@ const Map<String, List<QuizQuestion>> seedQuizQuestionsByModule = {
         '支払えば確実に復旧できる',
         '復旧する保証はなく、自己判断で支払わないことが原則',
         '支払いは会社の義務である',
-        '支払いは犯罪ではない'
+        '支払いは犯罪ではない',
       ],
       correctIndex: 1,
       explanation: '身代金を支払っても復旧する保証はなく、犯罪者への資金提供にもなるため、自己判断で支払わないことが原則とされています。',
@@ -1643,7 +1643,7 @@ const Map<String, List<QuizQuestion>> seedQuizQuestionsByModule = {
         '利用目的',
         '本人の趣味',
         '家族構成',
-        '過去の勤務先'
+        '過去の勤務先',
       ],
       correctIndex: 0,
       explanation: '収集する際は、利用目的を明示したうえで必要な範囲だけを取得することが紹介されています。',
@@ -1902,7 +1902,7 @@ const Map<String, List<QuizQuestion>> seedQuizQuestionsByModule = {
         '「今すぐ」「他言無用」など、確認する時間を与えず急がせる手口',
         'じっくり検討する時間を十分に与える手口',
         '複数人での確認を促す手口',
-        '公式な書面での通知'
+        '公式な書面での通知',
       ],
       correctIndex: 0,
       explanation: '「今すぐ」「他言無用」など、冷静に確認する時間を与えず急がせる手口には特に警戒すべきとされています。',
