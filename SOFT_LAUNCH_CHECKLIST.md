@@ -10,7 +10,7 @@
       main.dartへのFirebase.initializeApp()追加・匿名認証有効化を含む）
 - [ ] `firestore.rules` をFirebase Consoleへデプロイ（`FIREBASE_SETUP.md`セクション6）
 - [ ] Cloud Functions `submitQuizAttempt` をデプロイ（QuizService.submitAttemptの本経路）
-- [ ] `bin/seed_firestore.dart` 実行（業種8/モジュール45/レッスン180/クイズ450問の投入）
+- [ ] `bin/seed_firestore.dart` 実行（業種8/モジュール54/レッスン261/クイズ720問の投入）
 - [ ] Cloud Functions `sendMonthlyReports` 用のSecret設定（`firebase functions:secrets:set SENDGRID_API_KEY`・`SENDGRID_FROM_EMAIL`、SendGridで送信元認証済みのアドレス）
 - [ ] RevenueCat設定・課金動線の実機確認
 - [ ] 実機ビルド（[build-flutter-apk]）・[flutter-device-test]スキルでのスモークテスト

@@ -1,7 +1,7 @@
 import '../models/module_model.dart';
 import '../models/category_model.dart';
 
-/// 研修モジュール種データ。9カテゴリ×5モジュール=45モジュール。
+/// 研修モジュール種データ。9カテゴリ×6モジュール=54モジュール。
 /// 各カテゴリの1つ目をisFreeTrial=trueとし、無料体験→追加課金訴求(設計書 Step3.5 R④)の対象とする。
 const List<Module> seedModules = [
   // ①情報モラル
@@ -50,6 +50,15 @@ const List<Module> seedModules = [
     isFreeTrial: false,
     sortOrder: 5,
   ),
+  Module(
+    id: 'm_ethics_official_sns',
+    categoryId: CategoryId.infoMorals,
+    title: '企業公式アカウント運用における情報モラル',
+    description: '会社の公式SNSアカウントを運用する際に求められる情報モラルと、炎上・トラブルを防ぐための基本ルールを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 6,
+  ),
 
   // ②セキュリティ
   Module(
@@ -96,6 +105,15 @@ const List<Module> seedModules = [
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 5,
+  ),
+  Module(
+    id: 'm_security_cloud',
+    categoryId: CategoryId.security,
+    title: 'クラウドサービス利用時のセキュリティ設定',
+    description: 'クラウドストレージや業務SaaSを安全に利用するための、共有設定・アクセス権限・責任分界の基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 6,
   ),
 
   // ③個人情報保護
@@ -144,6 +162,15 @@ const List<Module> seedModules = [
     isFreeTrial: false,
     sortOrder: 5,
   ),
+  Module(
+    id: 'm_privacy_crossborder',
+    categoryId: CategoryId.privacy,
+    title: '個人データの越境移転(海外への提供)における注意点',
+    description: '個人データを外国にある第三者へ提供する際に、個人情報保護法上求められる特別な手続きと注意点を学びます。',
+    passThresholdDefault: 90,
+    isFreeTrial: false,
+    sortOrder: 6,
+  ),
 
   // ④情報マネジメント
   Module(
@@ -190,6 +217,15 @@ const List<Module> seedModules = [
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 5,
+  ),
+  Module(
+    id: 'm_infomgmt_changelog',
+    categoryId: CategoryId.infoManagement,
+    title: 'システム変更管理とログ管理の基本',
+    description: '業務システムの設定変更を安全に行うための変更管理プロセスと、証跡として残すログ管理の基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 6,
   ),
 
   // ⑤コンプライアンス
@@ -238,6 +274,15 @@ const List<Module> seedModules = [
     isFreeTrial: false,
     sortOrder: 5,
   ),
+  Module(
+    id: 'm_compliance_whistleblowing',
+    categoryId: CategoryId.compliance,
+    title: '内部通報制度と公益通報者保護法の基本',
+    description: '社内の不正やコンプライアンス違反を安心して通報できる内部通報制度と、通報者を保護する法律の基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 6,
+  ),
 
   // ⑥AI活用
   Module(
@@ -284,6 +329,15 @@ const List<Module> seedModules = [
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 5,
+  ),
+  Module(
+    id: 'm_ai_hr',
+    categoryId: CategoryId.aiUsage,
+    title: 'AIを使った採用選考・人事評価活用時の注意点',
+    description: 'AIを採用選考や人事評価に活用する際に生じ得る偏り(バイアス)や説明責任の課題と、適切な運用の考え方を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 6,
   ),
 
   // ⑦メンタルヘルス・健康経営
@@ -332,6 +386,15 @@ const List<Module> seedModules = [
     isFreeTrial: false,
     sortOrder: 5,
   ),
+  Module(
+    id: 'm_mental_caregiving',
+    categoryId: CategoryId.mentalHealth,
+    title: '仕事と介護の両立支援',
+    description: '家族の介護をしながら働く従業員が孤立せず両立できるよう、会社が知っておくべき支援制度と配慮の基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 6,
+  ),
 
   // ⑧BCP・危機管理/防災
   Module(
@@ -379,6 +442,15 @@ const List<Module> seedModules = [
     isFreeTrial: false,
     sortOrder: 5,
   ),
+  Module(
+    id: 'm_bcp_reputation',
+    categoryId: CategoryId.bcp,
+    title: '風評被害・SNS炎上時の危機管理広報',
+    description: '事故や不祥事、SNSでの炎上が起きた際に、会社としてどう情報発信し信頼を守るかという危機管理広報の基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 6,
+  ),
 
   // ⑨環境・サステナビリティ(SDGs)
   Module(
@@ -425,5 +497,14 @@ const List<Module> seedModules = [
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 5,
+  ),
+  Module(
+    id: 'm_sustainability_certification',
+    categoryId: CategoryId.sustainability,
+    title: '環境認証(エコアクション21等)の基礎知識',
+    description: '中小企業でも取得しやすい環境認証制度の種類と、認証取得が取引や信頼にもたらすメリットの基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 6,
   ),
 ];
