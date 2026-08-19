@@ -1,4 +1,4 @@
-/// 6カテゴリ固定定義（設計書 Section3参照）
+/// 9カテゴリ固定定義（設計書 Section3参照。②③⑦⑧⑨は「コンテンツカテゴリ追加案」で追加）
 enum CategoryId {
   infoMorals, // ①情報モラル
   security, // ②セキュリティ
@@ -6,6 +6,9 @@ enum CategoryId {
   infoManagement, // ④情報マネジメント
   compliance, // ⑤コンプライアンス
   aiUsage, // ⑥AI活用
+  mentalHealth, // ⑦メンタルヘルス・健康経営
+  bcp, // ⑧BCP・危機管理/防災
+  sustainability, // ⑨環境・サステナビリティ(SDGs)
 }
 
 class Category {
@@ -26,6 +29,9 @@ class Category {
     Category(id: CategoryId.infoManagement, name: '情報マネジメント', sortOrder: 4),
     Category(id: CategoryId.compliance, name: 'コンプライアンス', sortOrder: 5),
     Category(id: CategoryId.aiUsage, name: 'AI活用', sortOrder: 6),
+    Category(id: CategoryId.mentalHealth, name: 'メンタルヘルス・健康経営', sortOrder: 7),
+    Category(id: CategoryId.bcp, name: 'BCP・危機管理/防災', sortOrder: 8),
+    Category(id: CategoryId.sustainability, name: '環境・サステナビリティ', sortOrder: 9),
   ];
 
   static Category byId(CategoryId id) =>
