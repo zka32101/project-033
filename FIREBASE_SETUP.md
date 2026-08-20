@@ -31,8 +31,13 @@ Remote Config／Cloud Messaging（プッシュ通知）。
 | Android パッケージ名 | `com.yourwish.safy`（`android/app/build.gradle.kts`の`applicationId`） |
 | iOS バンドルID | `com.yourwish.safy`（Xcodeの`PRODUCT_BUNDLE_IDENTIFIER`） |
 
-- [ ] Android アプリを登録し、`google-services.json`をダウンロードして
-      `android/app/google-services.json`に配置（`.gitignore`済みなので各自配置）
+- [x] Android アプリを登録し、`google-services.json`をダウンロードして
+      `android/app/google-services.json`に配置（`.gitignore`済みなので各自配置。
+      `android/app/build.gradle.kts`に`com.google.gms.google-services`プラグインを
+      適用済み。CI(`build_apk.yml`)ではリポジトリシークレット
+      `GOOGLE_SERVICES_JSON_BASE64`(このファイルをbase64エンコードした値)から
+      ビルド時に復元する。**未設定の場合ビルドが失敗するので、CIを動かす前に
+      GitHub の Settings > Secrets and variables > Actions で追加すること**）
 - [ ] iOS アプリを登録し、`GoogleService-Info.plist`をダウンロードして
       `ios/Runner/GoogleService-Info.plist`に配置（同上）
 - [ ] iOS: Apple Developer PortalでAPNs認証キー(.p8)を発行し、
@@ -52,6 +57,11 @@ flutterfire configure --project=<firebase-project-id>
 ので生成後はそのままコミットしてよい。APIキーはクライアント埋め込み前提の
 公開情報であり、実際のアクセス制御はFirestoreセキュリティルール側で行う）。
 
+- [x] Android分のみ`lib/firebase_options.dart`を作成済み(`google-services.json`の
+      値から手動生成。実行環境で`firebase login`できず`flutterfire configure`が
+      使えなかったため)。iOS/web/macOSを追加する際はローカルで
+      `flutterfire configure`を再実行してこのファイルを上書きすること。
+
 ## 4. `main.dart`にFirebase初期化を追加
 
 生成後、`lib/main.dart`を以下のように変更する（現在は意図的にコメントアウトされている）。
@@ -70,9 +80,9 @@ void main() async {
 `bin/seed_firestore.dart`側も同様に、ファイル冒頭のコメント指示に従い
 `import`のコメントを解除し`Firebase.initializeApp(options: ...)`に差し替える。
 
-- [ ] `main.dart`を上記のように変更
-- [ ] `bin/seed_firestore.dart`を上記のように変更
-- [ ] `flutter analyze` / `flutter test` がエラーなく通ることを確認
+- [x] `main.dart`を上記のように変更済み
+- [x] `bin/seed_firestore.dart`を上記のように変更済み
+- [x] `flutter analyze` / `flutter test`(117件)がエラーなく通ることを確認済み
 
 ## 5. Authentication設定
 
