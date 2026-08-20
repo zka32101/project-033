@@ -1,5 +1,7 @@
 plugins {
     id("com.android.application")
+    // Firebase Console設定完了後、android/app/google-services.jsonを配置して有効化。
+    id("com.google.gms.google-services")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }

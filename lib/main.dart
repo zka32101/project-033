@@ -1,15 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'config/app_theme.dart';
 import 'features/onboarding/startup_gate.dart';
+import 'firebase_options.dart';
 import 'widgets/offline_banner.dart';
 import 'widgets/force_update_gate.dart';
 
-// Firebase.initializeApp()は firebase_options.dart 生成後([flutter-firebase-setup]で
-// Firebase Console設定完了後)に追加する。未設定の状態で呼ぶと起動時に例外になるため、
-// Firebase Console作業が完了するまではここに追加しない。
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const ProviderScope(child: SafyApp()));
 }
 

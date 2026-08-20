@@ -1,11 +1,8 @@
 // Firestoreへ種データ(業種/モジュール/レッスン/クイズ問題)を投入するスクリプト。
 //
-// 前提条件(Firebase Console設定完了後に実行すること・現時点ではfirebase_options.dart未生成のため未使用):
-//   1. [flutter-firebase-setup]スキルの手順でFirebaseプロジェクトを作成し、
-//      `flutterfire configure` で lib/firebase_options.dart を生成すること
-//   2. 生成後、下記のimportコメントを解除し、Firebase.initializeApp(options: ...)に
-//      DefaultFirebaseOptions.currentPlatform を渡すこと
-//   3. `flutter pub get` 済みであること
+// 前提条件:
+//   1. Firebase Console設定が完了し、lib/firebase_options.dart が生成済みであること
+//   2. `flutter pub get` 済みであること
 //
 // 実行方法:
 //   dart run bin/seed_firestore.dart
@@ -20,12 +17,10 @@ import 'package:safy/data/seed/industries_seed.dart';
 import 'package:safy/data/seed/modules_seed.dart';
 import 'package:safy/data/seed/lessons_seed.dart';
 import 'package:safy/data/seed/quiz_questions_seed.dart';
-// import 'package:safy/firebase_options.dart'; // flutterfire configure実行後にコメント解除
+import 'package:safy/firebase_options.dart';
 
 Future<void> main() async {
-  // firebase_options.dart生成後は以下に差し替えること:
-  //   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final db = FirebaseFirestore.instance;
 
   print('--- industries (${seedIndustries.length}件) ---');
