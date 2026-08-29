@@ -118,6 +118,9 @@ appstore_api_key.p8
 node_modules/
 functions/node_modules/
 
+# Backup files
+*.backup
+
 # --- Secrets & Build Keys (app-privacy-security) ---
 google-services.json
 GoogleService-Info.plist
