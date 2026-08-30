@@ -7,7 +7,11 @@ enum SupportedLocale {
   ja(Locale('ja', 'JP'), '日本語'),
   en(Locale('en', 'US'), 'English'),
   zh(Locale('zh', 'CN'), '简体中文'),
-  ko(Locale('ko', 'KR'), '한국어');
+  ko(Locale('ko', 'KR'), '한국어'),
+  th(Locale('th', 'TH'), 'ไทย'),
+  vi(Locale('vi', 'VN'), 'Tiếng Việt'),
+  id(Locale('id', 'ID'), 'Bahasa Indonesia'),
+  tl(Locale('tl', 'PH'), 'Filipino');
 
   final Locale locale;
   final String displayName;

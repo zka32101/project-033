@@ -126,6 +126,14 @@ class LanguageTile extends StatelessWidget {
         return '🇨🇳';
       case SupportedLocale.ko:
         return '🇰🇷';
+      case SupportedLocale.th:
+        return '🇹🇭';
+      case SupportedLocale.vi:
+        return '🇻🇳';
+      case SupportedLocale.id:
+        return '🇮🇩';
+      case SupportedLocale.tl:
+        return '🇵🇭';
     }
   }
 }
@@ -181,6 +189,14 @@ class LanguageDropdown extends ConsumerWidget {
         return '🇨🇳';
       case SupportedLocale.ko:
         return '🇰🇷';
+      case SupportedLocale.th:
+        return '🇹🇭';
+      case SupportedLocale.vi:
+        return '🇻🇳';
+      case SupportedLocale.id:
+        return '🇮🇩';
+      case SupportedLocale.tl:
+        return '🇵🇭';
     }
   }
 }
