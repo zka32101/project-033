@@ -11,7 +11,7 @@ enum SupportedLocale {
   th(Locale('th', 'TH'), 'ไทย'),
   vi(Locale('vi', 'VN'), 'Tiếng Việt'),
   id(Locale('id', 'ID'), 'Bahasa Indonesia'),
-  tl(Locale('tl', 'PH'), 'Filipino');
+  tl(Locale('tl', 'PH'), 'Tagalog');
 
   final Locale locale;
   final String displayName;

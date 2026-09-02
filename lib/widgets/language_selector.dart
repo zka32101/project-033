@@ -3,6 +3,30 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../extensions/localization_extension.dart';
 import '../providers/localization_provider.dart';
 
+/// Extension to get flag emoji for each locale
+extension FlagEmojiExtension on SupportedLocale {
+  String get flagEmoji {
+    switch (this) {
+      case SupportedLocale.ja:
+        return '🇯🇵';
+      case SupportedLocale.en:
+        return '🇺🇸';
+      case SupportedLocale.zh:
+        return '🇨🇳';
+      case SupportedLocale.ko:
+        return '🇰🇷';
+      case SupportedLocale.th:
+        return '🇹🇭';
+      case SupportedLocale.vi:
+        return '🇻🇳';
+      case SupportedLocale.id:
+        return '🇮🇩';
+      case SupportedLocale.tl:
+        return '🇵🇭';
+    }
+  }
+}
+
 /// Widget to select and change app language
 class LanguageSelector extends ConsumerWidget {
   final bool showTitle;
@@ -82,7 +106,7 @@ class LanguageTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 12.0),
               child: Text(
-                _getFlagEmoji(locale),
+                locale.flagEmoji,
                 style: const TextStyle(fontSize: 24.0),
               ),
             ),
@@ -114,28 +138,6 @@ class LanguageTile extends StatelessWidget {
       ),
     );
   }
-
-  /// Get flag emoji for locale
-  String _getFlagEmoji(SupportedLocale locale) {
-    switch (locale) {
-      case SupportedLocale.ja:
-        return '🇯🇵';
-      case SupportedLocale.en:
-        return '🇺🇸';
-      case SupportedLocale.zh:
-        return '🇨🇳';
-      case SupportedLocale.ko:
-        return '🇰🇷';
-      case SupportedLocale.th:
-        return '🇹🇭';
-      case SupportedLocale.vi:
-        return '🇻🇳';
-      case SupportedLocale.id:
-        return '🇮🇩';
-      case SupportedLocale.tl:
-        return '🇵🇭';
-    }
-  }
 }
 
 /// Compact language selector dropdown
@@ -160,7 +162,7 @@ class LanguageDropdown extends ConsumerWidget {
           child: Row(
             children: [
               Text(
-                _getFlagEmoji(locale),
+                locale.flagEmoji,
                 style: const TextStyle(fontSize: 20.0),
               ),
               const SizedBox(width: 8.0),
@@ -176,27 +178,5 @@ class LanguageDropdown extends ConsumerWidget {
         }
       },
     );
-  }
-
-  /// Get flag emoji for locale
-  String _getFlagEmoji(SupportedLocale locale) {
-    switch (locale) {
-      case SupportedLocale.ja:
-        return '🇯🇵';
-      case SupportedLocale.en:
-        return '🇺🇸';
-      case SupportedLocale.zh:
-        return '🇨🇳';
-      case SupportedLocale.ko:
-        return '🇰🇷';
-      case SupportedLocale.th:
-        return '🇹🇭';
-      case SupportedLocale.vi:
-        return '🇻🇳';
-      case SupportedLocale.id:
-        return '🇮🇩';
-      case SupportedLocale.tl:
-        return '🇵🇭';
-    }
   }
 }
