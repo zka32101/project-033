@@ -28,6 +28,8 @@ extension AppLocalizationsExt on AppLocalizations {
         return module_compliance;
       case 'm_ai_basics':
       case 'm_ai_ethics':
+      case 'm_ai_customer':
+      case 'm_ai_data':
         return module_ai;
       case 'm_ai_deepfake':
         return module_deepfake;
