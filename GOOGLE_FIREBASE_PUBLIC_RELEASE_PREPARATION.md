@@ -1137,180 +1137,7 @@ Step 4: Runbooks
 
 ---
 
-## 6. マーケティング・リリース計画
-### Marketing & Launch Plan
-
-### 6.1 プリローンチ (Sep 8 - Oct 31)
-
-**フェーズ 1: Team Announcement (Sep 8-11)**
-```
-Step 1: Board Approval (Sep 8)
-  └─ Board vote: YES → Board members informed
-
-Step 2: Team Announcement (Sep 8, 12:05 PM)
-  └─ Target: 全Safy チーム 42名
-  └─ Message: $2.5M投資決定 + Dec 1本番ローンチ計画
-  └─ Channel: All-hands meeting + Slack announcement
-
-Step 3: Leader Briefing (Sep 8, 1:00-2:00 PM)
-  └─ Audience: Tech Lead, Product Lead, Finance Lead, Marketing Lead
-  └─ Content: 詳細ローンチ計画, チーム分担, リスク
-
-Step 4: All-Hands Celebration (Sep 8, 2:00-3:00 PM)
-  └─ Audience: 全員
-  └─ Message: We're going to launch!
-  └─ Timeline: December 1, 2026
-```
-
-**フェーズ 2: Influencer Outreach (Oct 1-15)**
-```
-Step 1: Influencer List Finalization
-  └─ Categories:
-     ├─ Tech Education (YouTube, TikTok): 10-20 people
-     ├─ Career Development (LinkedIn): 5-10 people
-     ├─ General Education: 5 people
-  
-  └─ Criteria:
-     ├─ Followers: > 100K (Japan)
-     ├─ Engagement Rate: > 3%
-     ├─ Audience Match: 18-35 age group
-     └─ Brand Alignment: Education + Career focus
-
-Step 2: Partnership Proposals
-  └─ Content:
-     ├─ Exclusive early access (Nov 1)
-     ├─ Promo code: INFLUENCER20 (20% discount)
-     ├─ Revenue share: TBD per influencer
-     └─ Deliverables: 3-5 posts (launch + 2 weeks)
-
-Step 3: Deal Closing
-  └─ Deadline: Oct 15
-  └─ Confirmed: 20+ influencers
-
-Step 4: Content Calendar Planning
-  └─ Timeline:
-     ├─ Oct 20-31: Teasers (hype building)
-     ├─ Nov 1-30: Launch + regular posts
-     └─ Dec 1-31: Continued promotion
-```
-
-**フェーズ 3: Pre-Launch Campaign (Oct 1-31)**
-```
-Step 1: Website Update
-  └─ safy.jp:
-     ├─ Waitlist signup: Early access for first 10K users
-     ├─ "Coming Dec 1": Banner + countdown
-     ├─ Features overview: Product benefits
-     └─ Join community: Discord/Slack invitation
-
-Step 2: Email Campaign
-  └─ Sequence:
-     ├─ Oct 1: Launch announcement (existing users)
-     ├─ Oct 15: Feature highlights
-     ├─ Oct 29: Last chance for early access
-     └─ Dec 1: Now available on App Store/Play Store
-  
-  └─ Segments: Waitlist, beta testers, email subscribers
-
-Step 3: Paid Advertising
-  └─ Channels:
-     ├─ Google Ads (Search): Target "Learn [skill]"
-     ├─ YouTube Ads: 15-30 second unskippable
-     ├─ TikTok Ads: Native format (15-60 seconds)
-     └─ Meta Ads (Facebook/Instagram): Carousel format
-  
-  └─ Budget: $20K/month (Oct-Nov)
-  └─ Target: CPM $5-10, Conversion Rate > 5%
-
-Step 4: PR & Media Outreach
-  └─ Targets:
-     ├─ TechCrunch Japan
-     ├─ Forbes Japan
-     ├─ EdTechWave
-     ├─ Startup media
-     └─ Business press
-  
-  └─ Messaging: "$2.5M-funded education startup launches"
-  └─ Embargo: Lift Dec 1, 12:00
-```
-
-### 6.2 ローンチ (Nov 1 - Dec 1)
-
-**Phase 1: Soft Launch (Nov 1)**
-```
-Step 1: Beta Release
-  └─ Channels:
-     ├─ Google Play: Beta track (1,000 testers)
-     └─ TestFlight: iOS (500 testers)
-
-Step 2: Influencer Launch Wave 1
-  └─ Timing: Nov 1, 12:00 JST
-  └─ Posts: All influencers simultaneously
-  └─ Message: "Safy is live - get early access"
-  └─ Expected Reach: 5M+ impressions
-
-Step 3: Community Activation
-  └─ Channels:
-     ├─ Discord: Launch celebration
-     ├─ Slack: Tech community announcements
-     ├─ Reddit: r/learnprogramming, r/education
-     └─ Twitter/X: Thread + updates
-
-Step 4: Metrics Target
-  └─ Nov 1-7:
-     ├─ New users: 50K+
-     ├─ Conversion rate: > 5%
-     ├─ Rating: > 4.0/5.0
-     ├─ Crash rate: < 0.5%
-     └─ Support tickets: < 50/day
-```
-
-**Phase 2: Hard Launch (Dec 1)**
-```
-Step 1: Production Release
-  └─ Timing: Dec 1, 12:00 JST
-  └─ Channels:
-     ├─ Google Play: Full release (100% rollout by Dec 3)
-     ├─ Apple App Store: Full release
-     ├─ Website: Direct link to app stores
-     └─ Email: All waitlist users + newsletters
-
-Step 2: Marketing Blitz
-  └─ Channels:
-     ├─ All influencers: 2nd wave of posts
-     ├─ Paid ads: Budget increase to $50K/day
-     ├─ PR: Press release distribution
-     ├─ Community: Community events & Q&A
-     └─ Partnerships: Collaborations with education platforms
-
-Step 3: 24-hour operations (Dec 1, 12:00 - Dec 2, 12:00)
-  └─ Metrics Monitoring (30-min cadence):
-     ├─ Server load & CPU usage
-     ├─ Database performance
-     ├─ API latency
-     ├─ Error rates
-     ├─ Crash reports
-     ├─ User acquisition rate
-     ├─ Payment conversion rate
-     └─ Support ticket volume
-  
-  └─ Target Metrics (Dec 1-7):
-     ├─ New registrations: 500K+
-     ├─ Paid conversions: 50K+ (10% conversion)
-     ├─ DAU: 200K+ (by Dec 7)
-     ├─ Rating: 4.0-4.5/5.0
-     ├─ Retention (D1): 40%+
-     └─ Crash rate: < 1%
-
-Step 4: Success Celebration
-  └─ All-Hands Meeting: Dec 1, 15:00 JST
-  └─ Message: We did it! From board vote to public launch.
-  └─ Next milestone: 1M DAU by Dec 31
-```
-
----
-
-## 7. 本番ローンチ前チェックリスト
+## 6. 本番ローンチ前チェックリスト
 ### Pre-Launch Verification Checklist
 
 **Sep 15: GATE 2 検証**
@@ -1447,7 +1274,7 @@ Go-Live Checklist:
 
 ---
 
-## 8. 実装タイムライン
+## 7. 実装タイムライン
 ### Implementation Timeline
 
 ```
@@ -1508,7 +1335,7 @@ Dec 7: Post-Launch Review
 
 ---
 
-## 9. 成功メトリクス
+## 8. 成功メトリクス
 ### Success Metrics
 
 ### Firebase & Technical
