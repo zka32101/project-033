@@ -28,7 +28,7 @@ enum SupportedLocale {
   }
 
   static Locale getDefaultLocale() {
-    final systemLocale = WidgetsBinding.instance.window.locale;
+    final systemLocale = WidgetsBinding.instance.platformDispatcher.locale;
     return SupportedLocale.fromLocale(systemLocale).locale;
   }
 }
@@ -86,6 +86,14 @@ class LocalizationNotifier extends StateNotifier<Locale> {
   }
 }
 
+/// Global instance to store SharedPreferences after initialization
+late SharedPreferences _sharedPreferences;
+
+/// Initialize SharedPreferences globally (call this in main() before creating ProviderScope)
+Future<void> initializeLocalizationPreferences() async {
+  _sharedPreferences = await SharedPreferences.getInstance();
+}
+
 /// FutureProvider to initialize SharedPreferences
 final sharedPreferencesProvider = FutureProvider<SharedPreferences>((ref) async {
   return SharedPreferences.getInstance();
@@ -94,16 +102,9 @@ final sharedPreferencesProvider = FutureProvider<SharedPreferences>((ref) async 
 /// StateNotifierProvider for localization
 final localizationProvider =
     StateNotifierProvider<LocalizationNotifier, Locale>((ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return prefs.when(
-    data: (prefs) => LocalizationNotifier(prefs),
-    loading: () => LocalizationNotifier(
-      SharedPreferences.getInstance() as SharedPreferences,
-    ),
-    error: (err, stack) => LocalizationNotifier(
-      SharedPreferences.getInstance() as SharedPreferences,
-    ),
-  );
+  // Use the globally initialized preferences
+  // Ensure initializeLocalizationPreferences() was called in main()
+  return LocalizationNotifier(_sharedPreferences);
 });
 
 /// Provider to get current SupportedLocale

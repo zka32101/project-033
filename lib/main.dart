@@ -5,13 +5,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'config/app_theme.dart';
 import 'features/onboarding/startup_gate.dart';
 import 'firebase_options.dart';
-import 'providers/localization_provider.dart';
+import 'providers/localization_provider.dart'
+    show localizationProvider, initializeLocalizationPreferences;
 import 'widgets/offline_banner.dart';
 import 'widgets/force_update_gate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await initializeLocalizationPreferences();
   runApp(const ProviderScope(child: SafyApp()));
 }
 
