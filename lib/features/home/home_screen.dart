@@ -4,6 +4,7 @@ import '../../data/models/module_model.dart';
 import '../../data/models/industry_model.dart';
 import '../../data/models/company_model.dart';
 import '../../data/models/job_role.dart';
+import '../help/first_run_guide.dart';
 import '../../data/models/subscription_model.dart';
 import '../../data/models/enrollment_model.dart';
 import '../../core/access_control.dart';
@@ -144,6 +145,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(
         title: const Text('あなたの必須研修'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            tooltip: '使い方',
+            onPressed: () => openHelp(context, isAdmin: session.isAdmin),
+          ),
           IconButton(
             icon: const Icon(Icons.insights),
             tooltip: '成長',
