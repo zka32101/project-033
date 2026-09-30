@@ -29,7 +29,7 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
   }
 
   Future<void> _joinWithInviteCode() async {
-    final code = _codeController.text.trim();
+    final code = normalizeInviteCode(_codeController.text);
     final displayName = _nameController.text.trim();
     if (code.isEmpty || displayName.isEmpty) {
       setState(() => _errorMessage = 'チームIDとお名前を入力してください');
@@ -52,6 +52,15 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
         return;
       }
 
+      // 会社情報はメンバーにしか読めないため、先に参加してから取得する。
+      final employeeService = ref.read(employeeServiceProvider);
+      final employee = await employeeService.joinViaInviteCode(
+        inviteCode: invite.code,
+        companyId: invite.companyId,
+        teamId: invite.teamId,
+        displayName: displayName,
+      );
+
       final companyService = ref.read(companyServiceProvider);
       final company = await companyService.getCompany(invite.companyId);
       if (company == null) {
@@ -61,14 +70,6 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
         });
         return;
       }
-
-      final employeeService = ref.read(employeeServiceProvider);
-      final employee = await employeeService.joinViaInviteCode(
-        inviteCode: invite.code,
-        companyId: invite.companyId,
-        teamId: invite.teamId,
-        displayName: displayName,
-      );
 
       ref.read(sessionProvider.notifier).signIn(
             employee: employee,
@@ -273,4 +274,19 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
       ),
     );
   }
+}
+
+/// 招待コードの入力を正規化する。日本語キーボードで混入しやすい空白(全角含む)を除き、
+/// 全角の英数字を半角にそろえる。
+String normalizeInviteCode(String input) {
+  final buffer = StringBuffer();
+  for (final rune in input.runes) {
+    if (rune == 0x20 || rune == 0x3000 || rune == 0x09 || rune == 0x0A) continue;
+    if (rune >= 0xFF01 && rune <= 0xFF5E) {
+      buffer.writeCharCode(rune - 0xFEE0);
+    } else {
+      buffer.writeCharCode(rune);
+    }
+  }
+  return buffer.toString();
 }
