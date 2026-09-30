@@ -1,6 +1,6 @@
 import 'firestore_date_parser.dart';
 
-enum PlanType { individual, team }
+enum PlanType { individual, team, trial }
 
 class Company {
   final String id;
@@ -13,6 +13,7 @@ class Company {
   final String contactEmail; // 月次レポート等の送付先(空文字なら未設定)
   final Map<String, int> categoryPriorityOverride; // CategoryId.name -> 優先度(0/1/2)
   final DateTime createdAt;
+  final DateTime? trialEndsAt; // お試し(14日・5名)の終了日時。お試しでなければnull
 
   const Company({
     required this.id,
@@ -25,7 +26,21 @@ class Company {
     this.contactEmail = '',
     this.categoryPriorityOverride = const {},
     required this.createdAt,
+    this.trialEndsAt,
   });
+
+  bool get isTrial => planType == PlanType.trial;
+
+  /// お試し期間中か(期限前)。期間中は全モジュールを開放する。
+  bool isTrialActive([DateTime? now]) =>
+      isTrial && trialEndsAt != null && (now ?? DateTime.now()).isBefore(trialEndsAt!);
+
+  /// 残り日数(切り上げ)。お試しでない/期限切れは0。
+  int trialDaysLeft([DateTime? now]) {
+    if (!isTrialActive(now)) return 0;
+    final left = trialEndsAt!.difference(now ?? DateTime.now());
+    return (left.inHours / 24).ceil();
+  }
 
   /// 企業規模による推奨合格ライン（設計書 Step3 データモデル参照）
   int recommendedPassThreshold() {
@@ -45,9 +60,11 @@ class Company {
       id: id,
       name: map['name'] as String? ?? '',
       industryId: map['industryId'] as String? ?? '',
-      planType: (map['planType'] as String?) == 'team'
-          ? PlanType.team
-          : PlanType.individual,
+      planType: switch (map['planType'] as String?) {
+        'team' => PlanType.team,
+        'trial' => PlanType.trial,
+        _ => PlanType.individual,
+      },
       contractedHeadcount: (map['contractedHeadcount'] as num?)?.toInt() ?? 1,
       customPassThreshold: Map<String, int>.from(
         (map['customPassThreshold'] as Map?)?.map(
@@ -67,19 +84,21 @@ class Company {
             {},
       ),
       createdAt: parseFirestoreDateTime(map['createdAt']),
+      trialEndsAt: parseFirestoreDateTimeOrNull(map['trialEndsAt']),
     );
   }
 
   Map<String, dynamic> toMap() => {
         'name': name,
         'industryId': industryId,
-        'planType': planType == PlanType.team ? 'team' : 'individual',
+        'planType': planType.name,
         'contractedHeadcount': contractedHeadcount,
         'customPassThreshold': customPassThreshold,
         'moduleDeadlines': moduleDeadlines,
         'contactEmail': contactEmail,
         'categoryPriorityOverride': categoryPriorityOverride,
         'createdAt': createdAt,
+        if (trialEndsAt != null) 'trialEndsAt': trialEndsAt,
       };
 
   Company copyWith({
@@ -103,6 +122,7 @@ class Company {
       contactEmail: contactEmail ?? this.contactEmail,
       categoryPriorityOverride: categoryPriorityOverride ?? this.categoryPriorityOverride,
       createdAt: createdAt,
+      trialEndsAt: trialEndsAt,
     );
   }
 }

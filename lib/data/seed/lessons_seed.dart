@@ -496,10 +496,11 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
     Lesson(
       id: 'l_compliance_labor_1',
       moduleId: 'm_compliance_labor',
-      title: '下請法の基本ルール',
+      title: '取適法(旧下請法)の基本ルール',
       body:
-          '下請法は、発注者が優越的な立場を利用して下請事業者に不利益を与えることを防ぐための法律です。'
-          '代金の支払遅延や一方的な減額、不当なやり直し要求などが規制対象になります。',
+          '取適法(中小受託取引適正化法)は、2026年1月に下請法から名称と内容が改められた法律で、発注側(委託事業者)が優越的な立場を利用して中小受託事業者に不利益を与えることを防ぎます。'
+          '代金の支払遅延や一方的な減額、不当なやり直し要求に加え、協議に応じないまま一方的に代金を決めることや、手形払いなど資金繰りを圧迫する支払方法も規制対象です。'
+          '発注時には、内容・代金・支払期日を書面(または電子的方法)で明示する必要があります。',
       imageUrls: [],
       sortOrder: 1,
     ),
@@ -518,7 +519,7 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       moduleId: 'm_compliance_labor',
       title: '取引先との適正な関係構築',
       body:
-          '取引先を「対等なパートナー」として扱う意識が、下請法違反や不適切な労務慣行を防ぐ土台になります。'
+          '取引先を「対等なパートナー」として扱う意識が、取適法違反や不適切な労務慣行を防ぐ土台になります。'
           '価格交渉や納期調整も、一方的な押し付けにならないよう配慮することが求められます。',
       imageUrls: [],
       sortOrder: 3,
@@ -2794,6 +2795,1108 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       body:
           '認証は取得して終わりではなく、定期的な内部監査や外部審査を通じて、継続的に取り組みを維持・改善していくことが求められます。'
           '全社員が自社の環境目標を理解し、日々の業務の中で意識することが、認証を形だけのものにしないために重要です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_compliance_freelance': [
+    Lesson(
+      id: 'l_compliance_freelance_1',
+      moduleId: 'm_compliance_freelance',
+      title: 'フリーランス新法とは',
+      body:
+          'フリーランス新法(特定受託事業者に係る取引の適正化等に関する法律)は、2024年11月1日に施行されました。従業員を使用しない個人や1人法人(特定受託事業者)に業務を委託する企業に、取引の適正化と就業環境の整備を義務づける法律です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_compliance_freelance_2',
+      moduleId: 'm_compliance_freelance',
+      title: '取引条件の明示と報酬の支払い',
+      body:
+          '業務を委託するときは、業務内容・報酬額・支払期日などの取引条件を、書面または電子メール等で直ちに明示しなければなりません。報酬は、成果物を受け取った日から原則60日以内の、できる限り短い期日に支払う必要があります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_compliance_freelance_3',
+      moduleId: 'm_compliance_freelance',
+      title: '禁止される行為',
+      body:
+          '委託期間が1か月以上の業務では、受領拒否、報酬の減額、返品、買いたたき、正当な理由のない購入・利用の強制、不当なやり直しなどが禁止されます。フリーランスの落ち度がないのに一方的に条件を変える行為は、違反になるおそれがあります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_compliance_freelance_4',
+      moduleId: 'm_compliance_freelance',
+      title: '就業環境の整備と相談対応',
+      body:
+          '6か月以上の継続的な業務委託では、妊娠・出産・育児・介護への配慮が必要です。ハラスメント対策の体制整備や、契約を中途解約するときの30日前までの予告も求められます。違反は公正取引委員会などによる指導・勧告の対象で、相談窓口も整備されています。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_compliance_invoice': [
+    Lesson(
+      id: 'l_compliance_invoice_1',
+      moduleId: 'm_compliance_invoice',
+      title: 'インボイス制度の基本',
+      body:
+          'インボイス制度は2023年10月に始まりました。買い手が仕入税額控除を受けるには、原則として、登録を受けた事業者(適格請求書発行事業者)が発行した適格請求書(インボイス)を保存する必要があります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_compliance_invoice_2',
+      moduleId: 'm_compliance_invoice',
+      title: '適格請求書の記載事項',
+      body:
+          '適格請求書には、発行事業者の氏名または名称と登録番号(T+13桁の数字)、取引年月日、取引内容、税率ごとに区分した合計額と適用税率、消費税額、受け取る側の氏名または名称を記載します。軽減税率の対象品目には、その旨も明記します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_compliance_invoice_3',
+      moduleId: 'm_compliance_invoice',
+      title: '電子帳簿保存法と電子取引',
+      body:
+          'メールやクラウドサービスで請求書・領収書などを受け取った場合(電子取引)は、2024年1月から、電子データのまま保存することが義務になっています。紙に印刷して保存するだけでは認められません。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_compliance_invoice_4',
+      moduleId: 'm_compliance_invoice',
+      title: '保存のルールと社内体制',
+      body:
+          '電子データは、真実性(訂正・削除の履歴が残る、または事務処理規程を定める)と可視性(日付・金額・取引先で検索できる等)を満たして保存します。原則7年間の保存が必要です。担当者が変わっても運用が続くよう、ルールを文書にして共有しましょう。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ethics_accommodation': [
+    Lesson(
+      id: 'l_ethics_accommodation_1',
+      moduleId: 'm_ethics_accommodation',
+      title: '合理的配慮とは',
+      body:
+          '合理的配慮とは、障害のある方が社会の中で直面する障壁を取り除くために、個々の場面に応じて行う調整や工夫のことです。改正障害者差別解消法により、2024年4月から民間事業者にも提供が法的義務になりました。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ethics_accommodation_2',
+      moduleId: 'm_ethics_accommodation',
+      title: '不当な差別的取扱いの禁止',
+      body:
+          '障害があることを理由に、サービスの提供を拒否したり、条件を付けたりすることは「不当な差別的取扱い」として禁止されています。本人の意向や必要性を確かめないまま、思い込みで対応を決めることも避けましょう。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ethics_accommodation_3',
+      moduleId: 'm_ethics_accommodation',
+      title: '具体的な配慮の例',
+      body:
+          '筆談や読み上げ、コミュニケーションボードの利用、段差でのスロープ提供や介助、待ち時間の座席確保、休憩の調整などがあります。大切なのは、本人の希望を丁寧に聞いたうえで、その場でできる方法を一緒に考えることです。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ethics_accommodation_4',
+      moduleId: 'm_ethics_accommodation',
+      title: '過重な負担と建設的対話',
+      body:
+          '配慮は「過重な負担にならない範囲」で行えばよく、難しい場合も、理由を丁寧に説明し、代わりの方法を一緒に探すことが求められます。一方的に断らず、対話を重ねる姿勢(建設的対話)が重要です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ai_guideline': [
+    Lesson(
+      id: 'l_ai_guideline_1',
+      moduleId: 'm_ai_guideline',
+      title: 'AI事業者ガイドラインとは',
+      body:
+          'AI事業者ガイドラインは、経済産業省と総務省が公表した、AIの開発・提供・利用に関わる事業者向けの指針です。法律ではありませんが、人間中心、安全性、公平性、プライバシー保護、セキュリティ確保、透明性などの考え方を示しており、AIを使う側の企業も対象です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ai_guideline_2',
+      moduleId: 'm_ai_guideline',
+      title: '入力してはいけない情報',
+      body:
+          '顧客の個人情報、取引先との機密情報、未公開の経営情報などを、外部の生成AIサービスへ入力すると、情報漏えいにつながるおそれがあります。利用するサービスの設定(入力内容が学習に使われるか)を確認し、入力してよい情報の範囲を社内で決めておきましょう。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ai_guideline_3',
+      moduleId: 'm_ai_guideline',
+      title: '出力の確認と責任',
+      body:
+          '生成AIは、もっともらしい誤りを出すことがあります(ハルシネーション)。出力をそのまま使わず、事実・数字・法令・著作権への配慮を人が確認します。最終的な判断と責任は、AIではなく利用した人と会社にあります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ai_guideline_4',
+      moduleId: 'm_ai_guideline',
+      title: '社内ルールの整え方',
+      body:
+          '利用目的、使ってよいサービス、入力禁止情報、確認・承認の手順、問題が起きたときの連絡先を、簡単な文書にまとめて全員に周知します。ルールは一度作って終わりではなく、サービスや法令の変化にあわせて見直します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_health_heatstroke': [
+    Lesson(
+      id: 'l_health_heatstroke_1',
+      moduleId: 'm_health_heatstroke',
+      title: '熱中症対策が義務になった背景',
+      body:
+          '職場での熱中症による死傷者は毎年多く、対応の遅れが重症化につながっています。2025年6月1日から、労働安全衛生規則の改正により、熱中症のおそれがある作業を行う事業者に、体制の整備と手順の作成、関係者への周知が義務づけられました。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_health_heatstroke_2',
+      moduleId: 'm_health_heatstroke',
+      title: '対象となる作業',
+      body:
+          '対象は、WBGT(暑さ指数)28度以上または気温31度以上の環境で、連続1時間以上、または1日4時間を超えて行うことが見込まれる作業です。屋外の作業だけでなく、高温になる屋内作業も含まれます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_health_heatstroke_3',
+      moduleId: 'm_health_heatstroke',
+      title: '求められる3つの対応',
+      body:
+          '事業者は、①熱中症の自覚症状がある人や、その様子に気づいた人が報告できる体制を整え、②作業から離れる・体を冷やす・医療機関へ搬送するといった重篤化を防ぐ手順を作り、③これらを関係する作業者に周知することが求められます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_health_heatstroke_4',
+      moduleId: 'm_health_heatstroke',
+      title: '日頃の予防と応急処置',
+      body:
+          '暑さ指数の確認、こまめな水分・塩分補給、休憩と日陰の確保、通気性のよい服装が予防の基本です。意識がもうろうとする、けいれんがあるなどの場合は、ためらわず救急要請し、涼しい場所で体を冷やします。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ethics_customer_harassment': [
+    Lesson(
+      id: 'l_ethics_customer_harassment_1',
+      moduleId: 'm_ethics_customer_harassment',
+      title: 'カスタマーハラスメントとは',
+      body:
+          'カスタマーハラスメントとは、顧客等からの言動のうち、要求内容が妥当でない、または要求を実現する手段・態様が社会通念上不相当で、従業員の就業環境が害されるものを指します。正当な苦情や意見とは区別して考えます。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ethics_customer_harassment_2',
+      moduleId: 'm_ethics_customer_harassment',
+      title: '法改正と企業の責務',
+      body:
+          '2025年6月の労働施策総合推進法の改正で、事業主にカスハラ対策として、方針の明確化と周知、相談体制の整備、被害を受けた従業員への配慮、再発防止などの雇用管理上の措置が義務づけられました。施行時期は公布から1年6か月以内とされているため、最新の情報を確認してください。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ethics_customer_harassment_3',
+      moduleId: 'm_ethics_customer_harassment',
+      title: '現場での対応の基本',
+      body:
+          '相手の話を最後まで聞き、事実関係を確認したうえで、できることとできないことを明確に伝えます。感情的にならず、複数人で対応し、やり取りは記録に残します。土下座の強要や長時間の拘束などは、応じる必要のない要求です。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ethics_customer_harassment_4',
+      moduleId: 'm_ethics_customer_harassment',
+      title: '組織としての支援',
+      body:
+          '対応を従業員個人に任せず、上司や管理部門がすぐに介入できる仕組みを整えます。悪質な場合は、警察や弁護士への相談も視野に入れます。被害を受けた従業員のケアと、対応方針を全員で共有することが重要です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_construction_safety': [
+    Lesson(
+      id: 'l_ind_construction_safety_1',
+      moduleId: 'm_ind_construction_safety',
+      title: '建設現場の災害と墜落・転落',
+      body:
+          '建設業の死亡災害では、墜落・転落が最も多い原因の一つです。足場、屋根、はしご、開口部など、高い場所での作業は、わずかな不注意や設備の不備が命に関わります。「慣れているから大丈夫」という思い込みが事故のもとです。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_construction_safety_2',
+      moduleId: 'm_ind_construction_safety',
+      title: '高所作業の基本ルール',
+      body:
+          '高さ2メートル以上の場所で作業を行うときは、作業床を設け、手すりや囲いなどで墜落を防ぎます。作業床が設けられない場合は、墜落制止用器具(安全帯)を確実に使用します。器具は、使う前に傷みや損傷がないかを点検します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_construction_safety_3',
+      moduleId: 'm_ind_construction_safety',
+      title: '作業前点検とKY活動',
+      body:
+          '足場や機械は、作業を始める前に点検し、異常があれば直ちに補修や報告を行います。作業前のミーティングでは、KY活動(危険予知活動)で「どこに危険があるか」を全員で話し合い、対策を共有します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_construction_safety_4',
+      moduleId: 'm_ind_construction_safety',
+      title: '元請・下請・一人親方の連携',
+      body:
+          '建設現場は複数の会社が同時に作業するため、元請と下請が連絡調整を行い、安全衛生責任者を通じて情報を共有します。一人親方も同じ現場のルールに従い、保護具の着用と危険箇所の報告を怠らないようにします。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_healthcare_rights': [
+    Lesson(
+      id: 'l_ind_healthcare_rights_1',
+      moduleId: 'm_ind_healthcare_rights',
+      title: '権利擁護と虐待の類型',
+      body:
+          '利用者や患者の尊厳と権利を守ることは、医療・福祉の現場の大前提です。虐待には、身体的虐待、心理的虐待、放棄・放置(ネグレクト)、経済的虐待、性的虐待などがあり、悪意がなくても、無意識の言動が虐待にあたることがあります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_healthcare_rights_2',
+      moduleId: 'm_ind_healthcare_rights',
+      title: '身体拘束は原則行わない',
+      body:
+          '身体拘束は、利用者の自由を奪う行為であり、原則として行いません。やむを得ず行う場合でも、切迫性(生命等の危険が著しい)、非代替性(ほかに方法がない)、一時性(一時的である)の3つの要件を満たし、記録と家族への説明を行う必要があります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_healthcare_rights_3',
+      moduleId: 'm_ind_healthcare_rights',
+      title: '気づいたときの対応と通報',
+      body:
+          '虐待を発見したり、疑いを持ったりしたときは、ひとりで抱え込まず、上司や責任者に速やかに報告します。施設の従業者が高齢者虐待を発見した場合は、市町村への通報が求められます。通報した人が不利益を受けないよう、保護の仕組みがあります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_healthcare_rights_4',
+      moduleId: 'm_ind_healthcare_rights',
+      title: '個人情報と要配慮個人情報',
+      body:
+          '病歴や診療情報、介護記録は、特に慎重な取り扱いが必要な情報です。業務に関係のないカルテや記録を興味本位で閲覧してはいけません。SNSへの投稿や、家族以外への情報提供にも十分注意します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_it_secure_dev': [
+    Lesson(
+      id: 'l_ind_it_secure_dev_1',
+      moduleId: 'm_ind_it_secure_dev',
+      title: '開発現場の主な脆弱性',
+      body:
+          'システム開発では、入力値の検証不足によるSQLインジェクションやクロスサイトスクリプティングなどの脆弱性が、依然として多くの被害の原因になっています。ユーザーからの入力は信頼できないものとして扱い、検証とエスケープを行います。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_it_secure_dev_2',
+      moduleId: 'm_ind_it_secure_dev',
+      title: '機密情報をコードに埋め込まない',
+      body:
+          'パスワード、APIキー、秘密鍵などをソースコードに直接書くと、リポジトリの公開や共有で漏えいするおそれがあります。環境変数やシークレット管理サービスを使い、誤ってコミットしないよう検知の仕組みを導入します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_it_secure_dev_3',
+      moduleId: 'm_ind_it_secure_dev',
+      title: 'OSSの利用とライセンス管理',
+      body:
+          'オープンソースソフトウェア(OSS)は便利ですが、ライセンスの条件(利用範囲、ソースコード公開義務など)を守る必要があります。利用しているOSSと版数を一覧化し、脆弱性が公表されたら速やかに更新できる体制を整えます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_it_secure_dev_4',
+      moduleId: 'm_ind_it_secure_dev',
+      title: '権限管理と委託先の管理',
+      body:
+          '本番環境へのアクセスは、必要な人だけに最小限の権限を付与します。開発を外部に委託する場合は、秘密保持契約とセキュリティ要件を明確にし、再委託の有無や成果物の取り扱いも確認します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_manufacturing_secret': [
+    Lesson(
+      id: 'l_ind_manufacturing_secret_1',
+      moduleId: 'm_ind_manufacturing_secret',
+      title: '営業秘密とは',
+      body:
+          '営業秘密とは、不正競争防止法で保護される、秘密として管理された有用な情報です。保護されるには、秘密として管理されていること(秘密管理性)、事業活動に有用であること(有用性)、公然と知られていないこと(非公知性)の3つの要件が必要です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_manufacturing_secret_2',
+      moduleId: 'm_ind_manufacturing_secret',
+      title: '図面・ノウハウの持ち出し防止',
+      body:
+          '製造業では、図面、配合、工程条件などの技術情報が競争力の源泉です。「秘密」と表示し、アクセスできる人を限定し、USBメモリや私物スマホへの持ち出しを制限します。退職時には、情報の返却と守秘義務の確認を行います。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_manufacturing_secret_3',
+      moduleId: 'm_ind_manufacturing_secret',
+      title: '品質不正が起きる背景',
+      body:
+          '検査データの書き換えや、検査の省略といった品質不正は、納期・コストのプレッシャーや、「これくらいなら問題ない」という慣れから起きます。発覚すれば、取引停止や信頼の失墜など、企業に大きな損害を与えます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_manufacturing_secret_4',
+      moduleId: 'm_ind_manufacturing_secret',
+      title: '不正を防ぐ職場づくり',
+      body:
+          '不正を防ぐには、無理な納期や目標を見直し、異常やミスを報告しやすい雰囲気をつくることが大切です。検査記録は改ざんできない仕組みで保管し、疑わしい点は内部通報窓口に相談できるようにします。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_professional_confidential': [
+    Lesson(
+      id: 'l_ind_professional_confidential_1',
+      moduleId: 'm_ind_professional_confidential',
+      title: '守秘義務の重み',
+      body:
+          '士業や専門サービスでは、依頼者の家庭や財産、事業の秘密に触れる機会が多く、法律や職業倫理により守秘義務が課されています。依頼者との関係が終わった後も、原則として秘密を守り続ける必要があります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_professional_confidential_2',
+      moduleId: 'm_ind_professional_confidential',
+      title: '日常業務での情報漏えい対策',
+      body:
+          '喫茶店や電車内での電話・打ち合わせ、書類の置き忘れ、FAXやメールの誤送信は、日常業務で起こりやすい漏えい原因です。宛先の確認、パスワード付きファイルの活用、人目のある場所で案件の話をしない習慣が大切です。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_professional_confidential_3',
+      moduleId: 'm_ind_professional_confidential',
+      title: '利益相反の確認',
+      body:
+          '同じ案件で、対立する複数の当事者の依頼を受けるなど、依頼者の利益が衝突する状況(利益相反)は、原則として避けます。受任の前に、既存の依頼者や過去の案件との関係を確認する仕組みを整えます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_professional_confidential_4',
+      moduleId: 'm_ind_professional_confidential',
+      title: '預り金・依頼者財産の管理',
+      body:
+          '依頼者から預かったお金や書類は、自分や事務所の資産と分けて管理し、使途と残高を記録します。流用は重大な問題につながります。返還や精算は、ルールに従って速やかに、書面で行います。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_realestate_rules': [
+    Lesson(
+      id: 'l_ind_realestate_rules_1',
+      moduleId: 'm_ind_realestate_rules',
+      title: '重要事項説明の基本',
+      body:
+          '宅地建物取引業者は、契約が成立するまでの間に、宅地建物取引士が、購入者や借主に対して重要事項を説明する必要があります。説明は、書面(電子交付の場合もあります)を交付して行い、宅地建物取引士が記名します。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_realestate_rules_2',
+      moduleId: 'm_ind_realestate_rules',
+      title: '広告のルール',
+      body:
+          '実際には取引できない物件を広告する「おとり広告」や、実際より著しく良く見せる誇大広告は禁止されています。取引の可否や物件の状態は、最新の情報を確認し、成約済みの物件はすぐに広告から外します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_realestate_rules_3',
+      moduleId: 'm_ind_realestate_rules',
+      title: '契約書面と個人情報',
+      body:
+          '契約が成立した後は、契約内容を記載した書面を交付します。顧客の氏名、収入、家族構成など、取引で得た個人情報は、目的の範囲で適切に管理し、業務以外に使わないようにします。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_realestate_rules_4',
+      moduleId: 'm_ind_realestate_rules',
+      title: '反社会的勢力への対応',
+      body:
+          '不動産取引は、反社会的勢力に悪用されるおそれがあります。契約書に暴力団排除条項を入れ、取引の前に相手を確認します。疑わしい場合は、契約を進めず、上司や弁護士、警察等に相談します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_retail_hygiene': [
+    Lesson(
+      id: 'l_ind_retail_hygiene_1',
+      moduleId: 'm_ind_retail_hygiene',
+      title: 'HACCPに沿った衛生管理',
+      body:
+          '食品を扱う事業者には、HACCP(ハサップ)の考え方を取り入れた衛生管理が求められています。原材料の受入れから調理、提供までの中で、危険が高まる工程を確認し、温度や時間の記録を残して、食中毒を防ぎます。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_retail_hygiene_2',
+      moduleId: 'm_ind_retail_hygiene',
+      title: '日常の衛生ルール',
+      body:
+          '手洗いや消毒、調理器具の洗浄・殺菌、冷蔵・冷凍の温度管理は、日々の基本です。体調不良や下痢・嘔吐の症状があるときは調理に従事せず、責任者に報告します。使用期限や消費期限のチェックも欠かせません。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_retail_hygiene_3',
+      moduleId: 'm_ind_retail_hygiene',
+      title: 'アレルゲン表示',
+      body:
+          'アレルギーは、重い症状を引き起こすことがあります。えび・かに・くるみ・小麦・そば・卵・乳・落花生の8品目は、特に発症数や重篤度が高く、包装食品では表示が義務づけられています。お客様に聞かれたときは、確認せず推測で答えないようにします。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_retail_hygiene_4',
+      moduleId: 'm_ind_retail_hygiene',
+      title: '景品表示法と適正な表示',
+      body:
+          '実際よりも著しく優良であるかのように見せる表示(優良誤認)や、実際よりも有利であるかのように見せる表示(有利誤認)は、景品表示法で禁止されています。「通常価格」と示す二重価格表示は、実際の販売実績にもとづく必要があります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_transport_hours': [
+    Lesson(
+      id: 'l_ind_transport_hours_1',
+      moduleId: 'm_ind_transport_hours',
+      title: '2024年問題と労働時間の規制',
+      body:
+          '2024年4月から、トラック運転者にも時間外労働の上限規制が適用されました。これにより、長時間労働の是正と、人手不足への対応(いわゆる2024年問題)が、運送業全体の大きな課題になっています。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_transport_hours_2',
+      moduleId: 'm_ind_transport_hours',
+      title: '拘束時間と休息期間',
+      body:
+          '運転者の労働時間は、国の改善基準告示で、拘束時間と休息期間の基準が定められています。1日の勤務が終わった後は、原則として継続11時間以上の休息期間を与えるよう努め、どんな場合でも9時間を下回らないようにします。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_transport_hours_3',
+      moduleId: 'm_ind_transport_hours',
+      title: '点呼とアルコールチェック',
+      body:
+          '運転の前後には点呼を行い、運転者の健康状態、酒気帯びの有無、免許証の携帯などを確認します。アルコール検知器を使った確認と、その記録を残すことが義務づけられており、白ナンバーの事業者も対象になっています。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_transport_hours_4',
+      moduleId: 'm_ind_transport_hours',
+      title: '疲労・健康管理と荷主への働きかけ',
+      body:
+          '疲労や睡眠不足、持病の悪化は、重大事故の原因になります。体調不良のときは運転せず、すぐに報告します。長い待機時間の削減や、無理な納期の見直しは、荷主との協力なしには進まないため、日頃から働きかけを行います。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_safety_induction': [
+    Lesson(
+      id: 'l_law_safety_induction_1',
+      moduleId: 'm_law_safety_induction',
+      title: '法定の安全衛生教育とは',
+      body:
+          '労働安全衛生法により、事業者は、労働者を雇い入れたとき、また作業内容を変更したときに、従事する業務に関する安全・衛生のための教育を行わなければなりません。パートやアルバイトなど、雇用形態にかかわらず対象です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_safety_induction_2',
+      moduleId: 'm_law_safety_induction',
+      title: '教育で伝える主な内容',
+      body:
+          '機械・原材料などの危険性や有害性、安全装置や保護具の取扱い、作業の手順、作業開始前の点検、整理整頓や清潔の保持、事故が起きたときの応急措置や退避の方法などを教えます。事務中心の業種では、業務に関係しない項目を省略できる場合があります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_safety_induction_3',
+      moduleId: 'm_law_safety_induction',
+      title: '身近な災害:転倒と腰痛',
+      body:
+          '休業4日以上の労働災害では、転倒が最も多い原因の一つです。濡れた床や段差、コードの引っかけ、急いでの移動などに注意します。重い物を持つときは、体に近づけて持ち、腰に負担をかけない姿勢を心がけます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_safety_induction_4',
+      moduleId: 'm_law_safety_induction',
+      title: '記録と継続的な教育',
+      body:
+          '実施した教育は、日時、内容、受講者を記録して残しておくと、対応の証明にも役立ちます。職長になる人、危険な業務に就く人には、別に職長教育や特別教育などが必要になります。新人だけでなく、定期的な再確認も大切です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_workstyle': [
+    Lesson(
+      id: 'l_law_workstyle_1',
+      moduleId: 'm_law_workstyle',
+      title: '時間外労働の上限規制',
+      body:
+          '時間外労働の上限は、原則として月45時間・年360時間です。臨時的な特別の事情があり、特別条項付きの36協定を結んだ場合でも、年720時間以内、単月100時間未満(休日労働を含む)などの上限があります。中小企業にも2020年4月から適用されています。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_workstyle_2',
+      moduleId: 'm_law_workstyle',
+      title: '年5日の年次有給休暇',
+      body:
+          '年10日以上の年次有給休暇が付与される労働者には、使用者が、付与日から1年以内に、時季を指定して5日以上取得させることが義務づけられています。労働者の希望を聞き、計画的に取得できるよう、年間の管理を行います。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_workstyle_3',
+      moduleId: 'm_law_workstyle',
+      title: '労働時間の客観的な把握',
+      body:
+          '使用者は、タイムカードやパソコンの使用記録などの客観的な方法で、労働者の労働時間を把握する必要があります。自己申告だけに頼らず、実態と記録のずれがないかを確認します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_workstyle_4',
+      moduleId: 'm_law_workstyle',
+      title: '違反した場合と職場の取組',
+      body:
+          '上限規制や年5日の取得義務に違反すると、罰則の対象になるおそれがあります。管理職は、業務の偏りを見直し、無理のない業務量に調整します。勤務間インターバルの導入も、努力義務として推奨されています。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_health_check': [
+    Lesson(
+      id: 'l_law_health_check_1',
+      moduleId: 'm_law_health_check',
+      title: '定期健康診断の実施',
+      body:
+          '常時使用する労働者には、雇入れ時と、その後は年1回の定期健康診断を実施する義務があります。労働者にも受診する義務があります。結果は本人に通知し、異常の所見があれば、医師の意見を聞いたうえで必要な措置を検討します。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_health_check_2',
+      moduleId: 'm_law_health_check',
+      title: 'ストレスチェック制度',
+      body:
+          '常時50人以上の労働者を使用する事業場では、年1回のストレスチェックの実施が義務づけられています。結果は本人に通知され、本人の同意なく事業者に提供されることはありません。50人未満の事業場への義務化も、法改正で決まっています。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_health_check_3',
+      moduleId: 'm_law_health_check',
+      title: '長時間労働者への面接指導',
+      body:
+          '時間外・休日労働が月80時間を超え、疲労の蓄積が認められる労働者が申し出たときは、医師による面接指導を行う必要があります。面接の結果にもとづき、就業場所の変更や労働時間の短縮などの措置を検討します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_health_check_4',
+      moduleId: 'm_law_health_check',
+      title: '産業医と健康情報の取り扱い',
+      body:
+          '常時50人以上の事業場では、産業医を選任します。病歴や健康診断の結果などの健康情報は、特に慎重な取り扱いが必要な個人情報です。業務上必要な範囲の人だけが扱い、不必要に共有しないようにします。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_childcare_leave': [
+    Lesson(
+      id: 'l_law_childcare_leave_1',
+      moduleId: 'm_law_childcare_leave',
+      title: '改正の全体像',
+      body:
+          '育児・介護休業法は、2025年4月と10月に段階的に改正が施行されました。仕事と育児・介護の両立を支援するため、休暇や働き方の選択肢が広がり、事業主には制度の周知や意向の確認が義務づけられています。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_childcare_leave_2',
+      moduleId: 'm_law_childcare_leave',
+      title: '2025年4月施行のポイント',
+      body:
+          '子の看護休暇が、対象を小学校3年生修了までに広げ、名称も子の看護等休暇となりました。感染症による学級閉鎖や、入園(入学)式・卒園式なども取得の事由に加わりました。所定外労働の制限の対象も、小学校就学前の子に広がりました。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_childcare_leave_3',
+      moduleId: 'm_law_childcare_leave',
+      title: '2025年10月施行のポイント',
+      body:
+          '3歳から小学校就学前の子を養育する労働者のために、事業主は、始業時刻等の変更、テレワーク、短時間勤務、養育両立支援休暇などの中から2つ以上の措置を用意し、労働者が選べるようにする必要があります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_childcare_leave_4',
+      moduleId: 'm_law_childcare_leave',
+      title: '周知と意向確認、介護への対応',
+      body:
+          '妊娠・出産の申出があったときや、子が3歳になる前には、事業主が個別に制度を周知し、意向を確認する必要があります。介護に直面した旨の申出があったときも、制度の個別の周知と意向確認が義務です。不利益な取扱いは禁止されています。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_employment_quota': [
+    Lesson(
+      id: 'l_law_employment_quota_1',
+      moduleId: 'm_law_employment_quota',
+      title: '障害者の法定雇用率',
+      body:
+          '民間企業は、常時雇用する労働者の一定の割合(法定雇用率)以上の障害者を雇用する義務があります。法定雇用率は段階的に引き上げられ、2026年7月から2.7%となっています。対象となる事業主の範囲も、従業員37.5人以上に広がりました。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_employment_quota_2',
+      moduleId: 'm_law_employment_quota',
+      title: '報告と納付金・合理的配慮',
+      body:
+          '事業主は、毎年6月1日現在の障害者の雇用状況をハローワークに報告します。法定雇用率を満たさず、常時雇用する労働者が100人を超える場合は、障害者雇用納付金の納付が必要になります。雇用にあたっては、障害の特性に応じた合理的配慮を提供します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_employment_quota_3',
+      moduleId: 'm_law_employment_quota',
+      title: '高年齢者の雇用確保',
+      body:
+          '高年齢者雇用安定法により、事業主は、65歳までの雇用を確保するため、定年の引上げ、継続雇用制度の導入、定年の廃止のいずれかの措置を講じる義務があります。さらに、70歳までの就業確保は、努力義務とされています。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_employment_quota_4',
+      moduleId: 'm_law_employment_quota',
+      title: '多様な人材が働き続けられる職場',
+      body:
+          '障害のある人も高年齢の人も、能力を発揮して働けるよう、仕事の切り分けや作業環境の整備、相談しやすい体制づくりが大切です。採用や配置で、不当な差別をしないことも求められます。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_fire_safety': [
+    Lesson(
+      id: 'l_law_fire_safety_1',
+      moduleId: 'm_law_fire_safety',
+      title: '防火管理者と消防計画',
+      body:
+          '一定の規模の建物では、防火管理者を選任し、消防計画を作成して消防署に届け出る義務があります。宿泊施設や飲食店、病院などの不特定多数が利用する建物では、より小さな規模から対象になります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_fire_safety_2',
+      moduleId: 'm_law_fire_safety',
+      title: '消火・通報・避難訓練',
+      body:
+          '消防計画にもとづき、消火、通報、避難の訓練を定期的に行います。実際の火災では、初期消火よりも、通報と避難を優先する判断が重要です。訓練では、避難経路と集合場所、役割分担を全員で確認します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_fire_safety_3',
+      moduleId: 'm_law_fire_safety',
+      title: '避難経路と設備の点検',
+      body:
+          '避難経路や非常口の前には、物を置かないようにします。消火器、火災報知設備、誘導灯などの消防用設備は、定期的な点検を行い、結果を消防署に報告します。放置された荷物が、避難の妨げになることがあります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_fire_safety_4',
+      moduleId: 'm_law_fire_safety',
+      title: '日常の火気管理',
+      body:
+          '電気ストーブの近くに可燃物を置かない、たこ足配線を避ける、喫煙は決められた場所で行う、終業時に火元を確認するなど、日頃の管理が火災の予防につながります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_company_vehicle': [
+    Lesson(
+      id: 'l_law_company_vehicle_1',
+      moduleId: 'm_law_company_vehicle',
+      title: '安全運転管理者の選任',
+      body:
+          '乗車定員が11人以上の自動車を1台以上、または、その他の自動車を5台以上使用する事業所では、安全運転管理者を選任し、公安委員会に届け出る義務があります。白ナンバーの自動車も対象です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_company_vehicle_2',
+      moduleId: 'm_law_company_vehicle',
+      title: '運転前後のアルコールチェック',
+      body:
+          '安全運転管理者は、運転前後に、運転者の酒気帯びの有無を確認しなければなりません。2023年12月からは、アルコール検知器を使った確認と、検知器を常に有効な状態で保持することが義務となっています。確認の記録は1年間保存します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_company_vehicle_3',
+      moduleId: 'm_law_company_vehicle',
+      title: '運転者の心構えと禁止事項',
+      body:
+          '飲酒運転は、運転者だけでなく、酒類の提供や同乗、車両の提供にも責任が及びます。運転中のスマートフォンの操作や、ヘッドホンの使用、無理な運行スケジュールも、重大事故のもとです。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_company_vehicle_4',
+      moduleId: 'm_law_company_vehicle',
+      title: '事故が起きたときの対応',
+      body:
+          '事故が起きたときは、まず負傷者の救護と危険の防止を行い、警察に届け出ます。そのあと、会社の責任者に連絡します。事故の状況を記録し、再発防止のための教育や運行計画の見直しにつなげます。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_equal_treatment': [
+    Lesson(
+      id: 'l_law_equal_treatment_1',
+      moduleId: 'm_law_equal_treatment',
+      title: '同一労働同一賃金の考え方',
+      body:
+          '同じ会社で働く正社員と、パートタイム・有期雇用・派遣の労働者との間で、基本給や賞与、手当、福利厚生などについて、不合理な待遇差を設けることが禁止されています。中小企業にも2021年4月から適用されています。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_equal_treatment_2',
+      moduleId: 'm_law_equal_treatment',
+      title: '待遇差の説明義務',
+      body:
+          '非正規雇用の労働者から求められたときは、事業主は、正社員との待遇の違いの内容と、その理由を説明する必要があります。説明を求めたことを理由に、不利益な取扱いをすることは禁止されています。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_equal_treatment_3',
+      moduleId: 'm_law_equal_treatment',
+      title: '労働条件の明示',
+      body:
+          '労働契約を結ぶときは、契約期間、就業場所、業務の内容、始業・終業の時刻、賃金、退職に関することなどを、書面(または本人が希望した場合は電子的な方法)で明示する必要があります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_equal_treatment_4',
+      moduleId: 'm_law_equal_treatment',
+      title: '2024年4月に追加された明示事項',
+      body:
+          '2024年4月から、すべての労働者に対して、就業場所と業務の変更の範囲を明示する必要があります。有期契約の場合は、更新の上限の有無と内容、通算5年を超えるときの無期転換申込の機会と条件も明示します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_role_accounting_bec': [
+    Lesson(
+      id: 'l_role_accounting_bec_1',
+      moduleId: 'm_role_accounting_bec',
+      title: 'ビジネスメール詐欺(BEC)とは',
+      body:
+          'ビジネスメール詐欺とは、取引先や経営者になりすましたメールで、偽の口座へ送金させる詐欺です。実際の取引の流れの中に紛れ込むため、見抜くのが難しく、経理担当者が最初の防波堤になります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_accounting_bec_2',
+      moduleId: 'm_role_accounting_bec',
+      title: '要注意のサイン',
+      body:
+          '「振込先の口座が変わりました」「至急送金してください」「内密に対応してください」といった依頼は要注意です。差出人のメールアドレスの微妙な違いや、普段と異なる文面、急がせる表現にも気をつけます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_accounting_bec_3',
+      moduleId: 'm_role_accounting_bec',
+      title: '二重確認と別経路での確認',
+      body:
+          '振込先の変更依頼があったときは、届いたメールに返信せず、以前から知っている電話番号など、別の経路で本人に確認します。支払いの承認は、担当者と承認者の2人で行い、1人の判断で完結しないようにします。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_accounting_bec_4',
+      moduleId: 'm_role_accounting_bec',
+      title: '内部統制と記録',
+      body:
+          '請求書の受領、承認、支払い、記録の担当を分け、記録を残します。不審な依頼を受けたときは、すぐに上司に報告し、送金してしまった場合は、直ちに銀行と警察へ連絡します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_role_hr_hiring': [
+    Lesson(
+      id: 'l_role_hr_hiring_1',
+      moduleId: 'm_role_hr_hiring',
+      title: '公正な採用選考の基本',
+      body:
+          '採用選考は、応募者の適性と能力にもとづいて行うのが原則です。本人に責任のない事項(出生地、家族の職業や収入、住宅状況など)や、思想・信条にかかわること(宗教、支持政党、購読新聞など)を、選考の材料にしてはいけません。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_hr_hiring_2',
+      moduleId: 'm_role_hr_hiring',
+      title: '面接での質問に注意',
+      body:
+          '面接では、職務に必要な能力や経験に関する質問を中心にします。家族構成、結婚や出産の予定、本籍地、尊敬する人物、愛読書などの質問は、就職差別につながるおそれがあるため避けます。面接官全員が、質問例を共有しておきます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_hr_hiring_3',
+      moduleId: 'm_role_hr_hiring',
+      title: '応募者の個人情報の取り扱い',
+      body:
+          '応募者から得た個人情報は、選考の目的で使い、選考が終わった後の保存期間や廃棄のルールを決めておきます。不採用者の書類を、無期限に保管したり、他の目的に転用したりしてはいけません。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_hr_hiring_4',
+      moduleId: 'm_role_hr_hiring',
+      title: '入社後の人事情報の管理',
+      body:
+          '従業員の人事情報や健康情報、マイナンバーは、必要な担当者だけが扱えるように、アクセス権限を限定します。紙の書類は施錠して保管し、電子データは、アクセスログを残し、私物の端末やクラウドに保存しないようにします。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_role_sales_conduct': [
+    Lesson(
+      id: 'l_role_sales_conduct_1',
+      moduleId: 'm_role_sales_conduct',
+      title: '誇大な表現と景品表示法',
+      body:
+          '実際よりも著しく優れていると思わせる表現(優良誤認)や、実際よりも有利だと思わせる表現(有利誤認)は、景品表示法で禁止されています。営業トークや提案資料でも、根拠のない「業界No.1」「絶対に」などの表現は使いません。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_sales_conduct_2',
+      moduleId: 'm_role_sales_conduct',
+      title: '不実告知と不利益事実の不告知',
+      body:
+          '契約に関係する重要な事項について、事実と異なることを伝えたり、不利になる事実をわざと伝えなかったりすることは、消費者契約法や特定商取引法で問題になります。断られたのにしつこく勧誘することも避けます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_sales_conduct_3',
+      moduleId: 'm_role_sales_conduct',
+      title: '接待・贈答のルール',
+      body:
+          '取引先への接待や贈答は、社内の規程にしたがって行います。過度な接待や、公務員への贈答は、贈賄などの問題につながるおそれがあります。相手先の規程も確認し、記録を残します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_sales_conduct_4',
+      moduleId: 'm_role_sales_conduct',
+      title: '顧客情報の取り扱い',
+      body:
+          '顧客の名刺、連絡先、取引の内容などは、会社の大切な情報です。私物のスマートフォンへの保存、退職時の持ち出し、SNSでの発信には注意します。顧客の情報は、会社が決めたシステムの中で管理します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_role_manager_duties': [
+    Lesson(
+      id: 'l_role_manager_duties_1',
+      moduleId: 'm_role_manager_duties',
+      title: '管理職の安全配慮義務',
+      body:
+          '会社は、労働者が心身の健康を損なわないよう配慮する義務(安全配慮義務)を負っており、現場の管理職は、その実行を担います。長時間労働や業務の過重、部下の不調のサインを見逃さないことが求められます。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_manager_duties_2',
+      moduleId: 'm_role_manager_duties',
+      title: '労働時間の管理',
+      body:
+          '管理職であっても、労働時間を把握し、部下に無理な残業をさせないようにします。「管理監督者」にあたる人でも、深夜の割増賃金や、健康確保のための労働時間の把握は必要です。肩書きだけでは、管理監督者とは認められません。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_manager_duties_3',
+      moduleId: 'm_role_manager_duties',
+      title: 'ハラスメントの相談を受けたときの初動',
+      body:
+          '部下からハラスメントの相談を受けたときは、話を最後まで聞き、事実関係を確認し、相談者のプライバシーを守ります。ひとりで解決しようとせず、人事や相談窓口に報告して、組織で対応します。相談者に不利益な扱いをしてはいけません。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_manager_duties_4',
+      moduleId: 'm_role_manager_duties',
+      title: '日常のマネジメント',
+      body:
+          '指導と、ハラスメントの境界は、業務上の必要性と、伝え方の相当性にあります。人格を否定する言葉や、大勢の前での叱責は避け、具体的な事実と改善点を、落ち着いて伝えます。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_role_newcomer_basics': [
+    Lesson(
+      id: 'l_role_newcomer_basics_1',
+      moduleId: 'm_role_newcomer_basics',
+      title: '会社の情報は会社のもの',
+      body:
+          '業務で扱う資料、顧客の情報、社内の連絡内容は、会社の大切な情報です。許可なく社外に持ち出したり、私物のスマートフォンやクラウドに保存したりしません。分からないときは、上司や先輩に確認します。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_newcomer_basics_2',
+      moduleId: 'm_role_newcomer_basics',
+      title: 'メール・SNS・チャットの注意点',
+      body:
+          'メールの宛先や添付ファイルは、送信前に必ず確認します。SNSでは、業務の内容、職場の写真、顧客や同僚の情報を投稿しません。自分のアカウントであっても、会社の名前が分かる形での投稿は、慎重に行います。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_newcomer_basics_3',
+      moduleId: 'm_role_newcomer_basics',
+      title: '怪しいメールや電話への対応',
+      body:
+          '差出人の分からないメールの添付ファイルやリンクは、開かないようにします。心当たりのない電話で、パスワードや個人情報を聞かれても答えません。怪しいと思ったら、すぐに上司や情報システムの担当者に報告します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_newcomer_basics_4',
+      moduleId: 'm_role_newcomer_basics',
+      title: '報告・連絡・相談(報連相)',
+      body:
+          'ミスや、判断に迷うことは、早めに報告・相談します。隠したり、後回しにしたりすると、問題が大きくなります。早く伝えることが、信頼を守り、被害を小さくします。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_role_it_admin': [
+    Lesson(
+      id: 'l_role_it_admin_1',
+      moduleId: 'm_role_it_admin',
+      title: 'アカウントと権限の管理',
+      body:
+          'アカウントは、個人ごとに発行し、共有アカウントは避けます。権限は、業務に必要な最小限にとどめ、定期的に棚卸しをして、不要な権限や、使われていないアカウントを整理します。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_it_admin_2',
+      moduleId: 'm_role_it_admin',
+      title: '入社・異動・退職への対応',
+      body:
+          '入社時にはアカウントを作成し、異動時には権限を見直し、退職時には、当日中にアカウントを停止します。退職者のアカウントを放置すると、不正アクセスや情報の持ち出しの入口になります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_it_admin_3',
+      moduleId: 'm_role_it_admin',
+      title: 'バックアップと復旧',
+      body:
+          'データは、複数の場所に保存し、オフラインや別の場所にもバックアップを保管します。定期的に復元の手順を試し、いざというときに、実際に復旧できることを確認します。ランサムウェアの被害でも、バックアップが最後の砦になります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_it_admin_4',
+      moduleId: 'm_role_it_admin',
+      title: 'インシデントの初動',
+      body:
+          '不審なアクセスやウイルスの感染が疑われるときは、感染した端末をネットワークから切り離し、電源を切らずに、責任者へ報告します。証拠となるログを保全し、関係者と連携して、原因の調査と再発防止を進めます。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_role_purchasing': [
+    Lesson(
+      id: 'l_role_purchasing_1',
+      moduleId: 'm_role_purchasing',
+      title: '発注時の書面・電子的な明示',
+      body:
+          '取引先(中小受託事業者)に発注するときは、発注する内容、代金の額、支払期日などを、書面または電子的な方法で明示します。口頭だけで発注したり、後から内容を変えたりすることは、取適法に違反するおそれがあります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_purchasing_2',
+      moduleId: 'm_role_purchasing',
+      title: '代金の支払いと禁止行為',
+      body:
+          '代金は、物品を受け取った日から原則60日以内の、できる限り短い期間内に支払います。一方的な代金の減額、返品、不当なやり直しの要求、協議のない代金の決定などは、禁止されています。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_purchasing_3',
+      moduleId: 'm_role_purchasing',
+      title: '公正な取引先の選定',
+      body:
+          '取引先を選ぶときは、価格、品質、納期、対応力などの客観的な基準で評価し、複数の会社から見積もりを取って比較します。特定の会社を、個人的な関係で優遇したり、癒着したりしないようにします。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_purchasing_4',
+      moduleId: 'm_role_purchasing',
+      title: '贈答・接待の受け取りと反社チェック',
+      body:
+          '取引先からの贈答や接待は、社内の規程にしたがい、高額なものは断り、必要に応じて上司に報告します。新規の取引先については、反社会的勢力との関係がないかを、契約の前に確認します。',
       imageUrls: [],
       sortOrder: 4,
     ),

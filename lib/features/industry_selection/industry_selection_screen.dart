@@ -35,22 +35,25 @@ class _IndustrySelectionScreenState
       final callable =
           FirebaseFunctions.instance.httpsCallable('registerCompanyAdmin');
       final result = await callable.call<Map<String, dynamic>>({
-        'companyName': '${widget.individualDisplayName}様（個人）',
+        'companyName': '${widget.individualDisplayName}さんのお試しチーム',
         'industryId': industryId,
-        'planType': 'individual',
-        'contractedHeadcount': 1,
+        'planType': 'trial',
+        'contractedHeadcount': 5,
         'adminDisplayName': widget.individualDisplayName,
       });
       final data = Map<String, dynamic>.from(result.data as Map);
 
       final company = Company(
         id: data['companyId'] as String,
-        name: '${widget.individualDisplayName}様（個人）',
+        name: '${widget.individualDisplayName}さんのお試しチーム',
         industryId: industryId,
-        planType: PlanType.individual,
-        contractedHeadcount: 1,
+        planType: PlanType.trial,
+        contractedHeadcount: (data['contractedHeadcount'] as num?)?.toInt() ?? 5,
         customPassThreshold: const {},
         createdAt: DateTime.now(),
+        trialEndsAt: data['trialEndsAt'] == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch((data['trialEndsAt'] as num).toInt()),
       );
       final employee = Employee(
         id: data['employeeId'] as String,

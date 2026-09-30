@@ -1836,6 +1836,9 @@ export const onQaAnswerCreated = onDocumentCreated(
  * employees.role=='admin'での作成を許可していない(自己昇格防止のため)。
  * そのためこの初回登録だけはAdmin SDK経由で行う。
  */
+const TRIAL_DAYS = 14;
+const TRIAL_MAX_MEMBERS = 5;
+
 export const registerCompanyAdmin = onCall(async (request) => {
   const uid = request.auth?.uid;
   if (!uid) {
@@ -1855,7 +1858,7 @@ export const registerCompanyAdmin = onCall(async (request) => {
   if (
     !companyName ||
     !industryId ||
-    (planType !== "individual" && planType !== "team") ||
+    (planType !== "individual" && planType !== "team" && planType !== "trial") ||
     !contractedHeadcount ||
     contractedHeadcount <= 0 ||
     !adminDisplayName
@@ -1866,11 +1869,19 @@ export const registerCompanyAdmin = onCall(async (request) => {
   const now = admin.firestore.Timestamp.now();
   const companyRef = db.collection("companies").doc();
 
+  // お試し: 14日間・最大5名。人数と期限はクライアント入力を信用せずサーバーで固定する。
+  const isTrial = planType === "trial";
+  const headcount = isTrial ? TRIAL_MAX_MEMBERS : contractedHeadcount;
+  const trialEndsAt = isTrial
+    ? admin.firestore.Timestamp.fromMillis(now.toMillis() + TRIAL_DAYS * 24 * 60 * 60 * 1000)
+    : null;
+
   await companyRef.set({
     name: companyName,
     industryId,
     planType,
-    contractedHeadcount,
+    contractedHeadcount: headcount,
+    ...(trialEndsAt ? { trialEndsAt } : {}),
     customPassThreshold: {},
     moduleDeadlines: {},
     contactEmail: "",
@@ -1879,11 +1890,14 @@ export const registerCompanyAdmin = onCall(async (request) => {
   });
 
   let teamId = "";
-  if (teamName && teamName.trim().length > 0) {
+  const resolvedTeamName = teamName && teamName.trim().length > 0
+    ? teamName
+    : isTrial ? "お試しチーム" : "";
+  if (resolvedTeamName) {
     const teamRef = companyRef.collection("teams").doc();
     await teamRef.set({
       companyId: companyRef.id,
-      teamName,
+      teamName: resolvedTeamName,
       createdAt: now,
     });
     teamId = teamRef.id;
@@ -1897,5 +1911,63 @@ export const registerCompanyAdmin = onCall(async (request) => {
     createdAt: now,
   });
 
-  return { companyId: companyRef.id, teamId, employeeId: uid };
+  return {
+    companyId: companyRef.id,
+    teamId,
+    employeeId: uid,
+    contractedHeadcount: headcount,
+    trialEndsAt: trialEndsAt ? trialEndsAt.toMillis() : null,
+  };
+});
+
+/**
+ * 招待コードでの参加。契約人数(お試しは5名)を超える参加をサーバー側で拒否する。
+ * クライアント直書きだと参加者数を数えられず上限を回避できてしまうため、Admin SDKで行う。
+ */
+export const joinCompanyViaInvite = onCall({ region: "us-central1" }, async (request) => {
+  const uid = request.auth?.uid;
+  if (!uid) {
+    throw new HttpsError("unauthenticated", "サインインが必要です");
+  }
+  const { inviteCode, displayName } = request.data as {
+    inviteCode?: string;
+    displayName?: string;
+  };
+  if (!inviteCode || !displayName || displayName.trim().length === 0) {
+    throw new HttpsError("invalid-argument", "入力内容を確認してください");
+  }
+
+  const inviteSnap = await db.collection("inviteCodes").doc(inviteCode.toUpperCase()).get();
+  const invite = inviteSnap.data();
+  if (!invite || invite.isActive === false ||
+      (invite.expiresAt && invite.expiresAt.toMillis() < Date.now())) {
+    throw new HttpsError("not-found", "招待コードが無効です");
+  }
+
+  const companyRef = db.collection("companies").doc(invite.companyId);
+  const companySnap = await companyRef.get();
+  const company = companySnap.data();
+  if (!company) {
+    throw new HttpsError("not-found", "会社情報が見つかりませんでした");
+  }
+  if (company.trialEndsAt && company.trialEndsAt.toMillis() < Date.now()) {
+    throw new HttpsError("failed-precondition", "お試し期間が終了しています");
+  }
+
+  const employeeRef = companyRef.collection("employees").doc(uid);
+  const existing = await employeeRef.get();
+  if (!existing.exists) {
+    const count = (await companyRef.collection("employees").count().get()).data().count;
+    if (count >= (company.contractedHeadcount ?? 1)) {
+      throw new HttpsError("resource-exhausted", "参加人数の上限に達しています");
+    }
+    await employeeRef.set({
+      companyId: invite.companyId,
+      teamId: invite.teamId ?? "",
+      displayName,
+      role: "member",
+      createdAt: admin.firestore.Timestamp.now(),
+    });
+  }
+  return { companyId: invite.companyId, teamId: invite.teamId ?? "", employeeId: uid };
 });

@@ -1,3 +1,4 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/service_providers.dart';
@@ -28,7 +29,7 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
   }
 
   Future<void> _joinWithInviteCode() async {
-    final code = _codeController.text.trim();
+    final code = normalizeInviteCode(_codeController.text);
     final displayName = _nameController.text.trim();
     if (code.isEmpty || displayName.isEmpty) {
       setState(() => _errorMessage = 'チームIDとお名前を入力してください');
@@ -51,6 +52,15 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
         return;
       }
 
+      // 会社情報はメンバーにしか読めないため、先に参加してから取得する。
+      final employeeService = ref.read(employeeServiceProvider);
+      final employee = await employeeService.joinViaInviteCode(
+        inviteCode: invite.code,
+        companyId: invite.companyId,
+        teamId: invite.teamId,
+        displayName: displayName,
+      );
+
       final companyService = ref.read(companyServiceProvider);
       final company = await companyService.getCompany(invite.companyId);
       if (company == null) {
@@ -60,13 +70,6 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
         });
         return;
       }
-
-      final employeeService = ref.read(employeeServiceProvider);
-      final employee = await employeeService.joinViaInviteCode(
-        companyId: invite.companyId,
-        teamId: invite.teamId,
-        displayName: displayName,
-      );
 
       ref.read(sessionProvider.notifier).signIn(
             employee: employee,
@@ -87,6 +90,16 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const AppShell()),
       );
+    } on FirebaseFunctionsException catch (e) {
+      setState(() {
+        _errorMessage = switch (e.code) {
+          'resource-exhausted' => 'このチームは参加人数の上限に達しています。管理者にご確認ください',
+          'failed-precondition' => 'お試し期間が終了しています。管理者にご確認ください',
+          'not-found' => 'チームIDが正しくないか、有効期限が切れています',
+          _ => '参加処理に失敗しました。時間をおいて再度お試しください',
+        };
+        _isLoading = false;
+      });
     } catch (e) {
       setState(() {
         _errorMessage = '参加処理に失敗しました。時間をおいて再度お試しください';
@@ -182,7 +195,7 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
                       Icon(Icons.person_outline, color: colorScheme.primary),
                       const SizedBox(width: 8),
                       const Text(
-                        '個人でお使いの方',
+                        'まずは試したい方(14日間無料)',
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                     ],
@@ -192,7 +205,7 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
                     width: double.infinity,
                     child: OutlinedButton(
                       onPressed: _isLoading ? null : _startIndividual,
-                      child: const Text('個人で始める'),
+                      child: const Text('14日間お試しで始める(最大5名)'),
                     ),
                   ),
                 ],
@@ -261,4 +274,19 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
       ),
     );
   }
+}
+
+/// 招待コードの入力を正規化する。日本語キーボードで混入しやすい空白(全角含む)を除き、
+/// 全角の英数字を半角にそろえる。
+String normalizeInviteCode(String input) {
+  final buffer = StringBuffer();
+  for (final rune in input.runes) {
+    if (rune == 0x20 || rune == 0x3000 || rune == 0x09 || rune == 0x0A) continue;
+    if (rune >= 0xFF01 && rune <= 0xFF5E) {
+      buffer.writeCharCode(rune - 0xFEE0);
+    } else {
+      buffer.writeCharCode(rune);
+    }
+  }
+  return buffer.toString();
 }

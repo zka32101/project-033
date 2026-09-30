@@ -46,8 +46,10 @@ class ContentService {
     Map<String, int> categoryPriorityOverride = const {},
   }) async {
     final snap = await _db.collection(FirestorePaths.modules).get();
-    final modules =
-        snap.docs.map((d) => Module.fromMap(d.id, d.data())).toList();
+    final modules = snap.docs
+        .map((d) => Module.fromMap(d.id, d.data()))
+        .where((m) => m.isAvailableForIndustry(industry.id))
+        .toList();
     sortModulesByPriority(modules, industry, categoryPriorityOverride);
     return modules;
   }

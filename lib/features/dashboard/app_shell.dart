@@ -7,6 +7,7 @@ import '../learning_path/level_diagnostic_screen.dart';
 import '../qa_forum/qa_forum_screen.dart';
 import '../exam/exam_enrollment_screen.dart';
 import '../my_growth/my_growth_screen.dart';
+import '../help/first_run_guide.dart';
 
 /// メインアプリシェル：ナビゲーションタブ付き
 class AppShell extends ConsumerStatefulWidget {
@@ -18,6 +19,19 @@ class AppShell extends ConsumerStatefulWidget {
 
 class _AppShellState extends ConsumerState<AppShell> {
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // 初回のみ、使い方ガイドを表示する。
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      FirstRunGuide.showIfNeeded(
+        context,
+        isAdmin: ref.read(sessionProvider).isAdmin,
+      );
+    });
+  }
 
   late final List<Widget> _screens = [
     const HomeScreen(),

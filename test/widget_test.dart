@@ -24,6 +24,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('チームIDで参加する'), findsOneWidget);
-    expect(find.text('個人で始める'), findsOneWidget);
+    expect(find.text('14日間お試しで始める(最大5名)'), findsOneWidget);
   });
 }
