@@ -15,23 +15,46 @@ class Category {
   final CategoryId id;
   final String name;
   final int sortOrder;
+  // レーダーチャートの軸ラベル用（画面端で見切れないよう短く・改行込みで表示する）
+  final String chartLabel;
 
   const Category({
     required this.id,
     required this.name,
     required this.sortOrder,
-  });
+    String? chartLabel,
+  }) : chartLabel = chartLabel ?? name;
 
   static const List<Category> all = [
     Category(id: CategoryId.infoMorals, name: '情報モラル', sortOrder: 1),
     Category(id: CategoryId.security, name: 'セキュリティ', sortOrder: 2),
     Category(id: CategoryId.privacy, name: '個人情報保護', sortOrder: 3),
-    Category(id: CategoryId.infoManagement, name: '情報マネジメント', sortOrder: 4),
+    Category(
+      id: CategoryId.infoManagement,
+      name: '情報マネジメント',
+      sortOrder: 4,
+      chartLabel: '情報\nマネジメント',
+    ),
     Category(id: CategoryId.compliance, name: 'コンプライアンス', sortOrder: 5),
     Category(id: CategoryId.aiUsage, name: 'AI活用', sortOrder: 6),
-    Category(id: CategoryId.mentalHealth, name: 'メンタルヘルス・健康経営', sortOrder: 7),
-    Category(id: CategoryId.bcp, name: 'BCP・危機管理/防災', sortOrder: 8),
-    Category(id: CategoryId.sustainability, name: '環境・サステナビリティ', sortOrder: 9),
+    Category(
+      id: CategoryId.mentalHealth,
+      name: 'メンタルヘルス・健康経営',
+      sortOrder: 7,
+      chartLabel: 'メンタル\nヘルス',
+    ),
+    Category(
+      id: CategoryId.bcp,
+      name: 'BCP・危機管理/防災',
+      sortOrder: 8,
+      chartLabel: 'BCP\n危機管理',
+    ),
+    Category(
+      id: CategoryId.sustainability,
+      name: '環境・サステナビリティ',
+      sortOrder: 9,
+      chartLabel: '環境\nSDGs',
+    ),
   ];
 
   static Category byId(CategoryId id) =>
