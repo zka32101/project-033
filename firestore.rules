@@ -52,6 +52,13 @@ service cloud.firestore {
       }
     }
 
+    // レベル別の推奨学習パス(beginner/intermediate/advanced)。全テナント共通のグローバル
+    // コンテンツのため、企業配下のlearningPaths(Phase 2b・企業別パーソナライゼーション)とは別。
+    match /learningPaths/{level} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+
     // 認定試験(Tier2/Tier3)の問題セット。管理はConsole/Admin SDKのみ。
     match /exams/{examId} {
       allow read: if isSignedIn();

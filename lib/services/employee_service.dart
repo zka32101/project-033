@@ -15,12 +15,14 @@ class EmployeeService {
       : _db = db ?? FirebaseFirestore.instance,
         _auth = auth ?? FirebaseAuth.instance;
 
-  Future<String> _ensureAuthUid() async {
+  Future<String> ensureAuthUid() async {
     final current = _auth.currentUser;
     if (current != null) return current.uid;
     final credential = await _auth.signInAnonymously();
     return credential.user!.uid;
   }
+
+  Future<String> _ensureAuthUid() => ensureAuthUid();
 
   Future<Employee> joinViaInviteCode({
     required String companyId,

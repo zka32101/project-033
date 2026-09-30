@@ -1,6 +1,8 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/company_model.dart';
+import '../../data/models/employee_model.dart';
 import '../../providers/industry_provider.dart';
 import '../../providers/service_providers.dart';
 import '../../providers/session_provider.dart';
@@ -24,19 +26,39 @@ class _IndustrySelectionScreenState
   Future<void> _selectIndustry(String industryId) async {
     setState(() => _isCreating = true);
     try {
-      final companyService = ref.read(companyServiceProvider);
       final employeeService = ref.read(employeeServiceProvider);
 
-      final company = await companyService.createCompany(
+      // employees.role=='admin'での作成はFirestoreルール上クライアント直接書き込みが
+      // 禁止されている(自己昇格防止)ため、Cloud Functions経由でまとめて登録する。
+      await employeeService.ensureAuthUid();
+
+      final callable =
+          FirebaseFunctions.instance.httpsCallable('registerCompanyAdmin');
+      final result = await callable.call<Map<String, dynamic>>({
+        'companyName': '${widget.individualDisplayName}様（個人）',
+        'industryId': industryId,
+        'planType': 'individual',
+        'contractedHeadcount': 1,
+        'adminDisplayName': widget.individualDisplayName,
+      });
+      final data = Map<String, dynamic>.from(result.data as Map);
+
+      final company = Company(
+        id: data['companyId'] as String,
         name: '${widget.individualDisplayName}様（個人）',
         industryId: industryId,
         planType: PlanType.individual,
         contractedHeadcount: 1,
+        customPassThreshold: const {},
+        createdAt: DateTime.now(),
       );
-      final employee = await employeeService.createAdmin(
+      final employee = Employee(
+        id: data['employeeId'] as String,
         companyId: company.id,
-        teamId: '',
+        teamId: data['teamId'] as String? ?? '',
         displayName: widget.individualDisplayName,
+        role: EmployeeRole.admin,
+        createdAt: DateTime.now(),
       );
 
       ref.read(sessionProvider.notifier).signIn(

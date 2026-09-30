@@ -21,35 +21,58 @@ class MyGrowthScreen extends ConsumerWidget {
           if (scores.isEmpty) {
             return const Center(child: Text('まだ受講記録がありません'));
           }
+          final hasAnyAttempt = scores.any((s) => s.attemptCount > 0);
           final reviewTargets = ReviewRecommender.recommendForReview(scores);
           return ListView(
             padding: const EdgeInsets.all(24),
             children: [
               AspectRatio(
                 aspectRatio: 1,
-                child: RadarChart(
-                  RadarChartData(
-                    radarShape: RadarShape.polygon,
-                    dataSets: [
-                      RadarDataSet(
-                        dataEntries: scores
-                            .map((s) => RadarEntry(value: s.averageScore.toDouble()))
-                            .toList(),
-                        fillColor: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withValues(alpha: 0.2),
-                        borderColor: Theme.of(context).colorScheme.primary,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    RadarChart(
+                      RadarChartData(
+                        radarShape: RadarShape.polygon,
+                        dataSets: [
+                          RadarDataSet(
+                            dataEntries: scores
+                                .map((s) => RadarEntry(value: s.averageScore.toDouble()))
+                                .toList(),
+                            fillColor: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withValues(alpha: 0.2),
+                            borderColor: Theme.of(context).colorScheme.primary,
+                          ),
+                        ],
+                        getTitle: (index, angle) {
+                          final category = Category.byId(scores[index].categoryId);
+                          return RadarChartTitle(text: category.chartLabel);
+                        },
+                        titleTextStyle: const TextStyle(fontSize: 11, height: 1.2),
+                        titlePositionPercentageOffset: 0.15,
+                        tickCount: 5,
+                        ticksTextStyle: const TextStyle(fontSize: 0),
+                        radarBorderData: const BorderSide(color: Colors.transparent),
                       ),
-                    ],
-                    getTitle: (index, angle) {
-                      final category = Category.byId(scores[index].categoryId);
-                      return RadarChartTitle(text: category.name);
-                    },
-                    tickCount: 5,
-                    ticksTextStyle: const TextStyle(fontSize: 0),
-                    radarBorderData: const BorderSide(color: Colors.transparent),
-                  ),
+                    ),
+                    if (!hasAnyAttempt)
+                      IgnorePointer(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.9),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Text(
+                            'まだ受講記録がありません\n学習を進めるとここに表示されます',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 12, color: Colors.grey),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
               const SizedBox(height: 24),

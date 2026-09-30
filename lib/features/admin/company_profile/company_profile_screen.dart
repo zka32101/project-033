@@ -1,6 +1,8 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../data/models/company_model.dart';
+import '../../../data/models/employee_model.dart';
 import '../../../providers/industry_provider.dart';
 import '../../../providers/service_providers.dart';
 import '../../../providers/session_provider.dart';
@@ -50,21 +52,39 @@ class _CompanyProfileScreenState extends ConsumerState<CompanyProfileScreen> {
     });
 
     try {
-      final company = await ref.read(companyServiceProvider).createCompany(
-            name: companyName,
-            industryId: _selectedIndustryId!,
-            planType: PlanType.team,
-            contractedHeadcount: headcount,
-          );
-      final team = await ref.read(inviteServiceProvider).createTeam(
-            companyId: company.id,
-            teamName: '本社',
-          );
-      final admin = await ref.read(employeeServiceProvider).createAdmin(
-            companyId: company.id,
-            teamId: team.id,
-            displayName: adminName,
-          );
+      // employees.role=='admin'での作成はFirestoreルール上クライアント直接書き込みが
+      // 禁止されている(自己昇格防止)ため、Cloud Functions経由でまとめて登録する。
+      await ref.read(employeeServiceProvider).ensureAuthUid();
+
+      final callable =
+          FirebaseFunctions.instance.httpsCallable('registerCompanyAdmin');
+      final result = await callable.call<Map<String, dynamic>>({
+        'companyName': companyName,
+        'industryId': _selectedIndustryId!,
+        'planType': 'team',
+        'contractedHeadcount': headcount,
+        'adminDisplayName': adminName,
+        'teamName': '本社',
+      });
+      final data = Map<String, dynamic>.from(result.data as Map);
+
+      final company = Company(
+        id: data['companyId'] as String,
+        name: companyName,
+        industryId: _selectedIndustryId!,
+        planType: PlanType.team,
+        contractedHeadcount: headcount,
+        customPassThreshold: const {},
+        createdAt: DateTime.now(),
+      );
+      final admin = Employee(
+        id: data['employeeId'] as String,
+        companyId: company.id,
+        teamId: data['teamId'] as String? ?? '',
+        displayName: adminName,
+        role: EmployeeRole.admin,
+        createdAt: DateTime.now(),
+      );
 
       ref.read(sessionProvider.notifier).signIn(employee: admin, company: company);
 

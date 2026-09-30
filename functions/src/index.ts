@@ -1829,3 +1829,73 @@ export const onQaAnswerCreated = onDocumentCreated(
     }
   }
 );
+
+/**
+ * 会社(個人契約含む)の初回登録: 会社ドキュメント・本社チーム(任意)・管理者Employeeを
+ * まとめて作成する。Firestoreルール上、クライアントからの直接書き込みでは
+ * employees.role=='admin'での作成を許可していない(自己昇格防止のため)。
+ * そのためこの初回登録だけはAdmin SDK経由で行う。
+ */
+export const registerCompanyAdmin = onCall(async (request) => {
+  const uid = request.auth?.uid;
+  if (!uid) {
+    throw new HttpsError("unauthenticated", "サインインが必要です");
+  }
+
+  const { companyName, industryId, planType, contractedHeadcount, adminDisplayName, teamName } =
+    request.data as {
+      companyName?: string;
+      industryId?: string;
+      planType?: string;
+      contractedHeadcount?: number;
+      adminDisplayName?: string;
+      teamName?: string;
+    };
+
+  if (
+    !companyName ||
+    !industryId ||
+    (planType !== "individual" && planType !== "team") ||
+    !contractedHeadcount ||
+    contractedHeadcount <= 0 ||
+    !adminDisplayName
+  ) {
+    throw new HttpsError("invalid-argument", "入力内容を確認してください");
+  }
+
+  const now = admin.firestore.Timestamp.now();
+  const companyRef = db.collection("companies").doc();
+
+  await companyRef.set({
+    name: companyName,
+    industryId,
+    planType,
+    contractedHeadcount,
+    customPassThreshold: {},
+    moduleDeadlines: {},
+    contactEmail: "",
+    categoryPriorityOverride: {},
+    createdAt: now,
+  });
+
+  let teamId = "";
+  if (teamName && teamName.trim().length > 0) {
+    const teamRef = companyRef.collection("teams").doc();
+    await teamRef.set({
+      companyId: companyRef.id,
+      teamName,
+      createdAt: now,
+    });
+    teamId = teamRef.id;
+  }
+
+  await companyRef.collection("employees").doc(uid).set({
+    companyId: companyRef.id,
+    teamId,
+    displayName: adminDisplayName,
+    role: "admin",
+    createdAt: now,
+  });
+
+  return { companyId: companyRef.id, teamId, employeeId: uid };
+});
