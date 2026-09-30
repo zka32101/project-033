@@ -1,7 +1,7 @@
 import '../models/module_model.dart';
 import '../models/category_model.dart';
 
-/// 研修モジュール種データ。9カテゴリ×6モジュール=54モジュール + 法令改正対応の追加6モジュール(2026年9月)。
+/// 研修モジュール種データ。9カテゴリ×6モジュール=54モジュール + 法令改正対応6 + 全業種共通の法定教育8 + 業種専用8 = 76モジュール(2026年9月)。
 /// 各カテゴリの1つ目をisFreeTrial=trueとし、無料体験→追加課金訴求(設計書 Step3.5 R④)の対象とする。
 const List<Module> seedModules = [
   // ①情報モラル
@@ -640,5 +640,77 @@ const List<Module> seedModules = [
     isFreeTrial: false,
     sortOrder: 9,
     industryIds: ['transport'],
+  ),
+  Module(
+    id: 'm_law_safety_induction',
+    categoryId: CategoryId.mentalHealth,
+    title: '雇入れ時・作業内容変更時の安全衛生教育(法定)',
+    description: '労働安全衛生法で事業者に義務づけられた、新しく雇い入れた人・担当業務が変わった人への安全衛生教育の内容と、身近な災害の防ぎ方を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 10,
+  ),
+  Module(
+    id: 'm_law_workstyle',
+    categoryId: CategoryId.compliance,
+    title: '働き方改革関連法の基本(時間外上限・年5日の有給・労働時間の把握)',
+    description: '時間外労働の上限規制、年5日の年次有給休暇の確実な取得、労働時間の把握など、働き方改革関連法で守るべき基本ルールを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 12,
+  ),
+  Module(
+    id: 'm_law_health_check',
+    categoryId: CategoryId.mentalHealth,
+    title: '健康診断・ストレスチェック・長時間労働者の面接指導(法定)',
+    description: '事業者に義務づけられた健康診断、ストレスチェック、産業医・面接指導の仕組みと、健康情報の適切な取り扱いを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 11,
+  ),
+  Module(
+    id: 'm_law_childcare_leave',
+    categoryId: CategoryId.compliance,
+    title: '育児・介護休業法の改正ポイント(2025年4月・10月施行)',
+    description: '2025年に段階的に施行された育児・介護休業法の改正について、事業主に求められる対応と従業員が使える制度を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 13,
+  ),
+  Module(
+    id: 'm_law_employment_quota',
+    categoryId: CategoryId.compliance,
+    title: '障害者雇用(法定雇用率)と高年齢者の就業確保',
+    description: '障害者雇用促進法の法定雇用率と、高年齢者雇用安定法にもとづく65歳までの雇用確保・70歳までの就業確保の基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 14,
+  ),
+  Module(
+    id: 'm_law_fire_safety',
+    categoryId: CategoryId.bcp,
+    title: '防火管理と消防訓練(消防法)',
+    description: '消防法で求められる防火管理者の選任、消防計画、消火・通報・避難訓練、消防用設備の点検の基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 7,
+  ),
+  Module(
+    id: 'm_law_company_vehicle',
+    categoryId: CategoryId.bcp,
+    title: '社用車の安全運転管理とアルコールチェック義務',
+    description: '一定台数以上の社用車を使う事業所に義務づけられた、安全運転管理者の選任と、運転前後のアルコールチェックの基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 8,
+  ),
+  Module(
+    id: 'm_law_equal_treatment',
+    categoryId: CategoryId.compliance,
+    title: '同一労働同一賃金と労働条件の明示ルール',
+    description: 'パートタイム・有期雇用労働法の均等待遇のルールと、2024年4月に追加された労働条件明示の新しいルールを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 15,
   ),
 ];

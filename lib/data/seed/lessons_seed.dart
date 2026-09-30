@@ -3331,4 +3331,308 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       sortOrder: 4,
     ),
   ],
+  'm_law_safety_induction': [
+    Lesson(
+      id: 'l_law_safety_induction_1',
+      moduleId: 'm_law_safety_induction',
+      title: '法定の安全衛生教育とは',
+      body:
+          '労働安全衛生法により、事業者は、労働者を雇い入れたとき、また作業内容を変更したときに、従事する業務に関する安全・衛生のための教育を行わなければなりません。パートやアルバイトなど、雇用形態にかかわらず対象です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_safety_induction_2',
+      moduleId: 'm_law_safety_induction',
+      title: '教育で伝える主な内容',
+      body:
+          '機械・原材料などの危険性や有害性、安全装置や保護具の取扱い、作業の手順、作業開始前の点検、整理整頓や清潔の保持、事故が起きたときの応急措置や退避の方法などを教えます。事務中心の業種では、業務に関係しない項目を省略できる場合があります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_safety_induction_3',
+      moduleId: 'm_law_safety_induction',
+      title: '身近な災害:転倒と腰痛',
+      body:
+          '休業4日以上の労働災害では、転倒が最も多い原因の一つです。濡れた床や段差、コードの引っかけ、急いでの移動などに注意します。重い物を持つときは、体に近づけて持ち、腰に負担をかけない姿勢を心がけます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_safety_induction_4',
+      moduleId: 'm_law_safety_induction',
+      title: '記録と継続的な教育',
+      body:
+          '実施した教育は、日時、内容、受講者を記録して残しておくと、対応の証明にも役立ちます。職長になる人、危険な業務に就く人には、別に職長教育や特別教育などが必要になります。新人だけでなく、定期的な再確認も大切です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_workstyle': [
+    Lesson(
+      id: 'l_law_workstyle_1',
+      moduleId: 'm_law_workstyle',
+      title: '時間外労働の上限規制',
+      body:
+          '時間外労働の上限は、原則として月45時間・年360時間です。臨時的な特別の事情があり、特別条項付きの36協定を結んだ場合でも、年720時間以内、単月100時間未満(休日労働を含む)などの上限があります。中小企業にも2020年4月から適用されています。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_workstyle_2',
+      moduleId: 'm_law_workstyle',
+      title: '年5日の年次有給休暇',
+      body:
+          '年10日以上の年次有給休暇が付与される労働者には、使用者が、付与日から1年以内に、時季を指定して5日以上取得させることが義務づけられています。労働者の希望を聞き、計画的に取得できるよう、年間の管理を行います。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_workstyle_3',
+      moduleId: 'm_law_workstyle',
+      title: '労働時間の客観的な把握',
+      body:
+          '使用者は、タイムカードやパソコンの使用記録などの客観的な方法で、労働者の労働時間を把握する必要があります。自己申告だけに頼らず、実態と記録のずれがないかを確認します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_workstyle_4',
+      moduleId: 'm_law_workstyle',
+      title: '違反した場合と職場の取組',
+      body:
+          '上限規制や年5日の取得義務に違反すると、罰則の対象になるおそれがあります。管理職は、業務の偏りを見直し、無理のない業務量に調整します。勤務間インターバルの導入も、努力義務として推奨されています。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_health_check': [
+    Lesson(
+      id: 'l_law_health_check_1',
+      moduleId: 'm_law_health_check',
+      title: '定期健康診断の実施',
+      body:
+          '常時使用する労働者には、雇入れ時と、その後は年1回の定期健康診断を実施する義務があります。労働者にも受診する義務があります。結果は本人に通知し、異常の所見があれば、医師の意見を聞いたうえで必要な措置を検討します。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_health_check_2',
+      moduleId: 'm_law_health_check',
+      title: 'ストレスチェック制度',
+      body:
+          '常時50人以上の労働者を使用する事業場では、年1回のストレスチェックの実施が義務づけられています。結果は本人に通知され、本人の同意なく事業者に提供されることはありません。50人未満の事業場への義務化も、法改正で決まっています。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_health_check_3',
+      moduleId: 'm_law_health_check',
+      title: '長時間労働者への面接指導',
+      body:
+          '時間外・休日労働が月80時間を超え、疲労の蓄積が認められる労働者が申し出たときは、医師による面接指導を行う必要があります。面接の結果にもとづき、就業場所の変更や労働時間の短縮などの措置を検討します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_health_check_4',
+      moduleId: 'm_law_health_check',
+      title: '産業医と健康情報の取り扱い',
+      body:
+          '常時50人以上の事業場では、産業医を選任します。病歴や健康診断の結果などの健康情報は、特に慎重な取り扱いが必要な個人情報です。業務上必要な範囲の人だけが扱い、不必要に共有しないようにします。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_childcare_leave': [
+    Lesson(
+      id: 'l_law_childcare_leave_1',
+      moduleId: 'm_law_childcare_leave',
+      title: '改正の全体像',
+      body:
+          '育児・介護休業法は、2025年4月と10月に段階的に改正が施行されました。仕事と育児・介護の両立を支援するため、休暇や働き方の選択肢が広がり、事業主には制度の周知や意向の確認が義務づけられています。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_childcare_leave_2',
+      moduleId: 'm_law_childcare_leave',
+      title: '2025年4月施行のポイント',
+      body:
+          '子の看護休暇が、対象を小学校3年生修了までに広げ、名称も子の看護等休暇となりました。感染症による学級閉鎖や、入園(入学)式・卒園式なども取得の事由に加わりました。所定外労働の制限の対象も、小学校就学前の子に広がりました。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_childcare_leave_3',
+      moduleId: 'm_law_childcare_leave',
+      title: '2025年10月施行のポイント',
+      body:
+          '3歳から小学校就学前の子を養育する労働者のために、事業主は、始業時刻等の変更、テレワーク、短時間勤務、養育両立支援休暇などの中から2つ以上の措置を用意し、労働者が選べるようにする必要があります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_childcare_leave_4',
+      moduleId: 'm_law_childcare_leave',
+      title: '周知と意向確認、介護への対応',
+      body:
+          '妊娠・出産の申出があったときや、子が3歳になる前には、事業主が個別に制度を周知し、意向を確認する必要があります。介護に直面した旨の申出があったときも、制度の個別の周知と意向確認が義務です。不利益な取扱いは禁止されています。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_employment_quota': [
+    Lesson(
+      id: 'l_law_employment_quota_1',
+      moduleId: 'm_law_employment_quota',
+      title: '障害者の法定雇用率',
+      body:
+          '民間企業は、常時雇用する労働者の一定の割合(法定雇用率)以上の障害者を雇用する義務があります。法定雇用率は段階的に引き上げられ、2026年7月から2.7%となっています。対象となる事業主の範囲も、従業員37.5人以上に広がりました。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_employment_quota_2',
+      moduleId: 'm_law_employment_quota',
+      title: '報告と納付金・合理的配慮',
+      body:
+          '事業主は、毎年6月1日現在の障害者の雇用状況をハローワークに報告します。法定雇用率を満たさず、常時雇用する労働者が100人を超える場合は、障害者雇用納付金の納付が必要になります。雇用にあたっては、障害の特性に応じた合理的配慮を提供します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_employment_quota_3',
+      moduleId: 'm_law_employment_quota',
+      title: '高年齢者の雇用確保',
+      body:
+          '高年齢者雇用安定法により、事業主は、65歳までの雇用を確保するため、定年の引上げ、継続雇用制度の導入、定年の廃止のいずれかの措置を講じる義務があります。さらに、70歳までの就業確保は、努力義務とされています。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_employment_quota_4',
+      moduleId: 'm_law_employment_quota',
+      title: '多様な人材が働き続けられる職場',
+      body:
+          '障害のある人も高年齢の人も、能力を発揮して働けるよう、仕事の切り分けや作業環境の整備、相談しやすい体制づくりが大切です。採用や配置で、不当な差別をしないことも求められます。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_fire_safety': [
+    Lesson(
+      id: 'l_law_fire_safety_1',
+      moduleId: 'm_law_fire_safety',
+      title: '防火管理者と消防計画',
+      body:
+          '一定の規模の建物では、防火管理者を選任し、消防計画を作成して消防署に届け出る義務があります。宿泊施設や飲食店、病院などの不特定多数が利用する建物では、より小さな規模から対象になります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_fire_safety_2',
+      moduleId: 'm_law_fire_safety',
+      title: '消火・通報・避難訓練',
+      body:
+          '消防計画にもとづき、消火、通報、避難の訓練を定期的に行います。実際の火災では、初期消火よりも、通報と避難を優先する判断が重要です。訓練では、避難経路と集合場所、役割分担を全員で確認します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_fire_safety_3',
+      moduleId: 'm_law_fire_safety',
+      title: '避難経路と設備の点検',
+      body:
+          '避難経路や非常口の前には、物を置かないようにします。消火器、火災報知設備、誘導灯などの消防用設備は、定期的な点検を行い、結果を消防署に報告します。放置された荷物が、避難の妨げになることがあります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_fire_safety_4',
+      moduleId: 'm_law_fire_safety',
+      title: '日常の火気管理',
+      body:
+          '電気ストーブの近くに可燃物を置かない、たこ足配線を避ける、喫煙は決められた場所で行う、終業時に火元を確認するなど、日頃の管理が火災の予防につながります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_company_vehicle': [
+    Lesson(
+      id: 'l_law_company_vehicle_1',
+      moduleId: 'm_law_company_vehicle',
+      title: '安全運転管理者の選任',
+      body:
+          '乗車定員が11人以上の自動車を1台以上、または、その他の自動車を5台以上使用する事業所では、安全運転管理者を選任し、公安委員会に届け出る義務があります。白ナンバーの自動車も対象です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_company_vehicle_2',
+      moduleId: 'm_law_company_vehicle',
+      title: '運転前後のアルコールチェック',
+      body:
+          '安全運転管理者は、運転前後に、運転者の酒気帯びの有無を確認しなければなりません。2023年12月からは、アルコール検知器を使った確認と、検知器を常に有効な状態で保持することが義務となっています。確認の記録は1年間保存します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_company_vehicle_3',
+      moduleId: 'm_law_company_vehicle',
+      title: '運転者の心構えと禁止事項',
+      body:
+          '飲酒運転は、運転者だけでなく、酒類の提供や同乗、車両の提供にも責任が及びます。運転中のスマートフォンの操作や、ヘッドホンの使用、無理な運行スケジュールも、重大事故のもとです。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_company_vehicle_4',
+      moduleId: 'm_law_company_vehicle',
+      title: '事故が起きたときの対応',
+      body:
+          '事故が起きたときは、まず負傷者の救護と危険の防止を行い、警察に届け出ます。そのあと、会社の責任者に連絡します。事故の状況を記録し、再発防止のための教育や運行計画の見直しにつなげます。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_equal_treatment': [
+    Lesson(
+      id: 'l_law_equal_treatment_1',
+      moduleId: 'm_law_equal_treatment',
+      title: '同一労働同一賃金の考え方',
+      body:
+          '同じ会社で働く正社員と、パートタイム・有期雇用・派遣の労働者との間で、基本給や賞与、手当、福利厚生などについて、不合理な待遇差を設けることが禁止されています。中小企業にも2021年4月から適用されています。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_equal_treatment_2',
+      moduleId: 'm_law_equal_treatment',
+      title: '待遇差の説明義務',
+      body:
+          '非正規雇用の労働者から求められたときは、事業主は、正社員との待遇の違いの内容と、その理由を説明する必要があります。説明を求めたことを理由に、不利益な取扱いをすることは禁止されています。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_equal_treatment_3',
+      moduleId: 'm_law_equal_treatment',
+      title: '労働条件の明示',
+      body:
+          '労働契約を結ぶときは、契約期間、就業場所、業務の内容、始業・終業の時刻、賃金、退職に関することなどを、書面(または本人が希望した場合は電子的な方法)で明示する必要があります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_equal_treatment_4',
+      moduleId: 'm_law_equal_treatment',
+      title: '2024年4月に追加された明示事項',
+      body:
+          '2024年4月から、すべての労働者に対して、就業場所と業務の変更の範囲を明示する必要があります。有期契約の場合は、更新の上限の有無と内容、通算5年を超えるときの無期転換申込の機会と条件も明示します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
 };
