@@ -1,3 +1,4 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../data/models/employee_model.dart';
@@ -25,13 +26,18 @@ class EmployeeService {
   Future<String> _ensureAuthUid() => ensureAuthUid();
 
   Future<Employee> joinViaInviteCode({
+    required String inviteCode,
     required String companyId,
     required String teamId,
     required String displayName,
   }) async {
     final uid = await _ensureAuthUid();
-    final ref = _db.doc(FirestorePaths.employee(companyId, uid));
-    final employee = Employee(
+    // 参加人数の上限(お試しは5名)はサーバー側でしか数えられないためCloud Functions経由で参加する。
+    await FirebaseFunctions.instance.httpsCallable('joinCompanyViaInvite').call({
+      'inviteCode': inviteCode,
+      'displayName': displayName,
+    });
+    return Employee(
       id: uid,
       companyId: companyId,
       teamId: teamId,
@@ -39,8 +45,6 @@ class EmployeeService {
       role: EmployeeRole.member,
       createdAt: DateTime.now(),
     );
-    await ref.set(employee.toMap());
-    return employee;
   }
 
   Future<Employee> createAdmin({

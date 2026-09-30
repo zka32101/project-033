@@ -1,3 +1,4 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/service_providers.dart';
@@ -63,6 +64,7 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
 
       final employeeService = ref.read(employeeServiceProvider);
       final employee = await employeeService.joinViaInviteCode(
+        inviteCode: invite.code,
         companyId: invite.companyId,
         teamId: invite.teamId,
         displayName: displayName,
@@ -87,6 +89,16 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const AppShell()),
       );
+    } on FirebaseFunctionsException catch (e) {
+      setState(() {
+        _errorMessage = switch (e.code) {
+          'resource-exhausted' => 'このチームは参加人数の上限に達しています。管理者にご確認ください',
+          'failed-precondition' => 'お試し期間が終了しています。管理者にご確認ください',
+          'not-found' => 'チームIDが正しくないか、有効期限が切れています',
+          _ => '参加処理に失敗しました。時間をおいて再度お試しください',
+        };
+        _isLoading = false;
+      });
     } catch (e) {
       setState(() {
         _errorMessage = '参加処理に失敗しました。時間をおいて再度お試しください';
@@ -182,7 +194,7 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
                       Icon(Icons.person_outline, color: colorScheme.primary),
                       const SizedBox(width: 8),
                       const Text(
-                        '個人でお使いの方',
+                        'まずは試したい方(14日間無料)',
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                     ],
@@ -192,7 +204,7 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
                     width: double.infinity,
                     child: OutlinedButton(
                       onPressed: _isLoading ? null : _startIndividual,
-                      child: const Text('個人で始める'),
+                      child: const Text('14日間お試しで始める(最大5名)'),
                     ),
                   ),
                 ],
