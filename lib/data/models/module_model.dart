@@ -12,6 +12,8 @@ class Module {
   // レッスン/クイズの取得元(customModules配下 vs グローバルmodules配下)の分岐に使う。
   // グローバルコンテンツのfromMap()では常にfalse(Firestoreには保存しないフィールド)。
   final bool isCustom;
+  // 業種専用モジュールの対象業種ID。空なら全業種向け(共通モジュール)。
+  final List<String> industryIds;
 
   const Module({
     required this.id,
@@ -22,7 +24,12 @@ class Module {
     required this.isFreeTrial,
     required this.sortOrder,
     this.isCustom = false,
+    this.industryIds = const [],
   });
+
+  /// この業種の受講者に表示するか(共通モジュール、または対象業種に含まれる)。
+  bool isAvailableForIndustry(String industryId) =>
+      industryIds.isEmpty || industryIds.contains(industryId);
 
   factory Module.fromMap(String id, Map<String, dynamic> map) {
     return Module(
@@ -37,6 +44,7 @@ class Module {
           (map['passThresholdDefault'] as num?)?.toInt() ?? 80,
       isFreeTrial: map['isFreeTrial'] as bool? ?? false,
       sortOrder: (map['sortOrder'] as num?)?.toInt() ?? 0,
+      industryIds: List<String>.from((map['industryIds'] as List?) ?? const []),
     );
   }
 
@@ -47,5 +55,6 @@ class Module {
         'passThresholdDefault': passThresholdDefault,
         'isFreeTrial': isFreeTrial,
         'sortOrder': sortOrder,
+        if (industryIds.isNotEmpty) 'industryIds': industryIds,
       };
 }

@@ -3027,4 +3027,308 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       sortOrder: 4,
     ),
   ],
+  'm_ind_construction_safety': [
+    Lesson(
+      id: 'l_ind_construction_safety_1',
+      moduleId: 'm_ind_construction_safety',
+      title: '建設現場の災害と墜落・転落',
+      body:
+          '建設業の死亡災害では、墜落・転落が最も多い原因の一つです。足場、屋根、はしご、開口部など、高い場所での作業は、わずかな不注意や設備の不備が命に関わります。「慣れているから大丈夫」という思い込みが事故のもとです。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_construction_safety_2',
+      moduleId: 'm_ind_construction_safety',
+      title: '高所作業の基本ルール',
+      body:
+          '高さ2メートル以上の場所で作業を行うときは、作業床を設け、手すりや囲いなどで墜落を防ぎます。作業床が設けられない場合は、墜落制止用器具(安全帯)を確実に使用します。器具は、使う前に傷みや損傷がないかを点検します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_construction_safety_3',
+      moduleId: 'm_ind_construction_safety',
+      title: '作業前点検とKY活動',
+      body:
+          '足場や機械は、作業を始める前に点検し、異常があれば直ちに補修や報告を行います。作業前のミーティングでは、KY活動(危険予知活動)で「どこに危険があるか」を全員で話し合い、対策を共有します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_construction_safety_4',
+      moduleId: 'm_ind_construction_safety',
+      title: '元請・下請・一人親方の連携',
+      body:
+          '建設現場は複数の会社が同時に作業するため、元請と下請が連絡調整を行い、安全衛生責任者を通じて情報を共有します。一人親方も同じ現場のルールに従い、保護具の着用と危険箇所の報告を怠らないようにします。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_healthcare_rights': [
+    Lesson(
+      id: 'l_ind_healthcare_rights_1',
+      moduleId: 'm_ind_healthcare_rights',
+      title: '権利擁護と虐待の類型',
+      body:
+          '利用者や患者の尊厳と権利を守ることは、医療・福祉の現場の大前提です。虐待には、身体的虐待、心理的虐待、放棄・放置(ネグレクト)、経済的虐待、性的虐待などがあり、悪意がなくても、無意識の言動が虐待にあたることがあります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_healthcare_rights_2',
+      moduleId: 'm_ind_healthcare_rights',
+      title: '身体拘束は原則行わない',
+      body:
+          '身体拘束は、利用者の自由を奪う行為であり、原則として行いません。やむを得ず行う場合でも、切迫性(生命等の危険が著しい)、非代替性(ほかに方法がない)、一時性(一時的である)の3つの要件を満たし、記録と家族への説明を行う必要があります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_healthcare_rights_3',
+      moduleId: 'm_ind_healthcare_rights',
+      title: '気づいたときの対応と通報',
+      body:
+          '虐待を発見したり、疑いを持ったりしたときは、ひとりで抱え込まず、上司や責任者に速やかに報告します。施設の従業者が高齢者虐待を発見した場合は、市町村への通報が求められます。通報した人が不利益を受けないよう、保護の仕組みがあります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_healthcare_rights_4',
+      moduleId: 'm_ind_healthcare_rights',
+      title: '個人情報と要配慮個人情報',
+      body:
+          '病歴や診療情報、介護記録は、特に慎重な取り扱いが必要な情報です。業務に関係のないカルテや記録を興味本位で閲覧してはいけません。SNSへの投稿や、家族以外への情報提供にも十分注意します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_it_secure_dev': [
+    Lesson(
+      id: 'l_ind_it_secure_dev_1',
+      moduleId: 'm_ind_it_secure_dev',
+      title: '開発現場の主な脆弱性',
+      body:
+          'システム開発では、入力値の検証不足によるSQLインジェクションやクロスサイトスクリプティングなどの脆弱性が、依然として多くの被害の原因になっています。ユーザーからの入力は信頼できないものとして扱い、検証とエスケープを行います。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_it_secure_dev_2',
+      moduleId: 'm_ind_it_secure_dev',
+      title: '機密情報をコードに埋め込まない',
+      body:
+          'パスワード、APIキー、秘密鍵などをソースコードに直接書くと、リポジトリの公開や共有で漏えいするおそれがあります。環境変数やシークレット管理サービスを使い、誤ってコミットしないよう検知の仕組みを導入します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_it_secure_dev_3',
+      moduleId: 'm_ind_it_secure_dev',
+      title: 'OSSの利用とライセンス管理',
+      body:
+          'オープンソースソフトウェア(OSS)は便利ですが、ライセンスの条件(利用範囲、ソースコード公開義務など)を守る必要があります。利用しているOSSと版数を一覧化し、脆弱性が公表されたら速やかに更新できる体制を整えます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_it_secure_dev_4',
+      moduleId: 'm_ind_it_secure_dev',
+      title: '権限管理と委託先の管理',
+      body:
+          '本番環境へのアクセスは、必要な人だけに最小限の権限を付与します。開発を外部に委託する場合は、秘密保持契約とセキュリティ要件を明確にし、再委託の有無や成果物の取り扱いも確認します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_manufacturing_secret': [
+    Lesson(
+      id: 'l_ind_manufacturing_secret_1',
+      moduleId: 'm_ind_manufacturing_secret',
+      title: '営業秘密とは',
+      body:
+          '営業秘密とは、不正競争防止法で保護される、秘密として管理された有用な情報です。保護されるには、秘密として管理されていること(秘密管理性)、事業活動に有用であること(有用性)、公然と知られていないこと(非公知性)の3つの要件が必要です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_manufacturing_secret_2',
+      moduleId: 'm_ind_manufacturing_secret',
+      title: '図面・ノウハウの持ち出し防止',
+      body:
+          '製造業では、図面、配合、工程条件などの技術情報が競争力の源泉です。「秘密」と表示し、アクセスできる人を限定し、USBメモリや私物スマホへの持ち出しを制限します。退職時には、情報の返却と守秘義務の確認を行います。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_manufacturing_secret_3',
+      moduleId: 'm_ind_manufacturing_secret',
+      title: '品質不正が起きる背景',
+      body:
+          '検査データの書き換えや、検査の省略といった品質不正は、納期・コストのプレッシャーや、「これくらいなら問題ない」という慣れから起きます。発覚すれば、取引停止や信頼の失墜など、企業に大きな損害を与えます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_manufacturing_secret_4',
+      moduleId: 'm_ind_manufacturing_secret',
+      title: '不正を防ぐ職場づくり',
+      body:
+          '不正を防ぐには、無理な納期や目標を見直し、異常やミスを報告しやすい雰囲気をつくることが大切です。検査記録は改ざんできない仕組みで保管し、疑わしい点は内部通報窓口に相談できるようにします。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_professional_confidential': [
+    Lesson(
+      id: 'l_ind_professional_confidential_1',
+      moduleId: 'm_ind_professional_confidential',
+      title: '守秘義務の重み',
+      body:
+          '士業や専門サービスでは、依頼者の家庭や財産、事業の秘密に触れる機会が多く、法律や職業倫理により守秘義務が課されています。依頼者との関係が終わった後も、原則として秘密を守り続ける必要があります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_professional_confidential_2',
+      moduleId: 'm_ind_professional_confidential',
+      title: '日常業務での情報漏えい対策',
+      body:
+          '喫茶店や電車内での電話・打ち合わせ、書類の置き忘れ、FAXやメールの誤送信は、日常業務で起こりやすい漏えい原因です。宛先の確認、パスワード付きファイルの活用、人目のある場所で案件の話をしない習慣が大切です。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_professional_confidential_3',
+      moduleId: 'm_ind_professional_confidential',
+      title: '利益相反の確認',
+      body:
+          '同じ案件で、対立する複数の当事者の依頼を受けるなど、依頼者の利益が衝突する状況(利益相反)は、原則として避けます。受任の前に、既存の依頼者や過去の案件との関係を確認する仕組みを整えます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_professional_confidential_4',
+      moduleId: 'm_ind_professional_confidential',
+      title: '預り金・依頼者財産の管理',
+      body:
+          '依頼者から預かったお金や書類は、自分や事務所の資産と分けて管理し、使途と残高を記録します。流用は重大な問題につながります。返還や精算は、ルールに従って速やかに、書面で行います。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_realestate_rules': [
+    Lesson(
+      id: 'l_ind_realestate_rules_1',
+      moduleId: 'm_ind_realestate_rules',
+      title: '重要事項説明の基本',
+      body:
+          '宅地建物取引業者は、契約が成立するまでの間に、宅地建物取引士が、購入者や借主に対して重要事項を説明する必要があります。説明は、書面(電子交付の場合もあります)を交付して行い、宅地建物取引士が記名します。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_realestate_rules_2',
+      moduleId: 'm_ind_realestate_rules',
+      title: '広告のルール',
+      body:
+          '実際には取引できない物件を広告する「おとり広告」や、実際より著しく良く見せる誇大広告は禁止されています。取引の可否や物件の状態は、最新の情報を確認し、成約済みの物件はすぐに広告から外します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_realestate_rules_3',
+      moduleId: 'm_ind_realestate_rules',
+      title: '契約書面と個人情報',
+      body:
+          '契約が成立した後は、契約内容を記載した書面を交付します。顧客の氏名、収入、家族構成など、取引で得た個人情報は、目的の範囲で適切に管理し、業務以外に使わないようにします。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_realestate_rules_4',
+      moduleId: 'm_ind_realestate_rules',
+      title: '反社会的勢力への対応',
+      body:
+          '不動産取引は、反社会的勢力に悪用されるおそれがあります。契約書に暴力団排除条項を入れ、取引の前に相手を確認します。疑わしい場合は、契約を進めず、上司や弁護士、警察等に相談します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_retail_hygiene': [
+    Lesson(
+      id: 'l_ind_retail_hygiene_1',
+      moduleId: 'm_ind_retail_hygiene',
+      title: 'HACCPに沿った衛生管理',
+      body:
+          '食品を扱う事業者には、HACCP(ハサップ)の考え方を取り入れた衛生管理が求められています。原材料の受入れから調理、提供までの中で、危険が高まる工程を確認し、温度や時間の記録を残して、食中毒を防ぎます。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_retail_hygiene_2',
+      moduleId: 'm_ind_retail_hygiene',
+      title: '日常の衛生ルール',
+      body:
+          '手洗いや消毒、調理器具の洗浄・殺菌、冷蔵・冷凍の温度管理は、日々の基本です。体調不良や下痢・嘔吐の症状があるときは調理に従事せず、責任者に報告します。使用期限や消費期限のチェックも欠かせません。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_retail_hygiene_3',
+      moduleId: 'm_ind_retail_hygiene',
+      title: 'アレルゲン表示',
+      body:
+          'アレルギーは、重い症状を引き起こすことがあります。えび・かに・くるみ・小麦・そば・卵・乳・落花生の8品目は、特に発症数や重篤度が高く、包装食品では表示が義務づけられています。お客様に聞かれたときは、確認せず推測で答えないようにします。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_retail_hygiene_4',
+      moduleId: 'm_ind_retail_hygiene',
+      title: '景品表示法と適正な表示',
+      body:
+          '実際よりも著しく優良であるかのように見せる表示(優良誤認)や、実際よりも有利であるかのように見せる表示(有利誤認)は、景品表示法で禁止されています。「通常価格」と示す二重価格表示は、実際の販売実績にもとづく必要があります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ind_transport_hours': [
+    Lesson(
+      id: 'l_ind_transport_hours_1',
+      moduleId: 'm_ind_transport_hours',
+      title: '2024年問題と労働時間の規制',
+      body:
+          '2024年4月から、トラック運転者にも時間外労働の上限規制が適用されました。これにより、長時間労働の是正と、人手不足への対応(いわゆる2024年問題)が、運送業全体の大きな課題になっています。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ind_transport_hours_2',
+      moduleId: 'm_ind_transport_hours',
+      title: '拘束時間と休息期間',
+      body:
+          '運転者の労働時間は、国の改善基準告示で、拘束時間と休息期間の基準が定められています。1日の勤務が終わった後は、原則として継続11時間以上の休息期間を与えるよう努め、どんな場合でも9時間を下回らないようにします。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ind_transport_hours_3',
+      moduleId: 'm_ind_transport_hours',
+      title: '点呼とアルコールチェック',
+      body:
+          '運転の前後には点呼を行い、運転者の健康状態、酒気帯びの有無、免許証の携帯などを確認します。アルコール検知器を使った確認と、その記録を残すことが義務づけられており、白ナンバーの事業者も対象になっています。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ind_transport_hours_4',
+      moduleId: 'm_ind_transport_hours',
+      title: '疲労・健康管理と荷主への働きかけ',
+      body:
+          '疲労や睡眠不足、持病の悪化は、重大事故の原因になります。体調不良のときは運転せず、すぐに報告します。長い待機時間の削減や、無理な納期の見直しは、荷主との協力なしには進まないため、日頃から働きかけを行います。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
 };
