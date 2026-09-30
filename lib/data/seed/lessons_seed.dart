@@ -4357,4 +4357,156 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       sortOrder: 4,
     ),
   ],
+  'm_law_company_act': [
+    Lesson(
+      id: 'l_law_company_act_1',
+      moduleId: 'm_law_company_act',
+      title: '取締役の善管注意義務と忠実義務',
+      body:
+          '取締役は会社に対して、善良な管理者としての注意を尽くす義務と、会社の利益を優先する忠実義務を負います。経営判断は広く認められますが、情報収集や検討の過程が著しく不合理だと、責任を問われることがあります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_company_act_2',
+      moduleId: 'm_law_company_act',
+      title: '利益相反取引と競業',
+      body:
+          '取締役が自分や親族の会社と取引をする場合や、会社と同じ事業を行う場合は、取締役会などの承認が必要です。承認なく行うと、会社に損害が出たときの責任や、利益の取り戻しにつながります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_company_act_3',
+      moduleId: 'm_law_company_act',
+      title: '内部統制と報告の流れ',
+      body:
+          '会社は、業務の適正を確保するための体制(内部統制)を整える必要があります。従業員は、不正やミスの兆候に気づいたら、上司や相談窓口に早めに報告することが、会社と自分を守ることにつながります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_company_act_4',
+      moduleId: 'm_law_company_act',
+      title: '従業員が押さえる基本',
+      body:
+          '従業員の決裁権限や社印の使い方には、社内の規程があります。権限を超えた契約や、名義を貸す行為はトラブルの原因になります。迷ったら、上司や管理部門に確認しましょう。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_tax_basics': [
+    Lesson(
+      id: 'l_law_tax_basics_1',
+      moduleId: 'm_law_tax_basics',
+      title: '源泉徴収と年末調整',
+      body:
+          '会社は、給与や一定の報酬を支払うときに、所得税を差し引いて国に納める(源泉徴収)義務があります。年末調整では、その年の税額を精算します。従業員は、扶養の状況などを正確に申告する必要があります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_tax_basics_2',
+      moduleId: 'm_law_tax_basics',
+      title: '経費にできるもの・できないもの',
+      body:
+          '業務に必要な支出は経費になりますが、私的な支出を経費として精算するのは不適切です。領収書や請求書などの証拠書類は、法令で定められた期間、適切に保存します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_tax_basics_3',
+      moduleId: 'm_law_tax_basics',
+      title: '交際費と接待',
+      body:
+          '取引先との飲食などの交際費は、税務上の扱いに一定のルールがあります。目的や相手、参加者を記録しておくことが、適切な処理と説明につながります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_tax_basics_4',
+      moduleId: 'm_law_tax_basics',
+      title: '税務調査への備え',
+      body:
+          '税務調査では、帳簿や証拠書類の提示を求められます。日頃から、取引の記録を整理して保存し、正確に処理しておくことが大切です。調査の連絡が来たら、経理の責任者に速やかに報告します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_aml_kyc': [
+    Lesson(
+      id: 'l_law_aml_kyc_1',
+      moduleId: 'm_law_aml_kyc',
+      title: '取引時確認とは',
+      body:
+          '犯罪収益移転防止法は、犯罪で得たお金が正規の取引に紛れ込むことを防ぐための法律です。対象となる事業者は、取引の際に、顧客の本人確認などを行う義務があります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_aml_kyc_2',
+      moduleId: 'm_law_aml_kyc',
+      title: '対象となる事業者と取引',
+      body:
+          '金融機関のほか、不動産業者、宝石・貴金属の販売業者、司法書士や税理士などの士業も、一定の取引で対象になります。自社が対象かどうかは、業種や取引内容で確認する必要があります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_aml_kyc_3',
+      moduleId: 'm_law_aml_kyc',
+      title: '確認の記録と保存',
+      body:
+          '本人確認を行ったら、確認の記録と取引の記録を作成し、定められた期間、保存します。確認書類の写しや記録を、適切に管理することも求められます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_aml_kyc_4',
+      moduleId: 'm_law_aml_kyc',
+      title: '疑わしい取引への対応',
+      body:
+          '取引の内容や顧客の様子に不自然な点があるときは、自分で判断せず、責任者に報告します。対象の事業者は、疑わしい取引の届出が必要になる場合があります。顧客に、届出の事実を漏らしてはいけません。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_advertising': [
+    Lesson(
+      id: 'l_law_advertising_1',
+      moduleId: 'm_law_advertising',
+      title: '不当表示の禁止',
+      body:
+          '景品表示法は、商品やサービスの品質や価格について、実際よりも著しく良く見せる表示を禁止しています。実際より優れていると思わせる優良誤認表示や、有利だと誤認させる有利誤認表示が典型です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_advertising_2',
+      moduleId: 'm_law_advertising',
+      title: '景品類の提供の制限',
+      body:
+          '懸賞や、商品に付ける景品の金額には、上限が定められています。キャンペーンを行う際は、景品の種類や取引額に応じた上限を、事前に確認する必要があります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_advertising_3',
+      moduleId: 'm_law_advertising',
+      title: 'ステルスマーケティング規制',
+      body:
+          '広告であるのに、広告だと分からない形で発信することは、ステルスマーケティングとして規制されています。事業者の依頼を受けた投稿には、広告であることが分かる表示が必要です。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_advertising_4',
+      moduleId: 'm_law_advertising',
+      title: '社内でのチェック体制',
+      body:
+          '広告や販促の表示は、根拠となる資料を確認し、複数人でチェックしてから公開します。SNSでの発信も同様に、事前のルールを決めておくことが、違反の予防につながります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
 };
