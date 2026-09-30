@@ -5,12 +5,15 @@ class Team {
   final String companyId;
   final String teamName;
   final DateTime createdAt;
+  // 発行済みの招待コード。チームごとに一度だけ発行でき、再発行はできない。
+  final String? inviteCode;
 
   const Team({
     required this.id,
     required this.companyId,
     required this.teamName,
     required this.createdAt,
+    this.inviteCode,
   });
 
   factory Team.fromMap(String id, Map<String, dynamic> map) {
@@ -19,6 +22,7 @@ class Team {
       companyId: map['companyId'] as String? ?? '',
       teamName: map['teamName'] as String? ?? '',
       createdAt: parseFirestoreDateTime(map['createdAt']),
+      inviteCode: map['inviteCode'] as String?,
     );
   }
 
@@ -26,6 +30,7 @@ class Team {
         'companyId': companyId,
         'teamName': teamName,
         'createdAt': createdAt,
+        if (inviteCode != null) 'inviteCode': inviteCode,
       };
 
   Team copyWith({String? teamName}) {
@@ -34,6 +39,7 @@ class Team {
       companyId: companyId,
       teamName: teamName ?? this.teamName,
       createdAt: createdAt,
+      inviteCode: inviteCode,
     );
   }
 }

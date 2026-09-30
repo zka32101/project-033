@@ -1181,13 +1181,28 @@ export const submitLiveExam = onCall(async (request) => {
     }> = [];
     const categoryBreakdown: Record<string, { correct: number; total: number }> = {};
 
+    // 正解はクライアントから読めない answerKeys に置く(設問ドキュメントに正解を含めない)。
+    // 未移行の設問は従来どおり設問ドキュメントの correctOption を使う。
+    const answerKeySnapshot = await db
+      .collection("exams")
+      .doc(examId)
+      .collection("answerKeys")
+      .get();
+    const answerKeys = new Map<string, number>(
+      answerKeySnapshot.docs.map((d) => [d.id, d.data().correctOption as number])
+    );
+
     for (let i = 0; i < questions.length; i++) {
-      const question = questions[i] as {
+      const rawQuestion = questions[i] as {
         id: string;
         order: number;
         category?: string;
         text: string;
-        correctOption: number;
+        correctOption?: number;
+      };
+      const question = {
+        ...rawQuestion,
+        correctOption: answerKeys.get(rawQuestion.id) ?? rawQuestion.correctOption ?? 0,
       };
       const category = question.category || "未分類";
       const userAnswerKey = `option_${question.correctOption}a`;
@@ -1918,6 +1933,37 @@ export const registerCompanyAdmin = onCall(async (request) => {
     contractedHeadcount: headcount,
     trialEndsAt: trialEndsAt ? trialEndsAt.toMillis() : null,
   };
+});
+
+/**
+ * 招待コードの会社名・チーム名を、参加前に確認するために返す。
+ * 会社情報は参加前は直接読めないため、確認に必要な項目だけをサーバーで取得して返す。
+ */
+export const previewInviteCode = onCall({ region: "us-central1" }, async (request) => {
+  if (!request.auth?.uid) {
+    throw new HttpsError("unauthenticated", "サインインが必要です");
+  }
+  const { inviteCode } = request.data as { inviteCode?: string };
+  if (!inviteCode) {
+    throw new HttpsError("invalid-argument", "招待コードを入力してください");
+  }
+  const inviteSnap = await db.collection("inviteCodes").doc(inviteCode.toUpperCase()).get();
+  const invite = inviteSnap.data();
+  if (!invite || invite.isActive === false ||
+      (invite.expiresAt && invite.expiresAt.toMillis() < Date.now())) {
+    throw new HttpsError("not-found", "招待コードが無効です");
+  }
+  const companyRef = db.collection("companies").doc(invite.companyId);
+  const company = (await companyRef.get()).data();
+  if (!company) {
+    throw new HttpsError("not-found", "会社情報が見つかりませんでした");
+  }
+  let teamName = "";
+  if (invite.teamId) {
+    const team = (await companyRef.collection("teams").doc(invite.teamId).get()).data();
+    teamName = (team?.teamName as string | undefined) ?? "";
+  }
+  return { companyName: company.name as string, teamName };
 });
 
 /**

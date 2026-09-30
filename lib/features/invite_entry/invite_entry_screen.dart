@@ -52,6 +52,47 @@ class _InviteEntryScreenState extends ConsumerState<InviteEntryScreen> {
         return;
       }
 
+      // 参加する前に、会社名とチーム名を確認してもらい、参加するかどうかを選べるようにする。
+      final preview = await inviteService.previewInviteCode(invite.code);
+      if (!mounted) return;
+      final agreed = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('このチームに参加しますか'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('会社名', style: TextStyle(fontSize: 12)),
+              Text(preview.companyName,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+              const SizedBox(height: 12),
+              const Text('チーム', style: TextStyle(fontSize: 12)),
+              Text(preview.teamName.isEmpty ? '(チーム名なし)' : preview.teamName,
+                  style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 12),
+              Text('あなたの名前: $displayName'),
+              const SizedBox(height: 8),
+              const Text('心当たりのない会社の場合は、参加しないでください。', style: TextStyle(fontSize: 12)),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('参加しない'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('参加する'),
+            ),
+          ],
+        ),
+      );
+      if (agreed != true) {
+        setState(() => _isLoading = false);
+        return;
+      }
+
       // 会社情報はメンバーにしか読めないため、先に参加してから取得する。
       final employeeService = ref.read(employeeServiceProvider);
       final employee = await employeeService.joinViaInviteCode(

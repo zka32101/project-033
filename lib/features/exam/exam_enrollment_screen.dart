@@ -75,7 +75,7 @@ class _ExamSelectionContent extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Tier 1 Training 修了後、Tier 2/3 試験に挑戦できます',
+                    '基礎研修を修了後、Tier 2/3 試験に挑戦できます',
                     style: TextStyle(
                       fontSize: 13,
                       color: Colors.white70,
@@ -121,7 +121,7 @@ class _ExamSelectionContent extends StatelessWidget {
                   _buildExamCard(
                     context,
                     title: 'Tier 2 認定試験',
-                    description: '実務応用スキルの検定試験',
+                    description: '事例にもとづく実務応用の検定(25問)',
                     duration: 90,
                     examId: 'tier2-exam',
                     color: Colors.blue,
@@ -131,7 +131,7 @@ class _ExamSelectionContent extends StatelessWidget {
                   _buildExamCard(
                     context,
                     title: 'Tier 3 認定試験',
-                    description: '高度な応用・戦略的思考',
+                    description: '管理者・責任者向けのケース判断の検定(20問)',
                     duration: 120,
                     examId: 'tier3-exam',
                     color: Colors.purple,
@@ -168,7 +168,7 @@ class _ExamSelectionContent extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    '・受験するには Tier 1 Training 全モジュール修了が必須です\n'
+                    '・基礎研修(必須モジュール)を修了してから受験することをおすすめします\n'
                     '・一度開始した試験は制限時間内に必ず提出してください\n'
                     '・不合格の場合は何度でも再受験できます\n'
                     '・各試験の合格ラインは 70% です',
@@ -199,6 +199,7 @@ class _ExamSelectionContent extends StatelessWidget {
             MaterialPageRoute(
               builder: (_) => LiveExamScreen(
                 examId: examId,
+                examTitle: title,
                 companyId: companyId,
                 durationMinutes: duration,
               ),

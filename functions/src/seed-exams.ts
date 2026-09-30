@@ -91,9 +91,15 @@ async function seedExams() {
             category: question.category || "未分類",
             text: question.text,
             options: question.options,
-            correctOption: question.correctOption,
             createdAt: admin.firestore.FieldValue.serverTimestamp(),
           });
+        // 正解はクライアントから読めない answerKeys に保存する(採点はCloud Functionsのみ)。
+        await db
+          .collection("exams")
+          .doc(examData.id)
+          .collection("answerKeys")
+          .doc(question.id)
+          .set({ correctOption: question.correctOption });
       }
 
       console.log(

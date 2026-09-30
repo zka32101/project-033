@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../data/models/team_model.dart';
-import '../../../data/models/invite_code_model.dart';
 import '../../../providers/firebase_providers.dart';
 import '../../../providers/service_providers.dart';
 import '../../../providers/session_provider.dart';
 import '../dashboard/admin_dashboard_screen.dart';
+import '../compliance_checklist/compliance_checklist_screen.dart';
 import '../../../widgets/error_retry_view.dart';
 import '../../../widgets/empty_state_view.dart';
 
@@ -19,7 +20,6 @@ class TeamManagementScreen extends ConsumerStatefulWidget {
 }
 
 class _TeamManagementScreenState extends ConsumerState<TeamManagementScreen> {
-  final Map<String, InviteCode> _issuedCodes = {};
   bool _isIssuing = false;
   late Future<List<Team>> _teamsFuture;
 
@@ -37,9 +37,27 @@ class _TeamManagementScreenState extends ConsumerState<TeamManagementScreen> {
   }
 
   Future<void> _issueCodeFor(String companyId, String teamId) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('招待コードを発行しますか'),
+        content: const Text('招待コードは、チームごとに一度だけ発行できます。発行後は、再発行や変更ができません。'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('キャンセル'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('発行する'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
     setState(() => _isIssuing = true);
     try {
-      final code = await ref
+      await ref
           .read(inviteServiceProvider)
           .issueInviteCode(companyId: companyId, teamId: teamId);
       try {
@@ -49,7 +67,8 @@ class _TeamManagementScreenState extends ConsumerState<TeamManagementScreen> {
       } catch (_) {
         // 計測ログ送信の失敗はコード発行自体の成否に影響させない。
       }
-      setState(() => _issuedCodes[teamId] = code);
+      // 発行済みのコードはチームに保存されるため、一覧を再取得して表示する。
+      _reloadTeams(companyId);
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -88,6 +107,13 @@ class _TeamManagementScreenState extends ConsumerState<TeamManagementScreen> {
       appBar: AppBar(
         title: const Text('チーム管理'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.fact_check_outlined),
+            tooltip: '法令対応チェックリスト',
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const ComplianceChecklistScreen()),
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.dashboard),
             tooltip: '履修状況ダッシュボード',
@@ -146,7 +172,7 @@ class _TeamManagementScreenState extends ConsumerState<TeamManagementScreen> {
             itemCount: teams.length,
             itemBuilder: (context, index) {
               final team = teams[index];
-              final issuedCode = _issuedCodes[team.id];
+              final issuedCode = team.inviteCode;
               final colorScheme = Theme.of(context).colorScheme;
               return Card(
                 child: Padding(
@@ -181,13 +207,26 @@ class _TeamManagementScreenState extends ConsumerState<TeamManagementScreen> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: SelectableText(
-                                  issuedCode.code,
+                                  issuedCode,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: colorScheme.onPrimaryContainer,
                                     letterSpacing: 1.2,
                                   ),
                                 ),
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.copy,
+                                    size: 18, color: colorScheme.onPrimaryContainer),
+                                tooltip: 'コードをコピー',
+                                onPressed: () async {
+                                  await Clipboard.setData(ClipboardData(text: issuedCode));
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('招待コードをコピーしました')),
+                                    );
+                                  }
+                                },
                               ),
                             ],
                           ),
@@ -199,7 +238,15 @@ class _TeamManagementScreenState extends ConsumerState<TeamManagementScreen> {
                             onPressed: _isIssuing
                                 ? null
                                 : () => _issueCodeFor(companyId, team.id),
-                            child: const Text('招待コードを発行する'),
+                            child: const Text('招待コードを発行する(一度だけ)'),
+                          ),
+                        ),
+                      if (issuedCode != null)
+                        const Padding(
+                          padding: EdgeInsets.only(top: 6),
+                          child: Text(
+                            '招待コードは一度だけ発行できます。再発行はできません。',
+                            style: TextStyle(fontSize: 12),
                           ),
                         ),
                     ],

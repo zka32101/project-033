@@ -68,6 +68,11 @@ service cloud.firestore {
         allow read: if isSignedIn();
         allow write: if false;
       }
+
+      // 正解(採点用)。クライアントからは読み書きできず、Cloud Functions(Admin SDK)のみが参照する。
+      match /answerKeys/{questionId} {
+        allow read, write: if false;
+      }
     }
 
     match /examQuestions/{questionId} {
@@ -164,6 +169,11 @@ service cloud.firestore {
         allow read: if isCompanyMember(companyId);
         // 契約の作成・変更は管理者のみ(個人利用は自分専用の会社の管理者として扱われる)
         allow write: if isAdmin(companyId);
+      }
+
+      // 法令対応チェックリストの実施状況。管理者のみ読み書きできる。
+      match /complianceChecklist/{itemId} {
+        allow read, write: if isAdmin(companyId);
       }
 
       match /reminders/{reminderId} {

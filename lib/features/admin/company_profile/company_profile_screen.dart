@@ -6,7 +6,7 @@ import '../../../data/models/employee_model.dart';
 import '../../../providers/industry_provider.dart';
 import '../../../providers/service_providers.dart';
 import '../../../providers/session_provider.dart';
-import '../team_management/team_management_screen.dart';
+import '../../dashboard/app_shell.dart';
 
 /// 管理者側の入口: 会社プロファイル設定(業種・企業名・契約人数)→本社チーム作成→招待コード発行
 class CompanyProfileScreen extends ConsumerStatefulWidget {
@@ -45,6 +45,35 @@ class _CompanyProfileScreenState extends ConsumerState<CompanyProfileScreen> {
       setState(() => _errorMessage = '全ての項目を入力してください');
       return;
     }
+
+    // 登録前に、会社名の入力内容を確認してもらう(誤入力のまま登録されるのを防ぐ)。
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('この会社名で登録しますか'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(companyName, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+            const SizedBox(height: 12),
+            Text('管理者名: $adminName'),
+            Text('契約人数: $headcount名'),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('修正する'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('登録する'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
 
     setState(() {
       _isSubmitting = true;
@@ -100,7 +129,9 @@ class _CompanyProfileScreenState extends ConsumerState<CompanyProfileScreen> {
       if (!mounted) return;
       // InviteEntryScreenまで含めて戻れないようにする(戻ると別アカウントで再登録できてしまうため)。
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => const TeamManagementScreen()),
+        // 管理者も研修の受講対象のため、受講者と同じホーム(AppShell)から開始する。
+        // 管理メニューはホーム・アカウントから開ける。
+        MaterialPageRoute(builder: (_) => const AppShell()),
         (route) => false,
       );
     } catch (e) {
