@@ -98,7 +98,7 @@ class _LevelDiagnosticScreenState extends ConsumerState<LevelDiagnosticScreen> {
       await callable.call({
         'companyId': session.employee!.companyId,
         'employeeId': session.employee!.id,
-        'answers': _answers,
+        'answers': {for (final e in _answers.entries) e.key.toString(): e.value},
         'totalScore': totalScore,
         'averageScore': averageScore,
         'recommendedLevel': recommendedLevel,
