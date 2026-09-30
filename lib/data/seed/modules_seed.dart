@@ -1,7 +1,7 @@
 import '../models/module_model.dart';
 import '../models/category_model.dart';
 
-/// 研修モジュール種データ。9カテゴリ×6モジュール=54モジュール。
+/// 研修モジュール種データ。9カテゴリ×6モジュール=54モジュール + 法令改正対応の追加6モジュール(2026年9月)。
 /// 各カテゴリの1つ目をisFreeTrial=trueとし、無料体験→追加課金訴求(設計書 Step3.5 R④)の対象とする。
 const List<Module> seedModules = [
   // ①情報モラル
@@ -241,8 +241,8 @@ const List<Module> seedModules = [
   Module(
     id: 'm_compliance_labor',
     categoryId: CategoryId.compliance,
-    title: '下請法・労務コンプライアンス',
-    description: '下請代金の支払いルールや労働時間管理など、取引・労務面の基本ルールを学びます。',
+    title: '取適法(旧下請法)・労務コンプライアンス',
+    description: '代金の支払いルールや労働時間管理など、取引・労務面の基本ルールを学びます。',
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 2,
@@ -506,5 +506,59 @@ const List<Module> seedModules = [
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 6,
+  ),
+  Module(
+    id: 'm_compliance_freelance',
+    categoryId: CategoryId.compliance,
+    title: 'フリーランス新法(特定受託事業者取引適正化法)の基本',
+    description: '2024年11月施行のフリーランス新法で、個人に業務を委託する企業に求められる書面明示・報酬支払・禁止行為のルールを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 7,
+  ),
+  Module(
+    id: 'm_compliance_invoice',
+    categoryId: CategoryId.compliance,
+    title: 'インボイス制度と電子帳簿保存法の実務',
+    description: '適格請求書(インボイス)の記載事項と、電子取引データの保存義務など、経理・取引で最低限おさえるべきルールを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 8,
+  ),
+  Module(
+    id: 'm_ethics_accommodation',
+    categoryId: CategoryId.infoMorals,
+    title: '障害のある方への合理的配慮(2024年4月義務化)',
+    description: '改正障害者差別解消法で民間事業者にも義務となった「合理的配慮」の考え方と、職場・接客での具体例を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 7,
+  ),
+  Module(
+    id: 'm_ai_guideline',
+    categoryId: CategoryId.aiUsage,
+    title: 'AI事業者ガイドラインと社内利用ルール',
+    description: '国のAI事業者ガイドラインの考え方をふまえ、生成AIを安全に使うための社内ルールと、確認すべきポイントを学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 7,
+  ),
+  Module(
+    id: 'm_health_heatstroke',
+    categoryId: CategoryId.mentalHealth,
+    title: '職場の熱中症対策(2025年6月から義務化)',
+    description: '2025年6月施行の労働安全衛生規則の改正で義務となった、熱中症の早期発見・報告体制と対応手順の整え方を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 7,
+  ),
+  Module(
+    id: 'm_ethics_customer_harassment',
+    categoryId: CategoryId.infoMorals,
+    title: 'カスタマーハラスメント対策と従業員を守る対応',
+    description: 'カスハラの定義と、企業に求められる方針づくり・相談体制・対応の基本、現場での冷静な対応方法を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 8,
   ),
 ];

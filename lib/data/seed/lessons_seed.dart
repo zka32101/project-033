@@ -496,10 +496,11 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
     Lesson(
       id: 'l_compliance_labor_1',
       moduleId: 'm_compliance_labor',
-      title: '下請法の基本ルール',
+      title: '取適法(旧下請法)の基本ルール',
       body:
-          '下請法は、発注者が優越的な立場を利用して下請事業者に不利益を与えることを防ぐための法律です。'
-          '代金の支払遅延や一方的な減額、不当なやり直し要求などが規制対象になります。',
+          '取適法(中小受託取引適正化法)は、2026年1月に下請法から名称と内容が改められた法律で、発注側(委託事業者)が優越的な立場を利用して中小受託事業者に不利益を与えることを防ぎます。'
+          '代金の支払遅延や一方的な減額、不当なやり直し要求に加え、協議に応じないまま一方的に代金を決めることや、手形払いなど資金繰りを圧迫する支払方法も規制対象です。'
+          '発注時には、内容・代金・支払期日を書面(または電子的方法)で明示する必要があります。',
       imageUrls: [],
       sortOrder: 1,
     ),
@@ -518,7 +519,7 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       moduleId: 'm_compliance_labor',
       title: '取引先との適正な関係構築',
       body:
-          '取引先を「対等なパートナー」として扱う意識が、下請法違反や不適切な労務慣行を防ぐ土台になります。'
+          '取引先を「対等なパートナー」として扱う意識が、取適法違反や不適切な労務慣行を防ぐ土台になります。'
           '価格交渉や納期調整も、一方的な押し付けにならないよう配慮することが求められます。',
       imageUrls: [],
       sortOrder: 3,
@@ -2794,6 +2795,234 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       body:
           '認証は取得して終わりではなく、定期的な内部監査や外部審査を通じて、継続的に取り組みを維持・改善していくことが求められます。'
           '全社員が自社の環境目標を理解し、日々の業務の中で意識することが、認証を形だけのものにしないために重要です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_compliance_freelance': [
+    Lesson(
+      id: 'l_compliance_freelance_1',
+      moduleId: 'm_compliance_freelance',
+      title: 'フリーランス新法とは',
+      body:
+          'フリーランス新法(特定受託事業者に係る取引の適正化等に関する法律)は、2024年11月1日に施行されました。従業員を使用しない個人や1人法人(特定受託事業者)に業務を委託する企業に、取引の適正化と就業環境の整備を義務づける法律です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_compliance_freelance_2',
+      moduleId: 'm_compliance_freelance',
+      title: '取引条件の明示と報酬の支払い',
+      body:
+          '業務を委託するときは、業務内容・報酬額・支払期日などの取引条件を、書面または電子メール等で直ちに明示しなければなりません。報酬は、成果物を受け取った日から原則60日以内の、できる限り短い期日に支払う必要があります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_compliance_freelance_3',
+      moduleId: 'm_compliance_freelance',
+      title: '禁止される行為',
+      body:
+          '委託期間が1か月以上の業務では、受領拒否、報酬の減額、返品、買いたたき、正当な理由のない購入・利用の強制、不当なやり直しなどが禁止されます。フリーランスの落ち度がないのに一方的に条件を変える行為は、違反になるおそれがあります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_compliance_freelance_4',
+      moduleId: 'm_compliance_freelance',
+      title: '就業環境の整備と相談対応',
+      body:
+          '6か月以上の継続的な業務委託では、妊娠・出産・育児・介護への配慮が必要です。ハラスメント対策の体制整備や、契約を中途解約するときの30日前までの予告も求められます。違反は公正取引委員会などによる指導・勧告の対象で、相談窓口も整備されています。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_compliance_invoice': [
+    Lesson(
+      id: 'l_compliance_invoice_1',
+      moduleId: 'm_compliance_invoice',
+      title: 'インボイス制度の基本',
+      body:
+          'インボイス制度は2023年10月に始まりました。買い手が仕入税額控除を受けるには、原則として、登録を受けた事業者(適格請求書発行事業者)が発行した適格請求書(インボイス)を保存する必要があります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_compliance_invoice_2',
+      moduleId: 'm_compliance_invoice',
+      title: '適格請求書の記載事項',
+      body:
+          '適格請求書には、発行事業者の氏名または名称と登録番号(T+13桁の数字)、取引年月日、取引内容、税率ごとに区分した合計額と適用税率、消費税額、受け取る側の氏名または名称を記載します。軽減税率の対象品目には、その旨も明記します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_compliance_invoice_3',
+      moduleId: 'm_compliance_invoice',
+      title: '電子帳簿保存法と電子取引',
+      body:
+          'メールやクラウドサービスで請求書・領収書などを受け取った場合(電子取引)は、2024年1月から、電子データのまま保存することが義務になっています。紙に印刷して保存するだけでは認められません。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_compliance_invoice_4',
+      moduleId: 'm_compliance_invoice',
+      title: '保存のルールと社内体制',
+      body:
+          '電子データは、真実性(訂正・削除の履歴が残る、または事務処理規程を定める)と可視性(日付・金額・取引先で検索できる等)を満たして保存します。原則7年間の保存が必要です。担当者が変わっても運用が続くよう、ルールを文書にして共有しましょう。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ethics_accommodation': [
+    Lesson(
+      id: 'l_ethics_accommodation_1',
+      moduleId: 'm_ethics_accommodation',
+      title: '合理的配慮とは',
+      body:
+          '合理的配慮とは、障害のある方が社会の中で直面する障壁を取り除くために、個々の場面に応じて行う調整や工夫のことです。改正障害者差別解消法により、2024年4月から民間事業者にも提供が法的義務になりました。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ethics_accommodation_2',
+      moduleId: 'm_ethics_accommodation',
+      title: '不当な差別的取扱いの禁止',
+      body:
+          '障害があることを理由に、サービスの提供を拒否したり、条件を付けたりすることは「不当な差別的取扱い」として禁止されています。本人の意向や必要性を確かめないまま、思い込みで対応を決めることも避けましょう。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ethics_accommodation_3',
+      moduleId: 'm_ethics_accommodation',
+      title: '具体的な配慮の例',
+      body:
+          '筆談や読み上げ、コミュニケーションボードの利用、段差でのスロープ提供や介助、待ち時間の座席確保、休憩の調整などがあります。大切なのは、本人の希望を丁寧に聞いたうえで、その場でできる方法を一緒に考えることです。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ethics_accommodation_4',
+      moduleId: 'm_ethics_accommodation',
+      title: '過重な負担と建設的対話',
+      body:
+          '配慮は「過重な負担にならない範囲」で行えばよく、難しい場合も、理由を丁寧に説明し、代わりの方法を一緒に探すことが求められます。一方的に断らず、対話を重ねる姿勢(建設的対話)が重要です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ai_guideline': [
+    Lesson(
+      id: 'l_ai_guideline_1',
+      moduleId: 'm_ai_guideline',
+      title: 'AI事業者ガイドラインとは',
+      body:
+          'AI事業者ガイドラインは、経済産業省と総務省が公表した、AIの開発・提供・利用に関わる事業者向けの指針です。法律ではありませんが、人間中心、安全性、公平性、プライバシー保護、セキュリティ確保、透明性などの考え方を示しており、AIを使う側の企業も対象です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ai_guideline_2',
+      moduleId: 'm_ai_guideline',
+      title: '入力してはいけない情報',
+      body:
+          '顧客の個人情報、取引先との機密情報、未公開の経営情報などを、外部の生成AIサービスへ入力すると、情報漏えいにつながるおそれがあります。利用するサービスの設定(入力内容が学習に使われるか)を確認し、入力してよい情報の範囲を社内で決めておきましょう。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ai_guideline_3',
+      moduleId: 'm_ai_guideline',
+      title: '出力の確認と責任',
+      body:
+          '生成AIは、もっともらしい誤りを出すことがあります(ハルシネーション)。出力をそのまま使わず、事実・数字・法令・著作権への配慮を人が確認します。最終的な判断と責任は、AIではなく利用した人と会社にあります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ai_guideline_4',
+      moduleId: 'm_ai_guideline',
+      title: '社内ルールの整え方',
+      body:
+          '利用目的、使ってよいサービス、入力禁止情報、確認・承認の手順、問題が起きたときの連絡先を、簡単な文書にまとめて全員に周知します。ルールは一度作って終わりではなく、サービスや法令の変化にあわせて見直します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_health_heatstroke': [
+    Lesson(
+      id: 'l_health_heatstroke_1',
+      moduleId: 'm_health_heatstroke',
+      title: '熱中症対策が義務になった背景',
+      body:
+          '職場での熱中症による死傷者は毎年多く、対応の遅れが重症化につながっています。2025年6月1日から、労働安全衛生規則の改正により、熱中症のおそれがある作業を行う事業者に、体制の整備と手順の作成、関係者への周知が義務づけられました。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_health_heatstroke_2',
+      moduleId: 'm_health_heatstroke',
+      title: '対象となる作業',
+      body:
+          '対象は、WBGT(暑さ指数)28度以上または気温31度以上の環境で、連続1時間以上、または1日4時間を超えて行うことが見込まれる作業です。屋外の作業だけでなく、高温になる屋内作業も含まれます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_health_heatstroke_3',
+      moduleId: 'm_health_heatstroke',
+      title: '求められる3つの対応',
+      body:
+          '事業者は、①熱中症の自覚症状がある人や、その様子に気づいた人が報告できる体制を整え、②作業から離れる・体を冷やす・医療機関へ搬送するといった重篤化を防ぐ手順を作り、③これらを関係する作業者に周知することが求められます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_health_heatstroke_4',
+      moduleId: 'm_health_heatstroke',
+      title: '日頃の予防と応急処置',
+      body:
+          '暑さ指数の確認、こまめな水分・塩分補給、休憩と日陰の確保、通気性のよい服装が予防の基本です。意識がもうろうとする、けいれんがあるなどの場合は、ためらわず救急要請し、涼しい場所で体を冷やします。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_ethics_customer_harassment': [
+    Lesson(
+      id: 'l_ethics_customer_harassment_1',
+      moduleId: 'm_ethics_customer_harassment',
+      title: 'カスタマーハラスメントとは',
+      body:
+          'カスタマーハラスメントとは、顧客等からの言動のうち、要求内容が妥当でない、または要求を実現する手段・態様が社会通念上不相当で、従業員の就業環境が害されるものを指します。正当な苦情や意見とは区別して考えます。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_ethics_customer_harassment_2',
+      moduleId: 'm_ethics_customer_harassment',
+      title: '法改正と企業の責務',
+      body:
+          '2025年6月の労働施策総合推進法の改正で、事業主にカスハラ対策として、方針の明確化と周知、相談体制の整備、被害を受けた従業員への配慮、再発防止などの雇用管理上の措置が義務づけられました。施行時期は公布から1年6か月以内とされているため、最新の情報を確認してください。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_ethics_customer_harassment_3',
+      moduleId: 'm_ethics_customer_harassment',
+      title: '現場での対応の基本',
+      body:
+          '相手の話を最後まで聞き、事実関係を確認したうえで、できることとできないことを明確に伝えます。感情的にならず、複数人で対応し、やり取りは記録に残します。土下座の強要や長時間の拘束などは、応じる必要のない要求です。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_ethics_customer_harassment_4',
+      moduleId: 'm_ethics_customer_harassment',
+      title: '組織としての支援',
+      body:
+          '対応を従業員個人に任せず、上司や管理部門がすぐに介入できる仕組みを整えます。悪質な場合は、警察や弁護士への相談も視野に入れます。被害を受けた従業員のケアと、対応方針を全員で共有することが重要です。',
       imageUrls: [],
       sortOrder: 4,
     ),
