@@ -237,7 +237,7 @@ class _LevelDiagnosticScreenState extends ConsumerState<LevelDiagnosticScreen> {
         title: Text('スキルレベル診断 (${_currentQuestionIndex + 1}/${diagnosticQuestions.length})'),
         elevation: 0,
       ),
-      body: Column(
+      body: SafeArea(top: false, child: Column(
         children: [
           LinearProgressIndicator(
             value: (_currentQuestionIndex + 1) / diagnosticQuestions.length,
@@ -373,7 +373,7 @@ class _LevelDiagnosticScreenState extends ConsumerState<LevelDiagnosticScreen> {
             ),
           ),
         ],
-      ),
+      )),
     );
   }
 }

@@ -89,7 +89,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(widget.module.title)),
-      body: FutureBuilder<List<Lesson>>(
+      body: SafeArea(top: false, child: FutureBuilder<List<Lesson>>(
         future: _lessonsFuture,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -186,7 +186,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             ),
           );
         },
-      ),
+      )),
     );
   }
 }

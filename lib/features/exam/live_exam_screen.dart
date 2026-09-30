@@ -183,7 +183,7 @@ class _LiveExamScreenState extends ConsumerState<LiveExamScreen>
         'companyId': widget.companyId,
         'employeeId': session.employee!.id,
         'examId': widget.examId,
-        'answers': _selectedAnswers,
+        'answers': serializeExamAnswers(_selectedAnswers),
         'timeSpentSeconds': widget.durationMinutes * 60 - _remainingSeconds,
         'autoSubmit': autoSubmit,
         'backgroundCount': _backgroundCount,
@@ -389,7 +389,7 @@ class _LiveExamScreenState extends ConsumerState<LiveExamScreen>
             ),
           ],
         ),
-        body: Column(
+        body: SafeArea(top: false, child: Column(
           children: [
             // Progress bar
             LinearProgressIndicator(
@@ -468,7 +468,7 @@ class _LiveExamScreenState extends ConsumerState<LiveExamScreen>
               ),
             ),
           ],
-        ),
+        )),
       ),
     );
   }
@@ -563,4 +563,10 @@ class ExamQuestion {
       correctOption: (map['correctOption'] as num?)?.toInt() ?? 0,
     );
   }
+}
+
+/// Cloud Functionsの呼び出しでは、Mapのキーは文字列でなければならない(数値キーだと送信に失敗する)。
+/// 問題番号(0始まり)を文字列キーにして送る。サーバー側は answers[i] で読み取れる。
+Map<String, String> serializeExamAnswers(Map<int, String> selected) {
+  return {for (final e in selected.entries) e.key.toString(): e.value};
 }

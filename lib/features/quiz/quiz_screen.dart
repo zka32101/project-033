@@ -120,7 +120,7 @@ class QuizScreen extends ConsumerWidget {
                 title: Text(
                     '問題 ${sessionState.currentIndex + 1}/${sessionState.questions.length}'),
               ),
-              body: Padding(
+              body: SafeArea(top: false, child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,7 +191,7 @@ class QuizScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-              ),
+              )),
             );
           },
         );
