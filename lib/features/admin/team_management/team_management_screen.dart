@@ -6,6 +6,7 @@ import '../../../providers/firebase_providers.dart';
 import '../../../providers/service_providers.dart';
 import '../../../providers/session_provider.dart';
 import '../dashboard/admin_dashboard_screen.dart';
+import '../compliance_checklist/compliance_checklist_screen.dart';
 import '../../../widgets/error_retry_view.dart';
 import '../../../widgets/empty_state_view.dart';
 
@@ -88,6 +89,13 @@ class _TeamManagementScreenState extends ConsumerState<TeamManagementScreen> {
       appBar: AppBar(
         title: const Text('チーム管理'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.fact_check_outlined),
+            tooltip: '法令対応チェックリスト',
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const ComplianceChecklistScreen()),
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.dashboard),
             tooltip: '履修状況ダッシュボード',

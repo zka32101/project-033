@@ -23,6 +23,8 @@ class FirestorePaths {
       '${company(companyId)}/certificates';
   static String subscriptions(String companyId) =>
       '${company(companyId)}/subscriptions';
+  static String complianceChecklist(String companyId) =>
+      '${company(companyId)}/complianceChecklist';
   static String reminders(String companyId) =>
       '${company(companyId)}/reminders';
   static String examAttempts(String companyId) =>

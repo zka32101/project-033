@@ -12,9 +12,14 @@ import '../services/reminder_service.dart';
 import '../services/push_notification_service.dart';
 import '../services/custom_content_service.dart';
 import '../services/content_generation_service.dart';
+import '../services/compliance_checklist_service.dart';
 
 final companyServiceProvider = Provider<CompanyService>((ref) {
   return CompanyService(ref.watch(firestoreProvider));
+});
+
+final complianceChecklistServiceProvider = Provider<ComplianceChecklistService>((ref) {
+  return ComplianceChecklistService(ref.watch(firestoreProvider));
 });
 
 final inviteServiceProvider = Provider<InviteService>((ref) {

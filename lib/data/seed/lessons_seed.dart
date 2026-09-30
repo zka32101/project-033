@@ -3901,4 +3901,460 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       sortOrder: 4,
     ),
   ],
+  'm_law_work_rules': [
+    Lesson(
+      id: 'l_law_work_rules_1',
+      moduleId: 'm_law_work_rules',
+      title: '就業規則の作成と届出',
+      body:
+          '常時10人以上の労働者を使用する事業場は、就業規則を作成し、労働基準監督署に届け出る義務があります。始業・終業の時刻、休憩、休日、休暇、賃金の決め方と支払い方法、退職(解雇の事由を含む)に関することは、必ず記載します。変更したときも届出が必要です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_work_rules_2',
+      moduleId: 'm_law_work_rules',
+      title: '意見聴取と周知',
+      body:
+          '就業規則を作成・変更するときは、労働者の過半数を代表する者などの意見を聴き、意見書を添えて届け出ます。作成した就業規則は、職場への掲示、書面の交付、電子データで常時確認できる状態などにして、全労働者に周知します。周知していないと、効力が問題になります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_work_rules_3',
+      moduleId: 'm_law_work_rules',
+      title: '36協定(時間外・休日労働)',
+      body:
+          '法定労働時間(1日8時間・週40時間)を超えて働かせる、または法定休日に働かせるには、労使協定(36協定)を結んで、労働基準監督署に届け出る必要があります。届出のないまま残業をさせると違法です。労働者側の代表は、使用者が指名するのではなく、選出された過半数代表者などが務めます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_work_rules_4',
+      moduleId: 'm_law_work_rules',
+      title: 'その他の労使協定',
+      body:
+          '変形労働時間制の一部、賃金からの一部控除(社宅費など)、有給休暇の計画的付与などにも、労使協定が必要です。協定の内容と運用が、就業規則や実際の働き方とずれていないかを、定期的に確認します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_social_insurance': [
+    Lesson(
+      id: 'l_law_social_insurance_1',
+      moduleId: 'm_law_social_insurance',
+      title: '労働保険(労災保険・雇用保険)',
+      body:
+          '労働者を1人でも雇うと、労災保険の加入が必要になり、パートやアルバイトも対象です。雇用保険は、週の所定労働時間が20時間以上で、31日以上の雇用の見込みがある労働者が対象です。対象範囲は、今後さらに拡大される予定です。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_social_insurance_2',
+      moduleId: 'm_law_social_insurance',
+      title: '社会保険(健康保険・厚生年金)',
+      body:
+          '法人の事業所は、従業員が1人でも、代表者を含めて社会保険に加入する義務があります。個人事業所は、原則として常時5人以上を使用する場合に加入が必要です(一部の業種を除く)。短時間労働者への適用も、段階的に拡大されています。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_social_insurance_3',
+      moduleId: 'm_law_social_insurance',
+      title: '入社・退職時の手続き',
+      body:
+          '入社したときは、社会保険の資格取得届を事実発生から5日以内に、雇用保険の資格取得届を翌月10日までに提出します。退職したときは、社会保険の資格喪失届を5日以内に、雇用保険の資格喪失届を10日以内に提出します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_social_insurance_4',
+      moduleId: 'm_law_social_insurance',
+      title: '年度更新と未加入のリスク',
+      body:
+          '労働保険は、毎年6月1日から7月10日までに、保険料の年度更新の手続きを行います。未加入のままだと、過去にさかのぼって保険料を徴収されたり、従業員が給付を受けられなかったりするリスクがあります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_records': [
+    Lesson(
+      id: 'l_law_records_1',
+      moduleId: 'm_law_records',
+      title: '法定3帳簿とは',
+      body:
+          '労働基準法により、事業主は、労働者名簿、賃金台帳、出勤簿(労働時間の記録)を作成して備える義務があります。これらは、雇用形態を問わず、すべての労働者について、事業場ごとに整備します。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_records_2',
+      moduleId: 'm_law_records',
+      title: '記載する事項',
+      body:
+          '労働者名簿には、氏名、生年月日、履歴、性別、住所、従事する業務の種類などを記載します。賃金台帳には、氏名、賃金計算の期間、労働日数、労働時間数、時間外・休日・深夜の労働時間数、基本給や手当の額、控除の額などを、賃金の支払いのたびに記入します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_records_3',
+      moduleId: 'm_law_records',
+      title: '保存期間',
+      body:
+          '労働者名簿や賃金台帳、出勤簿などの記録は、原則として5年間の保存が必要です(当分の間は3年間)。保存期間の起算日は、労働者の死亡・退職・解雇の日や、最後の記入をした日などです。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_records_4',
+      moduleId: 'm_law_records',
+      title: '時効と実務上の留意点',
+      body:
+          '賃金の請求権の時効は、5年(当分の間は3年)とされています。記録を保存しておくことは、未払い賃金の請求への対応や、労働基準監督署の調査にも欠かせません。電子データでの保存も認められていますが、必要なときに確実に出力できる状態にします。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_safety_system': [
+    Lesson(
+      id: 'l_law_safety_system_1',
+      moduleId: 'm_law_safety_system',
+      title: '規模ごとに求められる体制',
+      body:
+          '常時10人以上50人未満の事業場では、安全衛生推進者(または衛生推進者)を選任します。常時50人以上の事業場では、衛生管理者、産業医の選任と、衛生委員会の設置が必要です。10人未満の事業場でも、雇入れ時の教育や健康診断などの義務は、同じように求められます。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_safety_system_2',
+      moduleId: 'm_law_safety_system',
+      title: '選任の手続きと期限',
+      body:
+          '衛生管理者などは、選任すべき事由が生じた日から14日以内に選任します。衛生管理者や産業医を選任したときは、遅滞なく、労働基準監督署に報告します。選任した人の氏名は、職場に周知します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_safety_system_3',
+      moduleId: 'm_law_safety_system',
+      title: '衛生委員会の運営',
+      body:
+          '衛生委員会は、月1回以上開き、労働者の健康障害の防止や、健康の保持増進などについて調査・審議します。議長以外の委員の半数は、労働者の代表から指名します。議事の概要は、労働者に周知し、記録を3年間保存します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_safety_system_4',
+      moduleId: 'm_law_safety_system',
+      title: '職場巡視と日常の管理',
+      body:
+          '衛生管理者は、少なくとも毎週1回、職場を巡視します。産業医は、原則として毎月1回、職場を巡視します。通路の整理、照明、換気、休憩室の状況などを確認し、問題があれば、速やかに改善します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_dismissal': [
+    Lesson(
+      id: 'l_law_dismissal_1',
+      moduleId: 'm_law_dismissal',
+      title: '解雇の基本ルール',
+      body:
+          '解雇は、客観的に合理的な理由があり、社会通念上相当と認められなければ、無効になります。「能力不足」「勤務態度が悪い」といった理由だけでは、認められないことが多く、改善の機会を与えたかなどの経緯も重視されます。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_dismissal_2',
+      moduleId: 'm_law_dismissal',
+      title: '解雇予告と解雇制限',
+      body:
+          '従業員を解雇するときは、少なくとも30日前に予告するか、30日分以上の平均賃金(解雇予告手当)を支払う必要があります。業務上のケガや病気で休業している期間とその後30日間、産前産後の休業期間とその後30日間は、原則として解雇できません。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_dismissal_3',
+      moduleId: 'm_law_dismissal',
+      title: '有期契約の雇止めと無期転換',
+      body:
+          '有期契約を何度も更新してきた場合、雇止めが認められないことがあります。有期契約が通算5年を超えたときは、労働者の申込みにより、無期契約に転換されます。更新しない場合は、一定の条件のもとで、30日前までの予告が必要です。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_dismissal_4',
+      moduleId: 'm_law_dismissal',
+      title: '退職時の手続き',
+      body:
+          '期間の定めのない雇用では、労働者は退職の申出から2週間で退職できます。退職した労働者や解雇された労働者から請求があったときは、退職証明書や解雇理由証明書を、遅滞なく交付する必要があります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_minimum_wage': [
+    Lesson(
+      id: 'l_law_minimum_wage_1',
+      moduleId: 'm_law_minimum_wage',
+      title: '賃金支払い5原則',
+      body:
+          '賃金は、通貨で、直接労働者に、全額を、毎月1回以上、一定の期日を定めて支払うのが原則です。銀行口座への振込は、労働者の同意があれば認められます。法令や労使協定で認められた以外は、賃金から勝手に差し引くことはできません。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_minimum_wage_2',
+      moduleId: 'm_law_minimum_wage',
+      title: '最低賃金の確認',
+      body:
+          '最低賃金は、地域別(都道府県ごと)に定められ、毎年10月ごろに改定されます。最低賃金を下回る賃金の合意は無効で、最低賃金と同じ額とみなされます。月給の場合は、時間あたりの額に換算して、最低賃金を下回っていないかを確認します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_minimum_wage_3',
+      moduleId: 'm_law_minimum_wage',
+      title: '割増賃金の割合',
+      body:
+          '法定労働時間を超える時間外労働は25%以上、午後10時から午前5時までの深夜労働は25%以上、法定休日の労働は35%以上の割増が必要です。月60時間を超える時間外労働は、50%以上で、中小企業にも2023年4月から適用されています。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_minimum_wage_4',
+      moduleId: 'm_law_minimum_wage',
+      title: '重なる場合と固定残業代',
+      body:
+          '時間外労働が深夜に及ぶときは50%以上、法定休日の労働が深夜に及ぶときは60%以上になります。固定残業代を支払う場合は、通常の賃金と区別して金額と時間数を明示し、超えた分は追加で支払う必要があります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_dispatch': [
+    Lesson(
+      id: 'l_law_dispatch_1',
+      moduleId: 'm_law_dispatch',
+      title: '派遣と請負の違い',
+      body:
+          '労働者派遣は、派遣会社と労働契約を結んだ人が、派遣先の指揮命令を受けて働く形です。請負や業務委託は、受託会社が自らの責任で業務を行い、受託会社が自社の従業員に指揮命令をします。発注者は、直接指示をすることができません。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_dispatch_2',
+      moduleId: 'm_law_dispatch',
+      title: '偽装請負とは',
+      body:
+          '契約は請負や業務委託になっているのに、実際には、発注者が受託会社の従業員に直接、業務の指示や、勤務時間の管理を行っている状態を、偽装請負といいます。労働者派遣法や職業安定法に違反するおそれがあります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_dispatch_3',
+      moduleId: 'm_law_dispatch',
+      title: '判断のポイント',
+      body:
+          '業務の指示や、進め方の決定を誰が行っているか、勤怠の管理や、休暇の承認を誰が行っているか、業務に使う機械や道具を誰が用意しているか、などを総合的に見て判断します。契約書だけでなく、実際の運用が重要です。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_dispatch_4',
+      moduleId: 'm_law_dispatch',
+      title: '違法な派遣を受けた場合のリスク',
+      body:
+          '違法な派遣を受け入れると、派遣先が、その労働者に直接雇用の申込みをしたものとみなされる制度があります。派遣の受入れでは、期間制限や、派遣先責任者の選任、管理台帳の作成など、派遣先の責任も守る必要があります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_chemical': [
+    Lesson(
+      id: 'l_law_chemical_1',
+      moduleId: 'm_law_chemical',
+      title: '化学物質管理の新しい仕組み',
+      body:
+          '労働安全衛生法の規制が見直され、事業者が、自らリスクを評価して、対策を選ぶ「自律的な管理」が中心になりました。2024年4月からは、危険性・有害性のある化学物質を製造・取り扱う事業場で、業種や規模を問わず、化学物質管理者の選任などが求められています。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_chemical_2',
+      moduleId: 'm_law_chemical',
+      title: 'SDSとラベル',
+      body:
+          'SDS(安全データシート)は、化学物質の危険性・有害性、取扱い方法、応急措置などが書かれた資料です。ラベルには、危険有害性を示す絵表示や注意書きが表示されています。SDSは、労働者がいつでも確認できる場所に備え、内容を周知します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_chemical_3',
+      moduleId: 'm_law_chemical',
+      title: 'リスクアセスメント',
+      body:
+          '対象となる化学物質を取り扱うときは、危険性や有害性を調べ、ばく露の程度を見積もり、対策を決めるリスクアセスメントを行います。結果にもとづいて、代替物の使用、換気設備、保護具の着用などの対策を実施します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_chemical_4',
+      moduleId: 'm_law_chemical',
+      title: '身近な化学物質の取り扱い',
+      body:
+          '洗剤、溶剤、塗料、消毒用アルコール、接着剤など、身近なものにも、危険なものがあります。塩素系と酸性の洗剤の混合、換気の悪い場所での溶剤の使用、容器の詰め替えとラベルの未表示などは、事故のもとです。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_action_plan': [
+    Lesson(
+      id: 'l_law_action_plan_1',
+      moduleId: 'm_law_action_plan',
+      title: '行動計画とは',
+      body:
+          '一般事業主行動計画は、女性の活躍や、仕事と子育ての両立を進めるために、事業主が、目標と取組を定める計画です。女性活躍推進法と、次世代育成支援対策推進法にもとづいて、策定します。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_action_plan_2',
+      moduleId: 'm_law_action_plan',
+      title: '策定の義務の対象',
+      body:
+          '常時雇用する労働者が101人以上の事業主は、行動計画の策定と、都道府県労働局への届出、社内への周知、外部への公表が義務です。100人以下の事業主は、努力義務とされています。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_action_plan_3',
+      moduleId: 'm_law_action_plan',
+      title: '計画づくりの手順',
+      body:
+          'まず、採用者の男女比、勤続年数の男女差、労働時間の状況、管理職に占める女性の割合などの状況を把握し、課題を分析します。そのうえで、数値目標と、取組の内容・実施時期を定めて、計画を策定します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_action_plan_4',
+      moduleId: 'm_law_action_plan',
+      title: '認定制度のメリット',
+      body:
+          '基準を満たした企業は、女性活躍の「えるぼし」、子育て支援の「くるみん」などの認定を受けられます。認定は、求人での企業の魅力づくりや、公共調達での評価、融資の優遇などに役立つことがあります。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_antitrust': [
+    Lesson(
+      id: 'l_law_antitrust_1',
+      moduleId: 'm_law_antitrust',
+      title: '優越的地位の濫用',
+      body:
+          '取引上の優位な立場を利用して、取引先に不当に不利益を与えることは、独占禁止法で禁止されています。買いたたき、不当な返品、協賛金や従業員の派遣の要請などが典型です。取適法とは対象の範囲が異なり、より広い取引が対象になります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_antitrust_2',
+      moduleId: 'm_law_antitrust',
+      title: 'カルテルと談合',
+      body:
+          '同業者どうしで、価格や販売数量、取引先を取り決めることは、カルテルとして禁止されています。入札で、事前に受注者を決める談合も同じです。同業者の会合では、価格や取引条件の話をしないよう、日頃から注意します。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_antitrust_3',
+      moduleId: 'm_law_antitrust',
+      title: '再販売価格の拘束',
+      body:
+          '商品を卸す側が、小売業者などに対して、販売価格を指定し、守らせることは、原則として違法です。「希望小売価格」の提示は、守らせなければ問題ありませんが、守らない相手への取引の停止などは、避けます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_antitrust_4',
+      moduleId: 'm_law_antitrust',
+      title: '消費者契約法のルール',
+      body:
+          '消費者との契約では、事実と異なる説明(不実告知)や、不利益な事実を故意に告げないこと、「必ず値上がりする」などの断定的な判断の提供、通常の量を著しく超える契約の勧誘などがあった場合、消費者は契約を取り消せます。事業者の責任を全部免除する条項も無効です。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_sme_cyber': [
+    Lesson(
+      id: 'l_law_sme_cyber_1',
+      moduleId: 'm_law_sme_cyber',
+      title: '中小企業が狙われる理由',
+      body:
+          'サイバー攻撃は、大企業だけでなく、中小企業も標的になります。対策が手薄な会社が、取引先への攻撃の入口(サプライチェーン攻撃)として狙われることもあります。被害は、業務の停止、情報の漏えい、取引先の信頼の失墜につながります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_sme_cyber_2',
+      moduleId: 'm_law_sme_cyber',
+      title: '情報セキュリティ5か条',
+      body:
+          'IPA(情報処理推進機構)が示す5か条は、①OSやソフトウェアを常に最新にする、②ウイルス対策ソフトを導入する、③パスワードを強化する、④共有設定を見直す、⑤脅威や攻撃の手口を知る、です。まずは、この5つから始めます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_sme_cyber_3',
+      moduleId: 'm_law_sme_cyber',
+      title: 'SECURITY ACTIONの宣言',
+      body:
+          'SECURITY ACTIONは、中小企業が、自ら情報セキュリティ対策に取り組むことを宣言する制度です。「一つ星」は5か条に取り組むことの宣言、「二つ星」は、自社診断を行い、基本方針を定めて宣言することです。補助金の申請要件になることもあります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_sme_cyber_4',
+      moduleId: 'm_law_sme_cyber',
+      title: '日頃の備えと相談先',
+      body:
+          'データのバックアップ、多要素認証の導入、端末の管理、従業員への教育を、継続して行います。困ったときは、IPAの相談窓口や、警察のサイバー犯罪の相談窓口を利用できます。事故が起きたときの連絡先も、事前に決めておきます。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_law_continuity_plan': [
+    Lesson(
+      id: 'l_law_continuity_plan_1',
+      moduleId: 'm_law_continuity_plan',
+      title: '事業継続力強化計画とは',
+      body:
+          '事業継続力強化計画は、中小企業が、自然災害などのリスクに備えるために作る計画で、経済産業大臣の認定を受けられる制度です。中小企業の防災・減災の取組を、国が後押しするために設けられました。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_law_continuity_plan_2',
+      moduleId: 'm_law_continuity_plan',
+      title: '計画に盛り込む内容',
+      body:
+          '自社の事業に影響する災害のリスクを、ハザードマップなどで確認し、被害の想定を行います。人命の安全確保、被害状況の確認、取引先への連絡などの初動対応と、建物・設備の保護、資金繰り、情報の保護などの事前対策を、計画にまとめます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_law_continuity_plan_3',
+      moduleId: 'm_law_continuity_plan',
+      title: '認定を受けるメリット',
+      body:
+          '認定を受けると、防災・減災の設備に対する税制上の優遇措置、金融面での支援、補助金の審査での加点などを受けられる場合があります。認定を受けたことをロゴマークなどで示すこともできます。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_law_continuity_plan_4',
+      moduleId: 'm_law_continuity_plan',
+      title: '訓練と見直し',
+      body:
+          '計画は、作って終わりではなく、定期的に訓練を行い、内容を見直すことが大切です。安否確認、連絡網、避難、代替手段の確認などの訓練を通じて、課題を見つけ、計画を更新します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
 };

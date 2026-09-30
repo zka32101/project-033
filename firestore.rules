@@ -166,6 +166,11 @@ service cloud.firestore {
         allow write: if isAdmin(companyId);
       }
 
+      // 法令対応チェックリストの実施状況。管理者のみ読み書きできる。
+      match /complianceChecklist/{itemId} {
+        allow read, write: if isAdmin(companyId);
+      }
+
       match /reminders/{reminderId} {
         allow read: if isCompanyMember(companyId);
         allow create: if isAdmin(companyId);
