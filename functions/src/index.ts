@@ -1181,13 +1181,28 @@ export const submitLiveExam = onCall(async (request) => {
     }> = [];
     const categoryBreakdown: Record<string, { correct: number; total: number }> = {};
 
+    // 正解はクライアントから読めない answerKeys に置く(設問ドキュメントに正解を含めない)。
+    // 未移行の設問は従来どおり設問ドキュメントの correctOption を使う。
+    const answerKeySnapshot = await db
+      .collection("exams")
+      .doc(examId)
+      .collection("answerKeys")
+      .get();
+    const answerKeys = new Map<string, number>(
+      answerKeySnapshot.docs.map((d) => [d.id, d.data().correctOption as number])
+    );
+
     for (let i = 0; i < questions.length; i++) {
-      const question = questions[i] as {
+      const rawQuestion = questions[i] as {
         id: string;
         order: number;
         category?: string;
         text: string;
-        correctOption: number;
+        correctOption?: number;
+      };
+      const question = {
+        ...rawQuestion,
+        correctOption: answerKeys.get(rawQuestion.id) ?? rawQuestion.correctOption ?? 0,
       };
       const category = question.category || "未分類";
       const userAnswerKey = `option_${question.correctOption}a`;

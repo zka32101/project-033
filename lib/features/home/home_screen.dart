@@ -34,6 +34,9 @@ class HomeScreen extends ConsumerStatefulWidget {
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
+/// 開発チーム内の研修(Tier 1 Training)を受講者向けのホームに出すか。Safyの受講者向け教材ではないため既定は非表示。
+const bool kShowInternalTraining = false;
+
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   // モジュールカードのタップ→非同期の契約確認→画面遷移の間に連打されると
   // 同じモジュールの画面が二重に積まれてしまうため、遷移中は再タップを無視する。
@@ -237,6 +240,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             onSelected: (id) => _changeJobRole(id),
                           ),
                           // Tier 1 Training セクション（Sep 16-22 自習期間用）
+                          if (kShowInternalTraining) ...[
                           Card(
                             color: Colors.indigo.withOpacity(0.1),
                             child: InkWell(
@@ -297,6 +301,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                           const SizedBox(height: 8),
+                          ],
                           // ライブ認定試験セクション（Oct 10-20 実施）
                           Card(
                             color: Colors.purple.withOpacity(0.1),

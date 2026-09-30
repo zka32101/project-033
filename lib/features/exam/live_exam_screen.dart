@@ -9,12 +9,14 @@ import 'exam_result_analysis_screen.dart';
 /// ライブ認定試験画面：Tier 2/3 試験（90/120分）
 class LiveExamScreen extends ConsumerStatefulWidget {
   final String examId; // tier2-exam or tier3-exam
+  final String? examTitle; // 画面に表示する試験名(未指定ならexamId)
   final String companyId;
   final int durationMinutes; // 90 or 120
 
   const LiveExamScreen({
     super.key,
     required this.examId,
+    this.examTitle,
     required this.companyId,
     this.durationMinutes = 90,
   });
@@ -369,7 +371,7 @@ class _LiveExamScreenState extends ConsumerState<LiveExamScreen>
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-              '${widget.examId} - 問題 ${_currentQuestionIndex + 1}/${_questions.length}'),
+              '${widget.examTitle ?? widget.examId} - 問題 ${_currentQuestionIndex + 1}/${_questions.length}'),
           elevation: 0,
           actions: [
             Container(
