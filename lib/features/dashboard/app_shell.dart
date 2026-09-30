@@ -8,6 +8,7 @@ import '../qa_forum/qa_forum_screen.dart';
 import '../exam/exam_enrollment_screen.dart';
 import '../my_growth/my_growth_screen.dart';
 import '../help/first_run_guide.dart';
+import '../account/account_screen.dart';
 
 /// メインアプリシェル：ナビゲーションタブ付き
 class AppShell extends ConsumerStatefulWidget {
@@ -38,6 +39,7 @@ class _AppShellState extends ConsumerState<AppShell> {
     const LearningPathScreen(),
     const QAForumScreen(),
     const MyGrowthScreen(),
+    const AccountScreen(),
   ];
 
   @override
@@ -79,6 +81,11 @@ class _AppShellState extends ConsumerState<AppShell> {
             icon: Icon(Icons.trending_up_outlined),
             activeIcon: Icon(Icons.trending_up),
             label: '成長',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_outlined),
+            activeIcon: Icon(Icons.account_circle),
+            label: 'アカウント',
           ),
         ],
       ),

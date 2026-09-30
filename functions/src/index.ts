@@ -1921,6 +1921,37 @@ export const registerCompanyAdmin = onCall(async (request) => {
 });
 
 /**
+ * 招待コードの会社名・チーム名を、参加前に確認するために返す。
+ * 会社情報は参加前は直接読めないため、確認に必要な項目だけをサーバーで取得して返す。
+ */
+export const previewInviteCode = onCall({ region: "us-central1" }, async (request) => {
+  if (!request.auth?.uid) {
+    throw new HttpsError("unauthenticated", "サインインが必要です");
+  }
+  const { inviteCode } = request.data as { inviteCode?: string };
+  if (!inviteCode) {
+    throw new HttpsError("invalid-argument", "招待コードを入力してください");
+  }
+  const inviteSnap = await db.collection("inviteCodes").doc(inviteCode.toUpperCase()).get();
+  const invite = inviteSnap.data();
+  if (!invite || invite.isActive === false ||
+      (invite.expiresAt && invite.expiresAt.toMillis() < Date.now())) {
+    throw new HttpsError("not-found", "招待コードが無効です");
+  }
+  const companyRef = db.collection("companies").doc(invite.companyId);
+  const company = (await companyRef.get()).data();
+  if (!company) {
+    throw new HttpsError("not-found", "会社情報が見つかりませんでした");
+  }
+  let teamName = "";
+  if (invite.teamId) {
+    const team = (await companyRef.collection("teams").doc(invite.teamId).get()).data();
+    teamName = (team?.teamName as string | undefined) ?? "";
+  }
+  return { companyName: company.name as string, teamName };
+});
+
+/**
  * 招待コードでの参加。契約人数(お試しは5名)を超える参加をサーバー側で拒否する。
  * クライアント直書きだと参加者数を数えられず上限を回避できてしまうため、Admin SDKで行う。
  */

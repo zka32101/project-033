@@ -5,6 +5,7 @@ import '../../data/models/industry_model.dart';
 import '../../data/models/company_model.dart';
 import '../../data/models/job_role.dart';
 import '../help/first_run_guide.dart';
+import '../../widgets/role_badge.dart';
 import '../../data/models/subscription_model.dart';
 import '../../data/models/enrollment_model.dart';
 import '../../core/access_control.dart';
@@ -143,7 +144,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('あなたの必須研修'),
+        // 管理者アカウントは、背景色とバッジで受講者アカウントと見分けられるようにする。
+        backgroundColor:
+            session.isAdmin ? Theme.of(context).colorScheme.tertiaryContainer : null,
+        title: Row(
+          children: [
+            const Flexible(child: Text('あなたの必須研修', overflow: TextOverflow.ellipsis)),
+            const SizedBox(width: 8),
+            RoleBadge(isAdmin: session.isAdmin),
+          ],
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.help_outline),
