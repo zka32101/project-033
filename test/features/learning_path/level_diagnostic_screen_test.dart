@@ -6,7 +6,7 @@ import 'package:safy/providers/session_provider.dart';
 
 void main() {
   group('LevelDiagnosticScreen Tests', () {
-    testWidgets('レベル診断画面が5つの質問を表示する', (WidgetTester tester) async {
+    testWidgets('レベル診断画面がSafyの9分野の質問を表示する', (WidgetTester tester) async {
       await tester.pumpWidget(
         ProviderScope(
           child: MaterialApp(
@@ -18,13 +18,13 @@ void main() {
       );
 
       // 最初の質問が表示されることを確認
-      expect(find.text('あなたの現在の業務経験は？'), findsOneWidget);
+      expect(find.textContaining('情報モラルについての知識・経験は'), findsOneWidget);
 
       // 4つの選択肢が表示されることを確認
-      expect(find.text('0-1年（新入社員・未経験）'), findsOneWidget);
-      expect(find.text('1-3年（基礎的な知識あり）'), findsOneWidget);
-      expect(find.text('3-5年（実務経験豊富）'), findsOneWidget);
-      expect(find.text('5年以上（リーダー・専門家水準）'), findsOneWidget);
+      expect(find.text('ほとんど知らない・経験がない'), findsOneWidget);
+      expect(find.text('用語は聞いたことがあるが、自信がない'), findsOneWidget);
+      expect(find.text('基本は理解しており、業務で対応できる'), findsOneWidget);
+      expect(find.text('他の人に教えられる・指導できる'), findsOneWidget);
     });
 
     testWidgets('回答選択が記録される', (WidgetTester tester) async {
@@ -39,7 +39,7 @@ void main() {
       );
 
       // 最初の選択肢をタップ
-      await tester.tap(find.text('0-1年（新入社員・未経験）'));
+      await tester.tap(find.text('ほとんど知らない・経験がない'));
       await tester.pumpAndSettle();
 
       // 次へボタンが有効化されることを確認
@@ -62,7 +62,7 @@ void main() {
       );
 
       // 最初の質問に対して回答
-      await tester.tap(find.text('0-1年（新入社員・未経験）'));
+      await tester.tap(find.text('ほとんど知らない・経験がない'));
       await tester.pumpAndSettle();
 
       // 次へボタンをタップ
@@ -71,7 +71,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // 2番目の質問が表示されることを確認
-      expect(find.text('デジタルツールの使用経験は？'), findsOneWidget);
+      expect(find.textContaining('セキュリティについての知識・経験は'), findsOneWidget);
 
       // プログレスバーが更新されたことを確認
       expect(find.byType(LinearProgressIndicator), findsOneWidget);
@@ -90,7 +90,7 @@ void main() {
 
       // 最後の質問まで進める（ここでは最初の質問のみをテスト）
       // 実際のテストでは、すべての質問に回答する必要がある
-      await tester.tap(find.text('0-1年（新入社員・未経験）'));
+      await tester.tap(find.text('ほとんど知らない・経験がない'));
       await tester.pumpAndSettle();
 
       // プログレスバーが表示されていることを確認
@@ -112,9 +112,9 @@ void main() {
       final progressIndicator = find.byType(LinearProgressIndicator);
       expect(progressIndicator, findsOneWidget);
 
-      // プログレスバーの値が 0.2（1/5）であることを確認（最初の質問）
+      // プログレスバーの値が 1/9であることを確認（最初の質問）
       final widget = tester.widget<LinearProgressIndicator>(progressIndicator);
-      expect(widget.value, closeTo(0.2, 0.01));
+      expect(widget.value, closeTo(1 / 9, 0.01));
     });
   });
 }

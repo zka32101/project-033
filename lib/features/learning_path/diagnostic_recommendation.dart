@@ -8,26 +8,37 @@ class DiagnosticCategory {
   final String label;
   final List<String> keywords;
 
-  const DiagnosticCategory(this.label, this.keywords);
+  /// Safyの分野ID(CategoryId.name)。モジュールの `categoryId` と一致するものを優先して推薦する。
+  final String categoryId;
+
+  const DiagnosticCategory(this.label, this.keywords, {this.categoryId = ''});
 }
 
-/// 質問インデックス(0-4) → カテゴリ定義。
+/// 質問インデックス(0-8) → 分野定義(Safyの9分野)。
 /// `level_diagnostic_screen.dart` の `diagnosticQuestions` の並び順と対応している。
 const List<DiagnosticCategory> kDiagnosticQuestionCategories = [
-  DiagnosticCategory('業務経験', ['基礎', '入門', 'オリエンテーション', '基本']),
-  DiagnosticCategory('デジタルツール活用', ['ツール', 'デジタル', 'システム', 'IT']),
-  DiagnosticCategory('チームマネジメント', ['マネジメント', 'リーダー', 'チーム運営']),
-  DiagnosticCategory('データ分析', ['データ', '分析', 'レポート']),
-  DiagnosticCategory('コミュニケーション', ['コミュニケーション', 'プレゼン', '発表']),
+  DiagnosticCategory('情報モラル', ['SNS', '情報モラル', 'ハラスメント', '著作権', 'マナー', '配慮', 'カスタマー'], categoryId: 'infoMorals'),
+  DiagnosticCategory('セキュリティ', ['パスワード', 'フィッシング', 'ランサム', 'デバイス', 'セキュリティ', 'サイバー'], categoryId: 'security'),
+  DiagnosticCategory('個人情報保護', ['個人情報', 'マイナンバー', '越境', '安全管理'], categoryId: 'privacy'),
+  DiagnosticCategory('情報マネジメント', ['文書管理', 'インシデント', 'アクセス権限', 'BYOD', '複合機', 'ログ'], categoryId: 'infoManagement'),
+  DiagnosticCategory('コンプライアンス', ['コンプライアンス', '下請', '取適', '贈収賄', 'インサイダー', '反社', '通報', '労務'], categoryId: 'compliance'),
+  DiagnosticCategory('AI活用', ['AI', '生成AI', 'ディープフェイク', 'チャットボット'], categoryId: 'aiUsage'),
+  DiagnosticCategory('メンタルヘルス・健康経営', ['メンタル', 'ストレス', '健康', '休職', '復職', '過重労働', '熱中症', '安全衛生'], categoryId: 'mentalHealth'),
+  DiagnosticCategory('BCP・危機管理/防災', ['BCP', '災害', '安否', '感染症', 'サプライチェーン', '風評'], categoryId: 'bcp'),
+  DiagnosticCategory('環境・サステナビリティ', ['SDGs', '省エネ', '脱炭素', '環境', 'グリーン', 'CSR'], categoryId: 'sustainability'),
 ];
 
 /// 弱点分野ごとの推薦理由テンプレート。
 const Map<String, String> kWeakCategoryReasons = {
-  '業務経験': '業務経験が浅いため、基礎モジュールをお勧めします',
-  'デジタルツール活用': 'デジタルツールの活用経験が少ないため、ツール系モジュールをお勧めします',
-  'チームマネジメント': 'チーム運営・マネジメントの経験を補うモジュールをお勧めします',
-  'データ分析': 'データ分析スキルの強化につながるモジュールをお勧めします',
-  'コミュニケーション': 'コミュニケーション・プレゼンスキルを高めるモジュールをお勧めします',
+  '情報モラル': '情報モラル(SNS・ハラスメント・著作権など)の基礎を補うモジュールをお勧めします',
+  'セキュリティ': 'セキュリティ(パスワード・不審メール・端末管理など)の基礎を補うモジュールをお勧めします',
+  '個人情報保護': '個人情報の取り扱いルールを補うモジュールをお勧めします',
+  '情報マネジメント': '文書・アクセス権限・インシデント対応など、情報の管理を補うモジュールをお勧めします',
+  'コンプライアンス': '法令遵守・取引・労務の基本を補うモジュールをお勧めします',
+  'AI活用': '生成AIを安全に使うためのモジュールをお勧めします',
+  'メンタルヘルス・健康経営': '心身の健康管理・ラインケアを補うモジュールをお勧めします',
+  'BCP・危機管理/防災': '災害・緊急時の事業継続への備えを補うモジュールをお勧めします',
+  '環境・サステナビリティ': '環境配慮・SDGsへの対応を補うモジュールをお勧めします',
 };
 
 /// 回答（質問インデックス→選択肢インデックス 0-3）から弱点分野を推定する。
@@ -126,6 +137,10 @@ List<RecommendedModule> buildModuleRecommendations({
         (c) => c.label == weak,
         orElse: () => const DiagnosticCategory('', []),
       );
+      final moduleCategoryId = module['categoryId'] as String? ?? '';
+      if (def.categoryId.isNotEmpty && moduleCategoryId == def.categoryId) {
+        return true;
+      }
       return def.keywords.any((keyword) => searchText.contains(keyword));
     }).toList();
 
