@@ -31,7 +31,20 @@ void main() {
     db = FakeFirebaseFirestore();
     companyService = CompanyService(db);
     contentService = ContentService(db);
-    employeeService = EmployeeService(db, MockFirebaseAuth());
+    employeeService = EmployeeService(
+      db,
+      MockFirebaseAuth(),
+      ({required inviteCode, required displayName, required companyId, required teamId, required uid}) async {
+        // 本番はCloud Functionsが行う参加処理の代わりに、同じ内容をFirestoreへ直接書き込む。
+        await db.doc('companies/$companyId/employees/$uid').set({
+          'companyId': companyId,
+          'teamId': teamId,
+          'displayName': displayName,
+          'role': 'member',
+          'createdAt': DateTime.now(),
+        });
+      },
+    );
     enrollmentService = EnrollmentService(db);
     inviteService = InviteService(db);
 
@@ -122,6 +135,7 @@ void main() {
     expect(resolvedInvite, isNotNull);
 
     final employee = await employeeService.joinViaInviteCode(
+      inviteCode: invite.code,
       companyId: company.id,
       teamId: resolvedInvite!.teamId,
       displayName: '山田太郎',

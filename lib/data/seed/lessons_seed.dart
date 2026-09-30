@@ -3635,4 +3635,270 @@ const Map<String, List<Lesson>> seedLessonsByModule = {
       sortOrder: 4,
     ),
   ],
+  'm_role_accounting_bec': [
+    Lesson(
+      id: 'l_role_accounting_bec_1',
+      moduleId: 'm_role_accounting_bec',
+      title: 'ビジネスメール詐欺(BEC)とは',
+      body:
+          'ビジネスメール詐欺とは、取引先や経営者になりすましたメールで、偽の口座へ送金させる詐欺です。実際の取引の流れの中に紛れ込むため、見抜くのが難しく、経理担当者が最初の防波堤になります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_accounting_bec_2',
+      moduleId: 'm_role_accounting_bec',
+      title: '要注意のサイン',
+      body:
+          '「振込先の口座が変わりました」「至急送金してください」「内密に対応してください」といった依頼は要注意です。差出人のメールアドレスの微妙な違いや、普段と異なる文面、急がせる表現にも気をつけます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_accounting_bec_3',
+      moduleId: 'm_role_accounting_bec',
+      title: '二重確認と別経路での確認',
+      body:
+          '振込先の変更依頼があったときは、届いたメールに返信せず、以前から知っている電話番号など、別の経路で本人に確認します。支払いの承認は、担当者と承認者の2人で行い、1人の判断で完結しないようにします。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_accounting_bec_4',
+      moduleId: 'm_role_accounting_bec',
+      title: '内部統制と記録',
+      body:
+          '請求書の受領、承認、支払い、記録の担当を分け、記録を残します。不審な依頼を受けたときは、すぐに上司に報告し、送金してしまった場合は、直ちに銀行と警察へ連絡します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_role_hr_hiring': [
+    Lesson(
+      id: 'l_role_hr_hiring_1',
+      moduleId: 'm_role_hr_hiring',
+      title: '公正な採用選考の基本',
+      body:
+          '採用選考は、応募者の適性と能力にもとづいて行うのが原則です。本人に責任のない事項(出生地、家族の職業や収入、住宅状況など)や、思想・信条にかかわること(宗教、支持政党、購読新聞など)を、選考の材料にしてはいけません。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_hr_hiring_2',
+      moduleId: 'm_role_hr_hiring',
+      title: '面接での質問に注意',
+      body:
+          '面接では、職務に必要な能力や経験に関する質問を中心にします。家族構成、結婚や出産の予定、本籍地、尊敬する人物、愛読書などの質問は、就職差別につながるおそれがあるため避けます。面接官全員が、質問例を共有しておきます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_hr_hiring_3',
+      moduleId: 'm_role_hr_hiring',
+      title: '応募者の個人情報の取り扱い',
+      body:
+          '応募者から得た個人情報は、選考の目的で使い、選考が終わった後の保存期間や廃棄のルールを決めておきます。不採用者の書類を、無期限に保管したり、他の目的に転用したりしてはいけません。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_hr_hiring_4',
+      moduleId: 'm_role_hr_hiring',
+      title: '入社後の人事情報の管理',
+      body:
+          '従業員の人事情報や健康情報、マイナンバーは、必要な担当者だけが扱えるように、アクセス権限を限定します。紙の書類は施錠して保管し、電子データは、アクセスログを残し、私物の端末やクラウドに保存しないようにします。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_role_sales_conduct': [
+    Lesson(
+      id: 'l_role_sales_conduct_1',
+      moduleId: 'm_role_sales_conduct',
+      title: '誇大な表現と景品表示法',
+      body:
+          '実際よりも著しく優れていると思わせる表現(優良誤認)や、実際よりも有利だと思わせる表現(有利誤認)は、景品表示法で禁止されています。営業トークや提案資料でも、根拠のない「業界No.1」「絶対に」などの表現は使いません。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_sales_conduct_2',
+      moduleId: 'm_role_sales_conduct',
+      title: '不実告知と不利益事実の不告知',
+      body:
+          '契約に関係する重要な事項について、事実と異なることを伝えたり、不利になる事実をわざと伝えなかったりすることは、消費者契約法や特定商取引法で問題になります。断られたのにしつこく勧誘することも避けます。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_sales_conduct_3',
+      moduleId: 'm_role_sales_conduct',
+      title: '接待・贈答のルール',
+      body:
+          '取引先への接待や贈答は、社内の規程にしたがって行います。過度な接待や、公務員への贈答は、贈賄などの問題につながるおそれがあります。相手先の規程も確認し、記録を残します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_sales_conduct_4',
+      moduleId: 'm_role_sales_conduct',
+      title: '顧客情報の取り扱い',
+      body:
+          '顧客の名刺、連絡先、取引の内容などは、会社の大切な情報です。私物のスマートフォンへの保存、退職時の持ち出し、SNSでの発信には注意します。顧客の情報は、会社が決めたシステムの中で管理します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_role_manager_duties': [
+    Lesson(
+      id: 'l_role_manager_duties_1',
+      moduleId: 'm_role_manager_duties',
+      title: '管理職の安全配慮義務',
+      body:
+          '会社は、労働者が心身の健康を損なわないよう配慮する義務(安全配慮義務)を負っており、現場の管理職は、その実行を担います。長時間労働や業務の過重、部下の不調のサインを見逃さないことが求められます。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_manager_duties_2',
+      moduleId: 'm_role_manager_duties',
+      title: '労働時間の管理',
+      body:
+          '管理職であっても、労働時間を把握し、部下に無理な残業をさせないようにします。「管理監督者」にあたる人でも、深夜の割増賃金や、健康確保のための労働時間の把握は必要です。肩書きだけでは、管理監督者とは認められません。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_manager_duties_3',
+      moduleId: 'm_role_manager_duties',
+      title: 'ハラスメントの相談を受けたときの初動',
+      body:
+          '部下からハラスメントの相談を受けたときは、話を最後まで聞き、事実関係を確認し、相談者のプライバシーを守ります。ひとりで解決しようとせず、人事や相談窓口に報告して、組織で対応します。相談者に不利益な扱いをしてはいけません。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_manager_duties_4',
+      moduleId: 'm_role_manager_duties',
+      title: '日常のマネジメント',
+      body:
+          '指導と、ハラスメントの境界は、業務上の必要性と、伝え方の相当性にあります。人格を否定する言葉や、大勢の前での叱責は避け、具体的な事実と改善点を、落ち着いて伝えます。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_role_newcomer_basics': [
+    Lesson(
+      id: 'l_role_newcomer_basics_1',
+      moduleId: 'm_role_newcomer_basics',
+      title: '会社の情報は会社のもの',
+      body:
+          '業務で扱う資料、顧客の情報、社内の連絡内容は、会社の大切な情報です。許可なく社外に持ち出したり、私物のスマートフォンやクラウドに保存したりしません。分からないときは、上司や先輩に確認します。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_newcomer_basics_2',
+      moduleId: 'm_role_newcomer_basics',
+      title: 'メール・SNS・チャットの注意点',
+      body:
+          'メールの宛先や添付ファイルは、送信前に必ず確認します。SNSでは、業務の内容、職場の写真、顧客や同僚の情報を投稿しません。自分のアカウントであっても、会社の名前が分かる形での投稿は、慎重に行います。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_newcomer_basics_3',
+      moduleId: 'm_role_newcomer_basics',
+      title: '怪しいメールや電話への対応',
+      body:
+          '差出人の分からないメールの添付ファイルやリンクは、開かないようにします。心当たりのない電話で、パスワードや個人情報を聞かれても答えません。怪しいと思ったら、すぐに上司や情報システムの担当者に報告します。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_newcomer_basics_4',
+      moduleId: 'm_role_newcomer_basics',
+      title: '報告・連絡・相談(報連相)',
+      body:
+          'ミスや、判断に迷うことは、早めに報告・相談します。隠したり、後回しにしたりすると、問題が大きくなります。早く伝えることが、信頼を守り、被害を小さくします。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_role_it_admin': [
+    Lesson(
+      id: 'l_role_it_admin_1',
+      moduleId: 'm_role_it_admin',
+      title: 'アカウントと権限の管理',
+      body:
+          'アカウントは、個人ごとに発行し、共有アカウントは避けます。権限は、業務に必要な最小限にとどめ、定期的に棚卸しをして、不要な権限や、使われていないアカウントを整理します。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_it_admin_2',
+      moduleId: 'm_role_it_admin',
+      title: '入社・異動・退職への対応',
+      body:
+          '入社時にはアカウントを作成し、異動時には権限を見直し、退職時には、当日中にアカウントを停止します。退職者のアカウントを放置すると、不正アクセスや情報の持ち出しの入口になります。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_it_admin_3',
+      moduleId: 'm_role_it_admin',
+      title: 'バックアップと復旧',
+      body:
+          'データは、複数の場所に保存し、オフラインや別の場所にもバックアップを保管します。定期的に復元の手順を試し、いざというときに、実際に復旧できることを確認します。ランサムウェアの被害でも、バックアップが最後の砦になります。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_it_admin_4',
+      moduleId: 'm_role_it_admin',
+      title: 'インシデントの初動',
+      body:
+          '不審なアクセスやウイルスの感染が疑われるときは、感染した端末をネットワークから切り離し、電源を切らずに、責任者へ報告します。証拠となるログを保全し、関係者と連携して、原因の調査と再発防止を進めます。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
+  'm_role_purchasing': [
+    Lesson(
+      id: 'l_role_purchasing_1',
+      moduleId: 'm_role_purchasing',
+      title: '発注時の書面・電子的な明示',
+      body:
+          '取引先(中小受託事業者)に発注するときは、発注する内容、代金の額、支払期日などを、書面または電子的な方法で明示します。口頭だけで発注したり、後から内容を変えたりすることは、取適法に違反するおそれがあります。',
+      imageUrls: [],
+      sortOrder: 1,
+    ),
+    Lesson(
+      id: 'l_role_purchasing_2',
+      moduleId: 'm_role_purchasing',
+      title: '代金の支払いと禁止行為',
+      body:
+          '代金は、物品を受け取った日から原則60日以内の、できる限り短い期間内に支払います。一方的な代金の減額、返品、不当なやり直しの要求、協議のない代金の決定などは、禁止されています。',
+      imageUrls: [],
+      sortOrder: 2,
+    ),
+    Lesson(
+      id: 'l_role_purchasing_3',
+      moduleId: 'm_role_purchasing',
+      title: '公正な取引先の選定',
+      body:
+          '取引先を選ぶときは、価格、品質、納期、対応力などの客観的な基準で評価し、複数の会社から見積もりを取って比較します。特定の会社を、個人的な関係で優遇したり、癒着したりしないようにします。',
+      imageUrls: [],
+      sortOrder: 3,
+    ),
+    Lesson(
+      id: 'l_role_purchasing_4',
+      moduleId: 'm_role_purchasing',
+      title: '贈答・接待の受け取りと反社チェック',
+      body:
+          '取引先からの贈答や接待は、社内の規程にしたがい、高額なものは断り、必要に応じて上司に報告します。新規の取引先については、反社会的勢力との関係がないかを、契約の前に確認します。',
+      imageUrls: [],
+      sortOrder: 4,
+    ),
+  ],
 };

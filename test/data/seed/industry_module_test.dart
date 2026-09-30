@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:safy/data/models/job_role.dart';
 import 'package:safy/data/seed/industries_seed.dart';
 import 'package:safy/data/seed/modules_seed.dart';
 
@@ -26,5 +27,24 @@ void main() {
         reason: i.id,
       );
     }
+  });
+
+  test('職種専用モジュールのroleTagsは実在する職種IDだけを指し、各職種に1件以上ある', () {
+    final ids = JobRole.all.map((r) => r.id).toSet();
+    for (final m in seedModules.where((m) => m.roleTags.isNotEmpty)) {
+      expect(ids.containsAll(m.roleTags), isTrue, reason: m.id);
+    }
+    for (final r in JobRole.all) {
+      expect(seedModules.any((m) => m.roleTags.contains(r.id)), isTrue, reason: r.id);
+    }
+  });
+
+  test('職種を選ぶと対象職種と共通のモジュールだけ、未設定なら全て表示される', () {
+    final acct = seedModules.firstWhere((m) => m.id == 'm_role_accounting_bec');
+    expect(acct.isAvailableForRole('accounting'), isTrue);
+    expect(acct.isAvailableForRole('sales'), isFalse);
+    expect(acct.isAvailableForRole(null), isTrue);
+    final common = seedModules.firstWhere((m) => m.roleTags.isEmpty);
+    expect(common.isAvailableForRole('sales'), isTrue);
   });
 }

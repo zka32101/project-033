@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/module_model.dart';
 import '../../data/models/industry_model.dart';
 import '../../data/models/company_model.dart';
+import '../../data/models/job_role.dart';
 import '../../data/models/subscription_model.dart';
 import '../../data/models/enrollment_model.dart';
 import '../../core/access_control.dart';
@@ -77,6 +78,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       );
     } finally {
       _isNavigating = false;
+    }
+  }
+
+  Future<void> _changeJobRole(String? jobRole) async {
+    final session = ref.read(sessionProvider);
+    final employee = session.employee;
+    final company = session.company;
+    if (employee == null || company == null) return;
+    try {
+      await ref.read(employeeServiceProvider).updateJobRole(
+            companyId: company.id,
+            employeeId: employee.id,
+            jobRole: jobRole,
+          );
+      ref.read(sessionProvider.notifier).signIn(
+            employee: jobRole == null
+                ? employee.copyWith(clearJobRole: true)
+                : employee.copyWith(jobRole: jobRole),
+            company: company,
+          );
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('職種の変更に失敗しました。時間をおいて再度お試しください')),
+      );
     }
   }
 
@@ -169,7 +195,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   if (!modulesSnapshot.hasData) {
                     return const SkeletonList();
                   }
-                  final modules = modulesSnapshot.data!;
+                  // 職種を選んでいる受講者には、共通モジュールと自分の職種向けのモジュールだけを表示する。
+                  final modules = modulesSnapshot.data!
+                      .where((m) => m.isAvailableForRole(session.employee!.jobRole))
+                      .toList();
                   if (modules.isEmpty) {
                     return const EmptyStateView(
                       imagePath: 'assets/images/empty_states/empty_state_no_modules.png',
@@ -187,6 +216,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       return ListView(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),
                         children: [
+                          _JobRoleSelector(
+                            selected: session.employee!.jobRole,
+                            onSelected: (id) => _changeJobRole(id),
+                          ),
                           // Tier 1 Training セクション（Sep 16-22 自習期間用）
                           Card(
                             color: Colors.indigo.withOpacity(0.1),
@@ -525,6 +558,54 @@ class _TrialBanner extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+
+/// 自分の職種(部門)を選ぶチップ。選ぶと、共通モジュールと自分の職種向けモジュールだけを表示する。
+class _JobRoleSelector extends StatelessWidget {
+  final String? selected;
+  final ValueChanged<String?> onSelected;
+
+  const _JobRoleSelector({required this.selected, required this.onSelected});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('あなたの職種', style: Theme.of(context).textTheme.labelLarge),
+          const SizedBox(height: 6),
+          SizedBox(
+            height: 40,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: ChoiceChip(
+                    label: const Text('すべて'),
+                    selected: selected == null,
+                    onSelected: (_) => onSelected(null),
+                  ),
+                ),
+                for (final role in JobRole.all)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: ChoiceChip(
+                      label: Text(role.label),
+                      selected: selected == role.id,
+                      onSelected: (_) => onSelected(role.id),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

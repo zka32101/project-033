@@ -1,7 +1,7 @@
 import '../models/module_model.dart';
 import '../models/category_model.dart';
 
-/// 研修モジュール種データ。9カテゴリ×6モジュール=54モジュール + 法令改正対応6 + 全業種共通の法定教育8 + 業種専用8 = 76モジュール(2026年9月)。
+/// 研修モジュール種データ。9カテゴリ×6モジュール=54モジュール + 法令改正対応6 + 全業種共通の法定教育8 + 業種専用8 + 職種専用7 = 83モジュール(2026年9月)。
 /// 各カテゴリの1つ目をisFreeTrial=trueとし、無料体験→追加課金訴求(設計書 Step3.5 R④)の対象とする。
 const List<Module> seedModules = [
   // ①情報モラル
@@ -712,5 +712,75 @@ const List<Module> seedModules = [
     passThresholdDefault: 80,
     isFreeTrial: false,
     sortOrder: 15,
+  ),
+  Module(
+    id: 'm_role_accounting_bec',
+    categoryId: CategoryId.compliance,
+    title: '【経理・財務】振込詐欺(ビジネスメール詐欺)と支払い不正の防止',
+    description: '取引先を装った振込先変更メールなどの詐欺と、経理担当者が構築すべき二重確認・内部統制の基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 16,
+    roleTags: ['accounting'],
+  ),
+  Module(
+    id: 'm_role_hr_hiring',
+    categoryId: CategoryId.privacy,
+    title: '【人事・総務】公正な採用選考と応募者・従業員情報の取り扱い',
+    description: '就職差別につながる質問の禁止、応募書類の個人情報の扱い、入社後の人事情報の管理など、人事・総務担当者が守るべき基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 8,
+    roleTags: ['hr_ga'],
+  ),
+  Module(
+    id: 'm_role_sales_conduct',
+    categoryId: CategoryId.compliance,
+    title: '【営業】不当な表示・勧誘の禁止と接待・顧客情報のルール',
+    description: '営業担当者が守るべき、景品表示法・特定商取引法の基本、接待・贈答のルール、顧客情報の持ち出し防止を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 17,
+    roleTags: ['sales'],
+  ),
+  Module(
+    id: 'm_role_manager_duties',
+    categoryId: CategoryId.mentalHealth,
+    title: '【管理職】部下を守る法的責任(安全配慮・労務管理・ハラスメントの初動)',
+    description: '管理職が負う安全配慮義務と労務管理、部下からハラスメントの相談を受けたときの初動対応を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 12,
+    roleTags: ['manager'],
+  ),
+  Module(
+    id: 'm_role_newcomer_basics',
+    categoryId: CategoryId.infoMorals,
+    title: '【新入社員】情報の取り扱い・SNS・報連相の基本',
+    description: '新しく働き始める人が最初に身につけたい、情報の取り扱いルール、SNSやメールの注意点、報告・連絡・相談の基本を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 9,
+    roleTags: ['newcomer'],
+  ),
+  Module(
+    id: 'm_role_it_admin',
+    categoryId: CategoryId.security,
+    title: '【情報システム】権限管理・退職者対応・インシデント初動',
+    description: '情報システム担当者が担う、アカウントと権限の管理、退職者のアカウント停止、バックアップ、インシデントの初動対応を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 8,
+    roleTags: ['it'],
+  ),
+  Module(
+    id: 'm_role_purchasing',
+    categoryId: CategoryId.compliance,
+    title: '【購買・調達】取適法・公正な取引先選定・贈答のルール',
+    description: '購買・調達担当者が守るべき、取適法にもとづく発注・支払いのルール、公正な取引先選定、贈答・接待の受け取りの注意点を学びます。',
+    passThresholdDefault: 80,
+    isFreeTrial: false,
+    sortOrder: 18,
+    roleTags: ['purchasing'],
   ),
 ];

@@ -9,6 +9,7 @@ class Employee {
   final String displayName;
   final EmployeeRole role;
   final DateTime createdAt;
+  final String? jobRole; // JobRole.id。未設定ならnull
 
   const Employee({
     required this.id,
@@ -17,6 +18,7 @@ class Employee {
     required this.displayName,
     required this.role,
     required this.createdAt,
+    this.jobRole,
   });
 
   factory Employee.fromMap(String id, Map<String, dynamic> map) {
@@ -29,6 +31,7 @@ class Employee {
           ? EmployeeRole.admin
           : EmployeeRole.member,
       createdAt: parseFirestoreDateTime(map['createdAt']),
+      jobRole: map['jobRole'] as String?,
     );
   }
 
@@ -38,9 +41,16 @@ class Employee {
         'displayName': displayName,
         'role': role == EmployeeRole.admin ? 'admin' : 'member',
         'createdAt': createdAt,
+        if (jobRole != null) 'jobRole': jobRole,
       };
 
-  Employee copyWith({String? displayName, EmployeeRole? role, String? teamId}) {
+  Employee copyWith({
+    String? displayName,
+    EmployeeRole? role,
+    String? teamId,
+    String? jobRole,
+    bool clearJobRole = false,
+  }) {
     return Employee(
       id: id,
       companyId: companyId,
@@ -48,6 +58,7 @@ class Employee {
       displayName: displayName ?? this.displayName,
       role: role ?? this.role,
       createdAt: createdAt,
+      jobRole: clearJobRole ? null : (jobRole ?? this.jobRole),
     );
   }
 }
