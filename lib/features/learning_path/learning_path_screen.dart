@@ -5,6 +5,7 @@ import '../../providers/firebase_providers.dart';
 import '../../widgets/error_retry_view.dart';
 import '../../data/models/training_progress_model.dart';
 import 'diagnostic_recommendation.dart';
+import 'level_diagnostic_screen.dart';
 
 /// 学習パスレコメンデーション画面：診断結果に基づく個別学習計画
 class LearningPathScreen extends ConsumerStatefulWidget {
@@ -67,8 +68,20 @@ class _LearningPathContentState extends ConsumerState<_LearningPathContent> {
   Future<Map<String, dynamic>> _loadLearningPath() async {
     try {
       // ユーザーレベルの取得（診断を未実施の場合はデフォルト）
-      String userLevel = widget.userLevel ?? 'intermediate';
       final firestore = ref.read(firestoreProvider);
+      String userLevel = widget.userLevel ?? 'intermediate';
+      if (widget.userLevel == null) {
+        // 診断を受けていれば、保存されたスキルレベルを使う。
+        try {
+          final employeeDoc = await firestore
+              .doc('companies/${widget.companyId}/employees/${widget.employeeId}')
+              .get();
+          final saved = employeeDoc.data()?['skillLevel'] as String?;
+          if (saved != null && saved.isNotEmpty) userLevel = saved;
+        } catch (_) {
+          // 取得できない場合は既定のレベルで表示を続ける。
+        }
+      }
 
       // Firestore から該当レベルの推奨学習パスを取得
       final pathSnapshot = await firestore
@@ -215,6 +228,7 @@ class _LearningPathContentState extends ConsumerState<_LearningPathContent> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                _buildDiagnosticCard(context),
                 _buildHeaderCard(context, pathData),
                 if (recommendations.isNotEmpty)
                   _buildRecommendationSection(context, recommendations),
@@ -249,6 +263,28 @@ class _LearningPathContentState extends ConsumerState<_LearningPathContent> {
               ],
             ),
           );
+        },
+      ),
+    );
+  }
+
+  /// スキルレベル診断への入口。診断後は保存されたレベルで学習パスを再表示する。
+  Widget _buildDiagnosticCard(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Card(
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      color: colorScheme.secondaryContainer,
+      child: ListTile(
+        leading: const Icon(Icons.quiz_outlined),
+        title: const Text('スキルレベル診断', style: TextStyle(fontWeight: FontWeight.w700)),
+        subtitle: const Text('数問に答えて、あなたに合った学習パスを見つけましょう'),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () async {
+          await Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const LevelDiagnosticScreen()),
+          );
+          if (!mounted) return;
+          setState(() => _learningPathFuture = _loadLearningPath());
         },
       ),
     );
