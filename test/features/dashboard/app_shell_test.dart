@@ -69,7 +69,7 @@ void main() {
       expect(find.text('ホーム'), findsOneWidget);
       expect(find.text('学習パス'), findsOneWidget);
       expect(find.text('Q&A'), findsOneWidget);
-      expect(find.text('マイ成長'), findsOneWidget);
+      expect(find.text('成長'), findsOneWidget);
     });
 
     testWidgets('タブ切り替えが機能する', (WidgetTester tester) async {
@@ -92,7 +92,7 @@ void main() {
       // アクティブアイコンが変わることを確認
       expect(find.byIcon(Icons.forum), findsOneWidget);
 
-      // 4番目のタブ（マイ成長）をタップ
+      // 4番目のタブ（成長）をタップ
       await tester.tap(find.byIcon(Icons.trending_up_outlined));
       await tester.pumpAndSettle();
 
