@@ -1,143 +1,211 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
+import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
-import 'package:csv/csv.dart';
 import 'package:share_plus/share_plus.dart';
-import '../../../core/dashboard_analytics.dart';
+import '../../../core/report_data.dart';
+import '../../../core/report_writers.dart';
+import '../../../data/seed/compliance_checklist_seed.dart';
 import '../../../providers/service_providers.dart';
 import '../../../providers/session_provider.dart';
 import '../../../widgets/error_retry_view.dart';
 
-/// レポート出力(CSV/PDF、設計書 Must③・法令対応エビデンス)
-class ReportExportScreen extends ConsumerWidget {
+/// レポート出力(Excel/PDF/CSV、設計書 Must③・法令対応エビデンス)。
+/// 履修状況(社員別・モジュール別)と法令対応チェックリストを、サマリ付きで出力する。
+class ReportExportScreen extends ConsumerStatefulWidget {
   const ReportExportScreen({super.key});
 
-  Future<List<EmployeeCompletionStat>> _loadStats(WidgetRef ref, String companyId, String industryId) async {
-    final employees = await ref.read(employeeServiceProvider).watchCompanyEmployees(companyId).first;
-    final enrollments = await ref.read(enrollmentServiceProvider).watchCompanyEnrollments(companyId).first;
-    final industry = await ref.read(contentServiceProvider).getIndustry(industryId);
-    final totalModules = industry == null
-        ? 0
-        : (await ref.read(contentServiceProvider).listModulesForIndustry(industry)).length;
-    return DashboardAnalytics.computeEmployeeCompletionStats(
+  @override
+  ConsumerState<ReportExportScreen> createState() => _ReportExportScreenState();
+}
+
+class _ReportExportScreenState extends ConsumerState<ReportExportScreen> {
+  late Future<ReportData> _future;
+  bool _busy = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _future = _load();
+  }
+
+  Future<ReportData> _load() async {
+    final company = ref.read(sessionProvider).company!;
+    final employees = await ref
+        .read(employeeServiceProvider)
+        .watchCompanyEmployees(company.id)
+        .first;
+    final enrollments = await ref
+        .read(enrollmentServiceProvider)
+        .watchCompanyEnrollments(company.id)
+        .first;
+    final content = ref.read(contentServiceProvider);
+    final industry = await content.getIndustry(company.industryId);
+    final modules = industry == null
+        ? <dynamic>[]
+        : await content.listModulesForIndustry(
+            industry,
+            categoryPriorityOverride: company.categoryPriorityOverride,
+          );
+    final statuses = await ref
+        .read(complianceChecklistServiceProvider)
+        .watchStatuses(company.id)
+        .first;
+    return ReportBuilder.build(
+      company: company,
       employees: employees,
       enrollments: enrollments,
-      totalModuleCount: totalModules,
+      modules: modules.cast(),
+      checklistItems: seedComplianceItems,
+      checklistStatuses: statuses,
+      now: DateTime.now(),
     );
   }
 
-  Future<void> _exportPdf(List<EmployeeCompletionStat> stats, String companyName) async {
-    final doc = pw.Document();
-    doc.addPage(
-      pw.Page(
-        pageFormat: PdfPageFormat.a4,
-        build: (context) => pw.Column(
-          crossAxisAlignment: pw.CrossAxisAlignment.start,
-          children: [
-            pw.Text('$companyName 履修状況レポート', style: const pw.TextStyle(fontSize: 18)),
-            pw.SizedBox(height: 16),
-            pw.TableHelper.fromTextArray(
-              headers: ['氏名', '完了モジュール数', '対象モジュール数', '受講率(%)'],
-              data: stats
-                  .map((s) => [
-                        s.displayName,
-                        s.completedCount.toString(),
-                        s.totalModuleCount.toString(),
-                        '${s.completionRatePercent}%',
-                      ])
-                  .toList(),
-            ),
-          ],
-        ),
-      ),
-    );
-    await Printing.sharePdf(bytes: await doc.save(), filename: 'safy_report.pdf');
-  }
+  String _fileName(ReportData data, String ext) =>
+      'safy_report_${ReportBuilder.formatDate(data.generatedAt).replaceAll('-', '')}.$ext';
 
-  /// 法令監査での二次利用(表計算ソフトでの再集計等)向けにCSVでも出力できるようにする。
-  Future<void> _exportCsv(List<EmployeeCompletionStat> stats, String companyName) async {
-    final rows = <List<String>>[
-      ['氏名', '完了モジュール数', '対象モジュール数', '受講率(%)'],
-      ...stats.map((s) => [
-            s.displayName,
-            s.completedCount.toString(),
-            s.totalModuleCount.toString(),
-            s.completionRatePercent.toString(),
-          ]),
-    ];
-    final csvContent = const ListToCsvConverter().convert(rows);
-    // BOM付きUTF-8で保存し、Excel等で日本語が文字化けしないようにする。
-    final bytes = <int>[0xEF, 0xBB, 0xBF, ...utf8.encode(csvContent)];
-
-    final file = File('${Directory.systemTemp.path}/safy_report.csv');
+  Future<void> _share(
+    ReportData data,
+    Uint8List bytes,
+    String ext,
+    String mime,
+  ) async {
+    final dir = await getTemporaryDirectory();
+    final file = File('${dir.path}/${_fileName(data, ext)}');
     await file.writeAsBytes(bytes);
-    await Share.shareXFiles([XFile(file.path)], subject: '$companyName 履修状況レポート(CSV)');
+    await Share.shareXFiles([
+      XFile(file.path, mimeType: mime),
+    ], subject: '${data.companyName} 履修状況レポート');
+  }
+
+  Future<void> _export(ReportData data, String kind) async {
+    if (_busy) return;
+    setState(() => _busy = true);
+    try {
+      switch (kind) {
+        case 'xlsx':
+          await _share(
+            data,
+            buildReportXlsx(data),
+            'xlsx',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          );
+        case 'pdf':
+          // 日本語フォントは初回のみネットワークから取得して端末にキャッシュされる。
+          final base = await PdfGoogleFonts.notoSansJPRegular();
+          final bold = await PdfGoogleFonts.notoSansJPBold();
+          await _share(
+            data,
+            await buildReportPdf(data, base: base, bold: bold),
+            'pdf',
+            'application/pdf',
+          );
+        case 'csv':
+          await _share(data, buildReportCsv(data), 'csv', 'text/csv');
+      }
+    } catch (_) {
+      if (mounted) {
+        final hint = kind == 'pdf' ? '(初回はフォント取得のためネットワーク接続が必要です)' : '';
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('出力に失敗しました$hint')));
+      }
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final session = ref.watch(sessionProvider);
     if (!session.isSignedIn) {
       return const Scaffold(body: Center(child: Text('セッションが見つかりません')));
     }
-    final company = session.company!;
 
     return Scaffold(
       appBar: AppBar(title: const Text('レポート出力')),
-      body: FutureBuilder<List<EmployeeCompletionStat>>(
-        future: _loadStats(ref, company.id, company.industryId),
+      body: FutureBuilder<ReportData>(
+        future: _future,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const ErrorRetryView(message: '履修状況の集計に失敗しました');
+            return ErrorRetryView(
+              message: '履修状況の集計に失敗しました',
+              onRetry: () => setState(() => _future = _load()),
+            );
           }
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
-          final stats = snapshot.data!;
-          return Padding(
+          final data = snapshot.data!;
+          return ListView(
             padding: const EdgeInsets.all(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('対象社員数: ${stats.length}名'),
-                const SizedBox(height: 24),
-                FilledButton.icon(
-                  onPressed: () async {
-                    try {
-                      await _exportPdf(stats, company.name);
-                    } catch (_) {
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('PDF出力に失敗しました')),
-                        );
-                      }
-                    }
-                  },
-                  icon: const Icon(Icons.picture_as_pdf),
-                  label: const Text('PDFレポートを出力する'),
+            children: [
+              Text('サマリ', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 8),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      for (final e in data.summary)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(flex: 5, child: Text(e.key)),
+                              Expanded(
+                                flex: 4,
+                                child: Text(
+                                  e.value,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 12),
-                OutlinedButton.icon(
-                  onPressed: () async {
-                    try {
-                      await _exportCsv(stats, company.name);
-                    } catch (_) {
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('CSV出力に失敗しました')),
-                        );
-                      }
-                    }
-                  },
-                  icon: const Icon(Icons.table_chart_outlined),
-                  label: const Text('CSVレポートを出力する'),
-                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '出力内容: ${data.tables.map((t) => t.title).join('・')}',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              const SizedBox(height: 24),
+              FilledButton.icon(
+                onPressed: _busy ? null : () => _export(data, 'xlsx'),
+                icon: const Icon(Icons.grid_on),
+                label: const Text('Excelで出力する(サマリ+3シート)'),
+              ),
+              const SizedBox(height: 12),
+              FilledButton.tonalIcon(
+                onPressed: _busy ? null : () => _export(data, 'pdf'),
+                icon: const Icon(Icons.picture_as_pdf),
+                label: const Text('PDFで出力する'),
+              ),
+              const SizedBox(height: 12),
+              OutlinedButton.icon(
+                onPressed: _busy ? null : () => _export(data, 'csv'),
+                icon: const Icon(Icons.table_chart_outlined),
+                label: const Text('CSVで出力する(社員別のみ)'),
+              ),
+              if (_busy) ...[
+                const SizedBox(height: 16),
+                const Center(child: CircularProgressIndicator()),
               ],
-            ),
+              const SizedBox(height: 16),
+              Text(
+                '法令対応チェックリストは自己申告の実施状況です。法令への適合を保証するものではありません。',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
           );
         },
       ),
