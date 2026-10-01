@@ -42,12 +42,15 @@ class DashboardAnalytics {
     required List<Employee> employees,
     required List<Enrollment> enrollments,
     required int totalModuleCount,
+    // 指定すると、その研修の修了だけを数える(管理者が受講対象を絞っている場合)。
+    Set<String>? onlyModuleIds,
   }) {
     return employees.map((employee) {
       final completed = enrollments
           .where((e) =>
               e.employeeId == employee.id &&
-              e.status == EnrollmentStatus.completed)
+              e.status == EnrollmentStatus.completed &&
+              (onlyModuleIds == null || onlyModuleIds.contains(e.moduleId)))
           .length;
       return EmployeeCompletionStat(
         employeeId: employee.id,
@@ -70,6 +73,7 @@ class DashboardAnalytics {
     required List<Employee> employees,
     required List<Enrollment> enrollments,
     required int totalModuleCount,
+    Set<String>? onlyModuleIds,
   }) {
     final byTeam = <String, List<Employee>>{};
     for (final employee in employees) {
@@ -83,7 +87,8 @@ class DashboardAnalytics {
             enrollments
                 .where((e) =>
                     e.employeeId == employee.id &&
-                    e.status == EnrollmentStatus.completed)
+                    e.status == EnrollmentStatus.completed &&
+                    (onlyModuleIds == null || onlyModuleIds.contains(e.moduleId)))
                 .length,
       );
       return TeamCompletionStat(

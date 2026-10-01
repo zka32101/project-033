@@ -7,6 +7,7 @@ import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../core/report_data.dart';
 import '../../../core/report_writers.dart';
+import '../../../data/models/module_model.dart';
 import '../../../data/seed/compliance_checklist_seed.dart';
 import '../../../providers/service_providers.dart';
 import '../../../providers/session_provider.dart';
@@ -57,12 +58,16 @@ class _ReportExportScreenState extends ConsumerState<ReportExportScreen> {
       company: company,
       employees: employees,
       enrollments: enrollments,
-      modules: modules.cast(),
+      modules: _assignedOnly(modules.cast(), company.assignedModuleIds),
       checklistItems: seedComplianceItems,
       checklistStatuses: statuses,
       now: DateTime.now(),
     );
   }
+
+  /// 管理者が受講対象を指定している場合は、その研修だけを集計の対象にする。
+  List<Module> _assignedOnly(List<Module> modules, List<String>? assigned) =>
+      assigned == null ? modules : modules.where((m) => assigned.contains(m.id)).toList();
 
   String _fileName(ReportData data, String ext) =>
       'safy_report_${ReportBuilder.formatDate(data.generatedAt).replaceAll('-', '')}.$ext';

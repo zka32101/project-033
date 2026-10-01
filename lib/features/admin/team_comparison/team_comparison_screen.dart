@@ -64,7 +64,8 @@ class _TeamComparisonScreenState extends ConsumerState<TeamComparisonScreen> {
           if (!totalModulesSnapshot.hasData) {
             return const SkeletonList();
           }
-          final totalModules = totalModulesSnapshot.data!;
+          final assigned = company.assignedModuleIds;
+          final totalModules = assigned?.length ?? totalModulesSnapshot.data!;
 
           return FutureBuilder<List<Team>>(
             future: _teamsFuture,
@@ -106,6 +107,7 @@ class _TeamComparisonScreenState extends ConsumerState<TeamComparisonScreen> {
                         employees: employees,
                         enrollments: enrollmentSnapshot.data!,
                         totalModuleCount: totalModules,
+                        onlyModuleIds: assigned?.toSet(),
                       );
 
                       if (teamStats.isEmpty) {

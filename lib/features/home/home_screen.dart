@@ -21,6 +21,7 @@ import '../certificates/my_certificates_screen.dart';
 import '../admin/team_management/team_management_screen.dart';
 import '../paywall/paywall_screen.dart';
 import '../billing/contract_guide_screen.dart';
+import '../admin/company_profile/company_profile_input_screen.dart';
 import '../training/training_dashboard_screen.dart';
 import '../exam/exam_enrollment_screen.dart';
 import '../../widgets/error_retry_view.dart';
@@ -191,6 +192,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: Column(
         children: [
           if (company.isTrial) _TrialBanner(company: company, isAdmin: session.isAdmin),
+          if (session.isAdmin && company.profile == null) const _ProfilePromptBanner(),
           Expanded(
             child: FutureBuilder(
             future: _industryFuture,
@@ -418,7 +420,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               categoryId: module.categoryId,
                               overrides: company.categoryPriorityOverride,
                             );
-                            final isRequired = priority == 2;
+                            // 管理者が受講対象を指定していれば、それを「必須」とする(未指定なら業種の重点分野)。
+                            final assigned = company.assignedModuleIds;
+                            final isRequired =
+                                assigned != null ? assigned.contains(module.id) : priority == 2;
                             final enrollments = enrollmentSnapshot.data ?? const [];
                             final isCompleted = enrollments.any((e) =>
                                 e.moduleId == module.id &&
@@ -547,6 +552,40 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
 
 /// お試し(14日・最大5名)中に、残り日数と次の行動(チーム招待)を示すバナー。
+/// 会社情報(規模・事業の特徴)が未入力の管理者に、入力を促す。入力すると推奨の研修が自動で選ばれる。
+class _ProfilePromptBanner extends StatelessWidget {
+  const _ProfilePromptBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Material(
+      color: scheme.tertiaryContainer,
+      child: InkWell(
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const CompanyProfileInputScreen()),
+        ),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          child: Row(
+            children: [
+              Icon(Icons.auto_fix_high, size: 20),
+              SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  '会社の規模・事業を入力すると、必要な研修を自動で選びます',
+                  style: TextStyle(fontSize: 13),
+                ),
+              ),
+              Icon(Icons.chevron_right),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _TrialBanner extends StatelessWidget {
   final Company company;
   final bool isAdmin;
