@@ -29,6 +29,7 @@ import { onDocumentCreated, onDocumentWritten } from "firebase-functions/v2/fire
 import { onSchedule } from "firebase-functions/v2/scheduler";
 import { defineSecret } from "firebase-functions/params";
 import { logger } from "firebase-functions/v2";
+import { countPendingRoster } from "./roster";
 import sgMail from "@sendgrid/mail";
 import Anthropic from "@anthropic-ai/sdk";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
@@ -2014,7 +2015,15 @@ export const previewInviteCode = onCall({ region: "us-central1" }, async (reques
     const team = (await companyRef.collection("teams").doc(invite.teamId).get()).data();
     teamName = (team?.teamName as string | undefined) ?? "";
   }
-  return { companyName: company.name as string, teamName };
+  let memberName = "";
+  if (invite.personal === true) {
+    const entry = (await companyRef.collection("roster").doc(inviteCode.toUpperCase()).get()).data();
+    if (!entry || entry.status === "revoked" || (entry.status === "joined" && entry.joinedUid !== request.auth.uid)) {
+      throw new HttpsError("not-found", "招待コードが無効です");
+    }
+    memberName = (entry.name as string | undefined) ?? "";
+  }
+  return { companyName: company.name as string, teamName, memberName };
 });
 
 /**
@@ -2057,22 +2066,45 @@ export const joinCompanyViaInvite = onCall({ region: "us-central1" }, async (req
     // 無効化(退職など)された社員は、招待コードでは復帰できない。復帰は管理者が行う。
     throw new HttpsError("permission-denied", "このアカウントは無効化されています。管理者にお問い合わせください");
   }
+  const personal = invite.personal === true;
+  const rosterRef = companyRef.collection("roster").doc(inviteCode.toUpperCase());
+  const rosterEntry = personal ? (await rosterRef.get()).data() : undefined;
+  if (personal) {
+    // 個人用コード: 取消済み、または別の人が使用済みなら無効。
+    if (!rosterEntry || rosterEntry.status === "revoked" ||
+        (rosterEntry.status === "joined" && rosterEntry.joinedUid !== uid)) {
+      throw new HttpsError("not-found", "招待コードが無効です");
+    }
+  }
   if (!existing.exists) {
     const count = await countActiveEmployees(companyRef);
-    if (count >= (company.contractedHeadcount ?? 1)) {
+    // 名簿で席を確保している人(未参加)の分は、チーム共通コードでの参加には使わせない。
+    const reserved = personal ? 0 : await countPendingRoster(companyRef);
+    if (count + reserved >= (company.contractedHeadcount ?? 1)) {
       throw new HttpsError("resource-exhausted", "参加人数の上限に達しています");
     }
-    await employeeRef.set({
+    const batch = db.batch();
+    batch.set(employeeRef, {
       companyId: invite.companyId,
       teamId: invite.teamId ?? "",
-      displayName,
+      displayName: personal ? rosterEntry!.name : displayName,
       role: "member",
       createdAt: admin.firestore.Timestamp.now(),
+      ...(personal && rosterEntry!.jobRole ? { jobRole: rosterEntry!.jobRole } : {}),
     });
+    if (personal) {
+      batch.update(rosterRef, {
+        status: "joined",
+        joinedUid: uid,
+        joinedAt: admin.firestore.Timestamp.now(),
+      });
+    }
+    await batch.commit();
   }
   return { companyId: invite.companyId, teamId: invite.teamId ?? "", employeeId: uid };
 });
 
+export { createRoster, revokeRosterEntry } from "./roster";
 export { notifyTrialExpiring } from "./trial_notice";
 export { createCheckoutSession, createBillingPortalSession, stripeWebhook } from "./stripe";
 

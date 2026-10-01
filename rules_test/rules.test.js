@@ -28,6 +28,7 @@ async function check(name, fn) {
     await setDoc(doc(db, `companies/${C}/employees/mem3`), { companyId: C, role: 'member', displayName: 'M3' });
     await setDoc(doc(db, `companies/${C}/employees/mem4`), { companyId: C, role: 'member', displayName: 'M4' });
     await setDoc(doc(db, `companies/${C}/employees/old1`), { companyId: C, role: 'member', displayName: 'Old', deactivated: true });
+    await setDoc(doc(db, `companies/${C}/roster/R1`), { name: '佐藤', status: 'pending' });
     await setDoc(doc(db, `companies/${C}/auditLogs/l1`), { at: new Date(), actorId: 'admin1', summary: 'x', action: 'member.promoted' });
     await setDoc(doc(db, `companies/${C}/teams/t1`), { companyId: C, teamName: '営業' });
     await setDoc(doc(db, `companies/${C}/subscriptions/company_${C}`), { status: 'active' });
@@ -156,6 +157,16 @@ async function check(name, fn) {
     assertSucceeds(updateDoc(doc(as('admin3'), `companies/${C}/employees/mem3`), { jobRole: 'accounting', lastEditedBy: 'admin3' })));
   await check('メンバーは自分の職種を変更できる(従来どおり)', () =>
     assertSucceeds(updateDoc(doc(as('mem4'), `companies/${C}/employees/mem4`), { jobRole: 'it' })));
+
+  console.log('--- 名簿(roster) ---');
+  await check('管理者は名簿を読める', () =>
+    assertSucceeds(getDoc(doc(as('admin1'), `companies/${C}/roster/R1`))));
+  await check('メンバーは名簿を読めない', () =>
+    assertFails(getDoc(doc(as('mem4'), `companies/${C}/roster/R1`))));
+  await check('管理者でも名簿を直接書き換えられない(席数チェック回避の防止)', () =>
+    assertFails(setDoc(doc(as('admin1'), `companies/${C}/roster/R2`), { name: '偽', status: 'pending' })));
+  await check('管理者でも名簿を直接削除できない', () =>
+    assertFails(deleteDoc(doc(as('admin1'), `companies/${C}/roster/R1`))));
 
   await env.cleanup();
   console.log(`\n結果: ${passed} PASS / ${failed} FAIL`);

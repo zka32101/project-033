@@ -16,6 +16,7 @@ import '../module_assignment/module_assignment_screen.dart';
 import '../member_management/member_management_screen.dart';
 import '../report_export/certificates_export_screen.dart';
 import '../audit_log/audit_log_screen.dart';
+import '../roster/roster_screen.dart';
 import '../module_assignment/role_assignment_screen.dart';
 import '../../../core/required_modules.dart';
 import '../pass_threshold/pass_threshold_settings_screen.dart';
@@ -392,6 +393,10 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const CertificatesExportScreen()),
                 );
+              } else if (value == 'roster') {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const RosterScreen()),
+                );
               } else if (value == 'members') {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const MemberManagementScreen()),
@@ -416,6 +421,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
             },
             itemBuilder: (context) => const [
               PopupMenuItem(value: 'members', child: Text('メンバー管理')),
+              PopupMenuItem(value: 'roster', child: Text('社員の一括登録')),
               PopupMenuItem(value: 'certificates', child: Text('修了証・受講記録の出力')),
               PopupMenuItem(value: 'audit_log', child: Text('操作履歴(監査ログ)')),
               PopupMenuItem(value: 'assignment', child: Text('受講コンテンツの設定')),
