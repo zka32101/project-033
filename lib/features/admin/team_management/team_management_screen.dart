@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'team_assignment_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../data/models/team_model.dart';
@@ -249,6 +250,25 @@ class _TeamManagementScreenState extends ConsumerState<TeamManagementScreen> {
                             style: TextStyle(fontSize: 12),
                           ),
                         ),
+                      const SizedBox(height: 8),
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                          icon: const Icon(Icons.checklist_rtl, size: 18),
+                          label: Text(team.assignedModuleIds.isEmpty
+                              ? 'このチームの必須研修を設定する'
+                              : 'このチームの追加の必須研修(${team.assignedModuleIds.length}件)'),
+                          onPressed: () async {
+                            await Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => TeamModuleAssignmentScreen(team: team),
+                              ),
+                            );
+                            // 保存した内容を一覧に反映する。
+                            _reloadTeams(companyId);
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),

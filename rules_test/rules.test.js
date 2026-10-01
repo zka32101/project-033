@@ -27,6 +27,7 @@ async function check(name, fn) {
     await setDoc(doc(db, `companies/${C}/employees/mem3`), { companyId: C, role: 'member', displayName: 'M3' });
     await setDoc(doc(db, `companies/${C}/employees/mem4`), { companyId: C, role: 'member', displayName: 'M4' });
     await setDoc(doc(db, `companies/${C}/employees/old1`), { companyId: C, role: 'member', displayName: 'Old', deactivated: true });
+    await setDoc(doc(db, `companies/${C}/teams/t1`), { companyId: C, teamName: '営業' });
     await setDoc(doc(db, `companies/${C}/subscriptions/company_${C}`), { status: 'active' });
     await setDoc(doc(db, `companies/${C}/enrollments/e1`), { employeeId: 'mem1', moduleId: 'm1', status: 'completed' });
   });
@@ -92,6 +93,18 @@ async function check(name, fn) {
     assertFails(setDoc(doc(admin, `companies/${C}/subscriptions/company_${C}`), { status: 'active', planTier: 'upper', fullSet: true })));
   await check('メンバーは契約情報を読める', () =>
     assertSucceeds(getDoc(doc(as('mem2'), `companies/${C}/subscriptions/company_${C}`))));
+
+  console.log('--- チーム別の必須研修 ---');
+  await check('管理者はチームの追加の必須研修を設定できる', () =>
+    assertSucceeds(updateDoc(doc(as('admin1'), `companies/${C}/teams/t1`), { assignedModuleIds: ['m1', 'm2'] })));
+  await check('メンバーはチームの追加の必須研修を読める(ホームの必須表示に使う)', () =>
+    assertSucceeds(getDoc(doc(as('mem4'), `companies/${C}/teams/t1`))));
+  await check('メンバーはチームの設定を書き換えられない', () =>
+    assertFails(updateDoc(doc(as('mem4'), `companies/${C}/teams/t1`), { assignedModuleIds: [] })));
+  await check('会社の外の人はチームの設定を読めない', () =>
+    assertFails(getDoc(doc(outsider, `companies/${C}/teams/t1`))));
+  await check('無効化された社員はチームの設定を読めない', () =>
+    assertFails(getDoc(doc(old, `companies/${C}/teams/t1`))));
 
   await env.cleanup();
   console.log(`\n結果: ${passed} PASS / ${failed} FAIL`);

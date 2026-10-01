@@ -53,8 +53,14 @@ class ReportBuilder {
     required List<ComplianceItem> checklistItems,
     required Map<String, bool> checklistStatuses,
     required DateTime now,
+    // 社員ごとの受講対象(必須)の研修ID。未指定/nullなら全研修が対象。
+    Set<String>? Function(Employee employee)? requiredFor,
   }) {
     final moduleIds = modules.map((m) => m.id).toSet();
+    Set<String> requiredOf(Employee e) {
+      final ids = requiredFor?.call(e);
+      return ids == null ? moduleIds : ids.intersection(moduleIds);
+    }
     // 対象モジュールの修了のみを数える(分母と一致させる)。
     final completedByEmployee = <String, Set<String>>{};
     final lastCompletedByEmployee = <String, DateTime>{};
@@ -78,15 +84,18 @@ class ReportBuilder {
     }
 
     final employeeIds = employees.map((e) => e.id).toSet();
-    final totalModules = modules.length;
 
     // --- 社員別 ---
     var totalCompleted = 0;
+    var denominator = 0;
     var fullyDone = 0;
     final employeeRows = <List<String>>[];
     for (final emp in employees) {
-      final done = (completedByEmployee[emp.id] ?? const <String>{}).length;
+      final required = requiredOf(emp);
+      final totalModules = required.length;
+      final done = (completedByEmployee[emp.id] ?? const <String>{}).where(required.contains).length;
       totalCompleted += done;
+      denominator += totalModules;
       if (totalModules > 0 && done >= totalModules) fullyDone++;
       final last = lastCompletedByEmployee[emp.id];
       employeeRows.add([
@@ -101,25 +110,25 @@ class ReportBuilder {
     }
 
     // --- モジュール別 ---
+    // その研修が必須の社員(会社全体・所属チームの指定)だけを対象に数える。誰も必須にしていない研修は載せない。
     final moduleRows = <List<String>>[];
     for (final m in modules) {
-      final done = (completedByModule[m.id] ?? const <String>{})
-          .where(employeeIds.contains)
-          .length;
+      final target = {
+        for (final e in employees)
+          if (requiredOf(e).contains(m.id)) e.id,
+      };
+      if (target.isEmpty) continue;
+      final done = (completedByModule[m.id] ?? const <String>{}).where(target.contains).length;
       final inProgress = (startedByModule[m.id] ?? const <String>{})
-          .where(
-            (id) =>
-                employeeIds.contains(id) &&
-                !(completedByModule[m.id]?.contains(id) ?? false),
-          )
+          .where((id) => target.contains(id) && !(completedByModule[m.id]?.contains(id) ?? false))
           .length;
-      final notStarted = employees.length - done - inProgress;
+      final notStarted = target.length - done - inProgress;
       moduleRows.add([
         m.title,
         '$done',
         '$inProgress',
         '${notStarted < 0 ? 0 : notStarted}',
-        _percent(done, employees.length),
+        _percent(done, target.length),
       ]);
     }
 
@@ -145,7 +154,6 @@ class ReportBuilder {
       ]);
     }
 
-    final denominator = employees.length * totalModules;
     return ReportData(
       companyName: company.name,
       generatedAt: now,
@@ -153,7 +161,7 @@ class ReportBuilder {
         MapEntry('会社名', company.name),
         MapEntry('出力日', formatDate(now)),
         MapEntry('対象社員数', '${employees.length}名'),
-        MapEntry('対象モジュール数', '$totalModules件'),
+        MapEntry('対象モジュール数', '${moduleRows.length}件'),
         MapEntry('全体の受講率', _percent(totalCompleted, denominator)),
         MapEntry('全モジュール修了者', '$fullyDone名'),
         MapEntry('未修了者', '${employees.length - fullyDone}名'),
