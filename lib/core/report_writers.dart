@@ -109,6 +109,7 @@ Future<Uint8List> buildReportPdf(
           data: [
             for (final e in data.summary) [e.key, e.value],
           ],
+          headerCount: 0,
           cellStyle: const pw.TextStyle(fontSize: 10),
           cellAlignment: pw.Alignment.centerLeft,
           columnWidths: {

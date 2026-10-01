@@ -156,9 +156,9 @@ class _ReportExportScreenState extends ConsumerState<ReportExportScreen> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(flex: 2, child: Text(e.key)),
+                              Expanded(flex: 5, child: Text(e.key)),
                               Expanded(
-                                flex: 3,
+                                flex: 4,
                                 child: Text(
                                   e.value,
                                   style: const TextStyle(
