@@ -19,6 +19,7 @@ class FirestorePaths {
       '${company(companyId)}/progressRecords';
   static String quizAttempts(String companyId) =>
       '${company(companyId)}/quizAttempts';
+  static String roster(String companyId) => '${company(companyId)}/roster';
   static String auditLogs(String companyId) => '${company(companyId)}/auditLogs';
   static String certificates(String companyId) =>
       '${company(companyId)}/certificates';
