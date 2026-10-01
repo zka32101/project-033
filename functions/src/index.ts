@@ -1981,6 +1981,7 @@ export const reactivateEmployee = onCall({ region: "us-central1" }, async (reque
     deactivated: admin.firestore.FieldValue.delete(),
     deactivatedAt: admin.firestore.FieldValue.delete(),
     lastEditedBy: uid, // 監査ログに、再有効化した管理者を記録する
+    lastEditedAt: admin.firestore.FieldValue.serverTimestamp(),
   });
   return { reactivated: true };
 });
