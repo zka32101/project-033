@@ -95,8 +95,17 @@ service cloud.firestore {
     // --- マルチテナントデータ(companies/{companyId}配下) ---
     match /companies/{companyId} {
       allow read: if isCompanyMember(companyId);
-      allow create: if isSignedIn(); // 会社プロファイル設定(管理者初回登録)
-      allow update: if isAdmin(companyId);
+      // 会社の作成はCloud Functions(registerCompanyAdmin)だけが行う。クライアントから任意の
+      // プラン・人数・期限で会社を作れると、決済を迂回して有料扱いにできてしまう。
+      allow create: if false;
+      // 管理者は会社の設定(合格ライン・期限・連絡先など)を更新できるが、契約・課金に関わる項目は
+      // 書き換えられない(お試し期限の延長や人数上限の引き上げによる決済の迂回を防ぐ)。
+      allow update: if isAdmin(companyId) &&
+        !request.resource.data.diff(resource.data).affectedKeys().hasAny([
+          'planType', 'trialEndsAt', 'contractedHeadcount', 'billingSource',
+          'stripeCustomerId', 'stripeSubscriptionId', 'stripeStatus',
+          'trialNoticesSent', 'createdAt'
+        ]);
       allow delete: if false;
 
       match /teams/{teamId} {

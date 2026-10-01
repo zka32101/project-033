@@ -1860,24 +1860,17 @@ export const registerCompanyAdmin = onCall(async (request) => {
     throw new HttpsError("unauthenticated", "サインインが必要です");
   }
 
-  const { companyName, industryId, planType, contractedHeadcount, adminDisplayName, teamName } =
+  // planType・contractedHeadcountはクライアントから受け取らない(旧版アプリが送ってきても無視する)。
+  // 新規登録は必ずお試し(14日・最大5名)で始まり、有料化は決済(Stripe Webhook)だけが行う。
+  const { companyName, industryId, adminDisplayName, teamName } =
     request.data as {
       companyName?: string;
       industryId?: string;
-      planType?: string;
-      contractedHeadcount?: number;
       adminDisplayName?: string;
       teamName?: string;
     };
 
-  if (
-    !companyName ||
-    !industryId ||
-    (planType !== "individual" && planType !== "team" && planType !== "trial") ||
-    !contractedHeadcount ||
-    contractedHeadcount <= 0 ||
-    !adminDisplayName
-  ) {
+  if (!companyName || !industryId || !adminDisplayName) {
     throw new HttpsError("invalid-argument", "入力内容を確認してください");
   }
 
@@ -1885,18 +1878,18 @@ export const registerCompanyAdmin = onCall(async (request) => {
   const companyRef = db.collection("companies").doc();
 
   // お試し: 14日間・最大5名。人数と期限はクライアント入力を信用せずサーバーで固定する。
-  const isTrial = planType === "trial";
-  const headcount = isTrial ? TRIAL_MAX_MEMBERS : contractedHeadcount;
-  const trialEndsAt = isTrial
-    ? admin.firestore.Timestamp.fromMillis(now.toMillis() + TRIAL_DAYS * 24 * 60 * 60 * 1000)
-    : null;
+  const planType = "trial";
+  const headcount = TRIAL_MAX_MEMBERS;
+  const trialEndsAt = admin.firestore.Timestamp.fromMillis(
+    now.toMillis() + TRIAL_DAYS * 24 * 60 * 60 * 1000,
+  );
 
   await companyRef.set({
     name: companyName,
     industryId,
     planType,
     contractedHeadcount: headcount,
-    ...(trialEndsAt ? { trialEndsAt } : {}),
+    trialEndsAt,
     customPassThreshold: {},
     moduleDeadlines: {},
     contactEmail: "",
@@ -1907,7 +1900,7 @@ export const registerCompanyAdmin = onCall(async (request) => {
   let teamId = "";
   const resolvedTeamName = teamName && teamName.trim().length > 0
     ? teamName
-    : isTrial ? "お試しチーム" : "";
+    : "お試しチーム";
   if (resolvedTeamName) {
     const teamRef = companyRef.collection("teams").doc();
     await teamRef.set({
@@ -1931,7 +1924,7 @@ export const registerCompanyAdmin = onCall(async (request) => {
     teamId,
     employeeId: uid,
     contractedHeadcount: headcount,
-    trialEndsAt: trialEndsAt ? trialEndsAt.toMillis() : null,
+    trialEndsAt: trialEndsAt.toMillis(),
   };
 });
 

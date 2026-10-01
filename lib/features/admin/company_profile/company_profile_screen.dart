@@ -8,7 +8,8 @@ import '../../../providers/service_providers.dart';
 import '../../../providers/session_provider.dart';
 import '../../dashboard/app_shell.dart';
 
-/// 管理者側の入口: 会社プロファイル設定(業種・企業名・契約人数)→本社チーム作成→招待コード発行
+/// 管理者側の入口: 会社プロファイル設定(業種・企業名・従業員数)→本社チーム作成→招待コード発行。
+/// 登録は必ずお試し(14日・最大5名)で始まり、有料化は契約(決済)後にサーバーが行う。
 class CompanyProfileScreen extends ConsumerStatefulWidget {
   const CompanyProfileScreen({super.key});
 
@@ -58,7 +59,7 @@ class _CompanyProfileScreenState extends ConsumerState<CompanyProfileScreen> {
             Text(companyName, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
             const SizedBox(height: 12),
             Text('管理者名: $adminName'),
-            Text('契約人数: $headcount名'),
+            Text('従業員数: $headcount名'),
           ],
         ),
         actions: [
@@ -90,8 +91,6 @@ class _CompanyProfileScreenState extends ConsumerState<CompanyProfileScreen> {
       final result = await callable.call<Map<String, dynamic>>({
         'companyName': companyName,
         'industryId': _selectedIndustryId!,
-        'planType': 'team',
-        'contractedHeadcount': headcount,
         'adminDisplayName': adminName,
         'teamName': '本社',
       });
@@ -101,10 +100,13 @@ class _CompanyProfileScreenState extends ConsumerState<CompanyProfileScreen> {
         id: data['companyId'] as String,
         name: companyName,
         industryId: _selectedIndustryId!,
-        planType: PlanType.team,
-        contractedHeadcount: headcount,
+        planType: PlanType.trial,
+        contractedHeadcount: (data['contractedHeadcount'] as num?)?.toInt() ?? 5,
         customPassThreshold: const {},
         createdAt: DateTime.now(),
+        trialEndsAt: data['trialEndsAt'] == null
+            ? null
+            : DateTime.fromMillisecondsSinceEpoch((data['trialEndsAt'] as num).toInt()),
       );
       final admin = Employee(
         id: data['employeeId'] as String,
@@ -171,7 +173,7 @@ class _CompanyProfileScreenState extends ConsumerState<CompanyProfileScreen> {
               controller: _headcountController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: '契約人数',
+                labelText: '従業員数(法令チェックの目安)',
                 border: OutlineInputBorder(),
               ),
             ),
