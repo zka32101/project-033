@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import '../data/models/company_model.dart';
 import 'firestore_paths.dart';
 
@@ -6,6 +7,9 @@ class CompanyService {
   final FirebaseFirestore _db;
   CompanyService([FirebaseFirestore? db]) : _db = db ?? FirebaseFirestore.instance;
 
+  /// ※クライアントからは呼ばない(firestore.rulesで会社の直接作成を禁止している)。
+  /// 会社の作成はCloud Functions(registerCompanyAdmin)が行う。テストの準備用。
+  @visibleForTesting
   Future<Company> createCompany({
     required String name,
     required String industryId,
@@ -93,14 +97,5 @@ class CompanyService {
     await _db.doc(FirestorePaths.company(companyId)).update({
       'categoryPriorityOverride.$categoryId': FieldValue.delete(),
     });
-  }
-
-  Future<void> updateHeadcount({
-    required String companyId,
-    required int contractedHeadcount,
-  }) async {
-    await _db
-        .doc(FirestorePaths.company(companyId))
-        .update({'contractedHeadcount': contractedHeadcount});
   }
 }
