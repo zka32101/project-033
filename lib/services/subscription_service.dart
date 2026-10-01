@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import '../data/models/subscription_model.dart';
 import 'firestore_paths.dart';
 
@@ -74,9 +75,12 @@ class SubscriptionService {
     return subscription;
   }
 
+  /// ※クライアントからは呼ばない(firestore.rulesで契約の書き込みを禁止している)。
+  /// 契約状態の反映はサーバー(Stripe Webhook)が行う。ロジック検証のテスト専用。
   /// 基本プラン(basic)への加入・維持、または上位プラン(upper)でのモジュール選択更新に使う。
   /// planTier未指定時は既存の契約段階を維持する(他の更新でbasic/upperが意図せず
   /// リセットされないようにするため。新規契約時のデフォルトはbasic)。
+  @visibleForTesting
   Future<Subscription> upsertSubscription({
     required String companyId,
     required SubscriptionOwnerType ownerType,
@@ -110,8 +114,10 @@ class SubscriptionService {
     return subscription;
   }
 
+  /// ※クライアントからは呼ばない(rulesで禁止)。ロジック検証のテスト専用。
   /// プレミアムプラン(オリジナルコンテンツ機能)単体のアップグレード用。
   /// モジュール受講プラン(planTier/subscribedModuleIds/fullSet)には触れない。
+  @visibleForTesting
   Future<Subscription> upsertPremiumTier({
     required String companyId,
     required SubscriptionOwnerType ownerType,

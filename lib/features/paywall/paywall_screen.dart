@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/module_model.dart';
-import '../lesson/lesson_screen.dart';
-import 'module_selection_screen.dart';
+import '../billing/contract_guide_screen.dart';
 
 /// ペイウォール(設計書 Step3.5 R④): 業種の高優先カテゴリ1つ無料体験→Aha直後に追加課金訴求。
 /// 基本プラン(無料体験モジュールのみ)を超えるモジュールは上位プランでのみ利用できるため、
-/// このモジュールを事前選択した状態でModuleSelectionScreen(受講プラン設定)へ誘導する。
+/// 契約は決済を伴うため、アプリ内で直接プランを書き換えず、契約案内画面へ誘導する。
 class PaywallScreen extends ConsumerWidget {
   final Module module;
 
@@ -44,8 +43,8 @@ class PaywallScreen extends ConsumerWidget {
                     const SizedBox(height: 8),
                     Text(
                       '基本プランでは各カテゴリの無料体験モジュールのみご利用いただけます。'
-                      '上位プランに切り替えると、カテゴリごとに必要なモジュールを選んで受講できます'
-                      '(利用者数に応じた月額定額制。選ぶモジュール数で料金は変わりません)。',
+                      'ご契約(管理者のお申し込み)で、全モジュールを受講できます。'
+                      'メンバーの方は、管理者にご相談ください。',
                       style: TextStyle(
                         fontSize: 13,
                         color: colorScheme.onPrimaryContainer,
@@ -59,19 +58,10 @@ class PaywallScreen extends ConsumerWidget {
             SizedBox(
               width: double.infinity,
               child: FilledButton(
-                onPressed: () async {
-                  final saved = await Navigator.of(context).push<bool>(
-                    MaterialPageRoute(
-                      builder: (_) => ModuleSelectionScreen(preselectModuleId: module.id),
-                    ),
-                  );
-                  if (saved == true && context.mounted) {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (_) => LessonScreen(module: module)),
-                    );
-                  }
-                },
-                child: const Text('上位プランでこのモジュールを含める'),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const ContractGuideScreen()),
+                ),
+                child: const Text('ご契約の方法を確認する'),
               ),
             ),
           ],

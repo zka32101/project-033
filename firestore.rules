@@ -167,8 +167,9 @@ service cloud.firestore {
 
       match /subscriptions/{subscriptionId} {
         allow read: if isCompanyMember(companyId);
-        // 契約の作成・変更は管理者のみ(個人利用は自分専用の会社の管理者として扱われる)
-        allow write: if isAdmin(companyId);
+        // 契約状態は決済(Stripe Webhook)を受けたCloud Functions(Admin SDK)だけが書く。
+        // クライアントから書けると、管理者が決済せずに有料プランを自己付与できてしまう。
+        allow write: if false;
       }
 
       // 法令対応チェックリストの実施状況。管理者のみ読み書きできる。
