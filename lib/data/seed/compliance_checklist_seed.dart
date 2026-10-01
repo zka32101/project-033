@@ -1,3 +1,4 @@
+import '../models/company_profile.dart';
 import '../models/compliance_item.dart';
 
 /// 法令対応チェックリストの項目。あくまで一般的な目安であり、実際の適用は事業内容・雇用形態などで変わる。
@@ -29,6 +30,7 @@ const List<ComplianceItem> seedComplianceItems = [
     law: '労働基準法36条',
     condition: '時間外・休日労働をさせる場合',
     relatedModuleIds: ['m_law_work_rules', 'm_law_workstyle'],
+    requiredTrait: BusinessTrait.overtime,
   ),
   ComplianceItem(
     id: 'c_records',
@@ -166,6 +168,7 @@ const List<ComplianceItem> seedComplianceItems = [
     law: '労働安全衛生規則(2025年6月施行)',
     condition: 'WBGT28度以上または気温31度以上で、連続1時間以上または1日4時間超の作業が見込まれる場合',
     relatedModuleIds: ['m_health_heatstroke'],
+    requiredTrait: BusinessTrait.outdoorHeat,
   ),
   ComplianceItem(
     id: 'c_chemical',
@@ -175,6 +178,7 @@ const List<ComplianceItem> seedComplianceItems = [
     law: '労働安全衛生法・同規則(2024年4月強化)',
     condition: 'リスクアセスメント対象の化学物質を製造・取り扱う場合',
     relatedModuleIds: ['m_law_chemical'],
+    requiredTrait: BusinessTrait.chemicals,
   ),
   ComplianceItem(
     id: 'c_fire',
@@ -194,6 +198,7 @@ const List<ComplianceItem> seedComplianceItems = [
     law: '道路交通法74条の3・同施行規則',
     condition: '乗車定員11人以上の車を1台以上、またはその他の車を5台以上使用する場合',
     relatedModuleIds: ['m_law_company_vehicle'],
+    requiredTrait: BusinessTrait.vehicles,
   ),
   // --- 雇用・両立支援 ---
   ComplianceItem(
@@ -273,6 +278,7 @@ const List<ComplianceItem> seedComplianceItems = [
     law: '取適法(中小受託取引適正化法)・フリーランス新法',
     condition: '業務・製造・役務を外部に委託する場合',
     relatedModuleIds: ['m_compliance_labor', 'm_compliance_freelance', 'm_role_purchasing'],
+    requiredTrait: BusinessTrait.outsourcing,
   ),
   ComplianceItem(
     id: 'c_antisocial',

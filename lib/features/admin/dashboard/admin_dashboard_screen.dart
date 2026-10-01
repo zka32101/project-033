@@ -11,6 +11,8 @@ import '../../../providers/service_providers.dart';
 import '../../../providers/session_provider.dart';
 import '../reminder/reminder_screen.dart';
 import '../report_export/report_export_screen.dart';
+import '../company_profile/company_profile_input_screen.dart';
+import '../module_assignment/module_assignment_screen.dart';
 import '../pass_threshold/pass_threshold_settings_screen.dart';
 import '../deadline_settings/deadline_settings_screen.dart';
 import '../report_email_settings/report_email_settings_screen.dart';
@@ -377,6 +379,14 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const OriginalContentScreen()),
                 );
+              } else if (value == 'assignment') {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const ModuleAssignmentScreen()),
+                );
+              } else if (value == 'company_profile') {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const CompanyProfileInputScreen()),
+                );
               } else if (value == 'module_plan') {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const ContractGuideScreen()),
@@ -384,6 +394,8 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
               }
             },
             itemBuilder: (context) => const [
+              PopupMenuItem(value: 'assignment', child: Text('受講コンテンツの設定')),
+              PopupMenuItem(value: 'company_profile', child: Text('会社情報の設定(規模・事業)')),
               PopupMenuItem(value: 'module_plan', child: Text('ご契約について')),
               PopupMenuItem(value: 'pass_threshold', child: Text('合格ライン設定')),
               PopupMenuItem(value: 'deadline', child: Text('受講期限設定')),
@@ -415,7 +427,9 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
               if (!totalModulesSnapshot.hasData) {
                 return const SkeletonList();
               }
-              final totalModules = totalModulesSnapshot.data!;
+              // 管理者が受講対象を指定している場合は、その件数と修了だけで受講率を出す。
+              final assigned = company.assignedModuleIds;
+              final totalModules = assigned?.length ?? totalModulesSnapshot.data!;
 
               return StreamBuilder<List<Employee>>(
             stream: ref.read(employeeServiceProvider).watchCompanyEmployees(company.id),
@@ -445,6 +459,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                     employees: employees,
                     enrollments: enrollments,
                     totalModuleCount: totalModules,
+                    onlyModuleIds: assigned?.toSet(),
                   );
                   final overall = DashboardAnalytics.overallCompletionRatePercent(stats);
                   final churnRisk = ChurnRisk.evaluate(

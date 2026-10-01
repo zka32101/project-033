@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import '../data/models/company_model.dart';
+import '../data/models/company_profile.dart';
 import 'firestore_paths.dart';
 
 class CompanyService {
@@ -97,5 +98,21 @@ class CompanyService {
     await _db.doc(FirestorePaths.company(companyId)).update({
       'categoryPriorityOverride.$categoryId': FieldValue.delete(),
     });
+  }
+
+  /// 会社の規模・事業の特徴を保存する。
+  Future<void> updateProfile({
+    required String companyId,
+    required CompanyProfile profile,
+  }) async {
+    await _db.doc(FirestorePaths.company(companyId)).update({'profile': profile.toMap()});
+  }
+
+  /// 管理者が受講対象(必須)に指定した研修を保存する。
+  Future<void> updateAssignedModules({
+    required String companyId,
+    required List<String> moduleIds,
+  }) async {
+    await _db.doc(FirestorePaths.company(companyId)).update({'assignedModuleIds': moduleIds});
   }
 }

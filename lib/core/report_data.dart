@@ -124,12 +124,12 @@ class ReportBuilder {
     }
 
     // --- 法令対応チェックリスト ---
-    final headcount = company.contractedHeadcount;
+    final headcount = company.legalEmployeeCount;
     var mandatoryApplicable = 0;
     var mandatoryDone = 0;
     final checklistRows = <List<String>>[];
     for (final item in checklistItems) {
-      final applies = item.appliesTo(headcount);
+      final applies = item.appliesTo(headcount, traits: company.profile?.traits);
       final done = checklistStatuses[item.id] ?? false;
       if (applies && item.isMandatory) {
         mandatoryApplicable++;

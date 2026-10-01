@@ -1,3 +1,5 @@
+import 'company_profile.dart';
+
 /// 法令対応チェックリストの分類。
 enum ComplianceCategory {
   labor('労務・労働時間'),
@@ -35,6 +37,9 @@ class ComplianceItem {
   /// 関連する研修モジュールのID。
   final List<String> relatedModuleIds;
 
+  /// この事業の特徴がある会社にだけ適用される(会社情報で特徴が分かっている場合の判定に使う)。
+  final BusinessTrait? requiredTrait;
+
   const ComplianceItem({
     required this.id,
     required this.category,
@@ -45,7 +50,13 @@ class ComplianceItem {
     this.isMandatory = true,
     this.condition,
     this.relatedModuleIds = const [],
+    this.requiredTrait,
   });
 
-  bool appliesTo(int headcount) => headcount >= minHeadcount;
+  /// 従業員数が基準以上で、必要な事業の特徴がある(特徴が不明[traits==null]なら人数のみで判定)か。
+  bool appliesTo(int headcount, {Set<BusinessTrait>? traits}) {
+    if (headcount < minHeadcount) return false;
+    if (requiredTrait != null && traits != null && !traits.contains(requiredTrait)) return false;
+    return true;
+  }
 }

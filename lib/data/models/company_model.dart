@@ -1,3 +1,4 @@
+import 'company_profile.dart';
 import 'firestore_date_parser.dart';
 
 enum PlanType { individual, team, trial }
@@ -18,6 +19,9 @@ class Company {
   final Map<String, int> categoryPriorityOverride; // CategoryId.name -> 優先度(0/1/2)
   final DateTime createdAt;
   final BillingSource billingSource;
+  final CompanyProfile? profile; // 規模・事業の特徴(未入力ならnull)
+  /// 管理者が受講対象(必須)に指定した研修ID。未設定(null)なら業種の重点分野で必須/任意を決める。
+  final List<String>? assignedModuleIds;
   final DateTime? trialEndsAt; // お試し(14日・5名)の終了日時。お試しでなければnull
 
   const Company({
@@ -32,10 +36,15 @@ class Company {
     this.categoryPriorityOverride = const {},
     required this.createdAt,
     this.billingSource = BillingSource.none,
+    this.profile,
+    this.assignedModuleIds,
     this.trialEndsAt,
   });
 
   bool get isTrial => planType == PlanType.trial;
+
+  /// 法令の適用基準になる従業員数。会社情報が未入力なら契約人数で代用する。
+  int get legalEmployeeCount => profile?.employeeCount ?? contractedHeadcount;
 
   /// お試し期間中か(期限前)。期間中は全モジュールを開放する。
   bool isTrialActive([DateTime? now]) =>
@@ -50,8 +59,8 @@ class Company {
 
   /// 企業規模による推奨合格ライン（設計書 Step3 データモデル参照）
   int recommendedPassThreshold() {
-    if (contractedHeadcount <= 20) return 70;
-    if (contractedHeadcount <= 100) return 80;
+    if (legalEmployeeCount <= 20) return 70;
+    if (legalEmployeeCount <= 100) return 80;
     return 90;
   }
 
@@ -95,6 +104,12 @@ class Company {
         'invoice' => BillingSource.invoice,
         _ => BillingSource.none,
       },
+      profile: map['profile'] is Map
+          ? CompanyProfile.fromMap(Map<String, dynamic>.from(map['profile'] as Map))
+          : null,
+      assignedModuleIds: map['assignedModuleIds'] is List
+          ? List<String>.from(map['assignedModuleIds'] as List)
+          : null,
       trialEndsAt: parseFirestoreDateTimeOrNull(map['trialEndsAt']),
     );
   }
@@ -110,6 +125,8 @@ class Company {
         'categoryPriorityOverride': categoryPriorityOverride,
         'createdAt': createdAt,
         if (trialEndsAt != null) 'trialEndsAt': trialEndsAt,
+        if (profile != null) 'profile': profile!.toMap(),
+        if (assignedModuleIds != null) 'assignedModuleIds': assignedModuleIds,
       };
 
   Company copyWith({
@@ -121,6 +138,8 @@ class Company {
     Map<String, DateTime>? moduleDeadlines,
     String? contactEmail,
     Map<String, int>? categoryPriorityOverride,
+    CompanyProfile? profile,
+    List<String>? assignedModuleIds,
   }) {
     return Company(
       id: id,
@@ -134,6 +153,8 @@ class Company {
       categoryPriorityOverride: categoryPriorityOverride ?? this.categoryPriorityOverride,
       createdAt: createdAt,
       billingSource: billingSource,
+      profile: profile ?? this.profile,
+      assignedModuleIds: assignedModuleIds ?? this.assignedModuleIds,
       trialEndsAt: trialEndsAt,
     );
   }

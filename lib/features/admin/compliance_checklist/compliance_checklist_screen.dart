@@ -24,7 +24,8 @@ class _ComplianceChecklistScreenState extends ConsumerState<ComplianceChecklistS
     if (!session.isSignedIn || !session.isAdmin || company == null) {
       return const Scaffold(body: Center(child: Text('管理者のみ利用できます')));
     }
-    final headcount = company.contractedHeadcount;
+    final headcount = company.legalEmployeeCount;
+    final traits = company.profile?.traits;
     final service = ref.watch(complianceChecklistServiceProvider);
 
     return Scaffold(
@@ -33,7 +34,7 @@ class _ComplianceChecklistScreenState extends ConsumerState<ComplianceChecklistS
         stream: service.watchStatuses(company.id),
         builder: (context, snapshot) {
           final done = snapshot.data ?? const <String, bool>{};
-          final applicable = seedComplianceItems.where((i) => i.appliesTo(headcount)).toList();
+          final applicable = seedComplianceItems.where((i) => i.appliesTo(headcount, traits: traits)).toList();
           final mandatory = applicable.where((i) => i.isMandatory).toList();
           final doneCount = mandatory.where((i) => done[i.id] == true).length;
           final visible = _showUpcoming ? seedComplianceItems : applicable;
@@ -48,7 +49,7 @@ class _ComplianceChecklistScreenState extends ConsumerState<ComplianceChecklistS
               ),
               SwitchListTile(
                 title: const Text('人数が増えたら対象になる項目も表示'),
-                subtitle: Text('現在の人数(${headcount}名)では対象外の項目'),
+                subtitle: Text('現在の規模・事業内容では対象外の項目'),
                 value: _showUpcoming,
                 onChanged: (v) => setState(() => _showUpcoming = v),
               ),
@@ -58,7 +59,7 @@ class _ComplianceChecklistScreenState extends ConsumerState<ComplianceChecklistS
                 for (final item in visible.where((i) => i.category == category))
                   _ItemTile(
                     item: item,
-                    applicable: item.appliesTo(headcount),
+                    applicable: item.appliesTo(headcount, traits: traits),
                     checked: done[item.id] == true,
                     onChanged: (value) => service.setDone(
                       companyId: company.id,

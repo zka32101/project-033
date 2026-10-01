@@ -1,4 +1,5 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import '../admin/company_profile/company_profile_input_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/company_model.dart';
@@ -80,10 +81,13 @@ class _IndustrySelectionScreenState
 
       if (!mounted) return;
       // InviteEntryScreenまで含めて戻れないようにする(戻ると別アカウントで再登録できてしまうため)。
-      Navigator.of(context).pushAndRemoveUntil(
+      final navigator = Navigator.of(context);
+      navigator.pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => const AppShell()),
         (route) => false,
       );
+      // 続けて、規模・事業の特徴を入力してもらい、必要な研修を自動で選ぶ。
+      navigator.push(MaterialPageRoute(builder: (_) => const CompanyProfileInputScreen()));
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
