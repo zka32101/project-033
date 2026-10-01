@@ -2018,4 +2018,5 @@ export const joinCompanyViaInvite = onCall({ region: "us-central1" }, async (req
   return { companyId: invite.companyId, teamId: invite.teamId ?? "", employeeId: uid };
 });
 
+export { notifyTrialExpiring } from "./trial_notice";
 export { createCheckoutSession, createBillingPortalSession, stripeWebhook } from "./stripe";
