@@ -27,6 +27,7 @@ async function check(name, fn) {
     await setDoc(doc(db, `companies/${C}/employees/mem3`), { companyId: C, role: 'member', displayName: 'M3' });
     await setDoc(doc(db, `companies/${C}/employees/mem4`), { companyId: C, role: 'member', displayName: 'M4' });
     await setDoc(doc(db, `companies/${C}/employees/old1`), { companyId: C, role: 'member', displayName: 'Old', deactivated: true });
+    await setDoc(doc(db, `companies/${C}/auditLogs/l1`), { at: new Date(), actorId: 'admin1', summary: 'x', action: 'member.promoted' });
     await setDoc(doc(db, `companies/${C}/teams/t1`), { companyId: C, teamName: '営業' });
     await setDoc(doc(db, `companies/${C}/subscriptions/company_${C}`), { status: 'active' });
     await setDoc(doc(db, `companies/${C}/enrollments/e1`), { employeeId: 'mem1', moduleId: 'm1', status: 'completed' });
@@ -105,6 +106,20 @@ async function check(name, fn) {
     assertFails(getDoc(doc(outsider, `companies/${C}/teams/t1`))));
   await check('無効化された社員はチームの設定を読めない', () =>
     assertFails(getDoc(doc(old, `companies/${C}/teams/t1`))));
+
+  console.log('--- 監査ログ(auditLogs) ---');
+  await check('管理者は操作履歴を読める', () =>
+    assertSucceeds(getDoc(doc(as('admin1'), `companies/${C}/auditLogs/l1`))));
+  await check('メンバーは操作履歴を読めない', () =>
+    assertFails(getDoc(doc(as('mem4'), `companies/${C}/auditLogs/l1`))));
+  await check('管理者でも操作履歴を書き換えられない(改ざん防止)', () =>
+    assertFails(updateDoc(doc(as('admin1'), `companies/${C}/auditLogs/l1`), { summary: '改ざん' })));
+  await check('管理者でも操作履歴を削除できない', () =>
+    assertFails(deleteDoc(doc(as('admin1'), `companies/${C}/auditLogs/l1`))));
+  await check('管理者でも操作履歴を新しく作れない(偽造防止)', () =>
+    assertFails(setDoc(doc(as('admin1'), `companies/${C}/auditLogs/fake`), { summary: '偽の履歴' })));
+  await check('無効化された社員は操作履歴を読めない', () =>
+    assertFails(getDoc(doc(old, `companies/${C}/auditLogs/l1`))));
 
   await env.cleanup();
   console.log(`\n結果: ${passed} PASS / ${failed} FAIL`);
