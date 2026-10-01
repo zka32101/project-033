@@ -8,7 +8,7 @@
     "logs": "firebase functions:log",
     "seed:tier1": "ts-node src/seed-tier1-modules.ts",
     "seed:exams": "ts-node src/seed-exams.ts",
-    "test": "tsc && node --test test/*.test.js"
+    "test": "tsc && node --test"
   },
   "engines": {
     "node": "20"
