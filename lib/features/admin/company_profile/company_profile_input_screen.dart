@@ -82,9 +82,9 @@ class _CompanyProfileInputScreenState extends ConsumerState<CompanyProfileInputS
             controller: _countController,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
-              labelText: '事業場の従業員数(パート・アルバイトを含む)',
+              labelText: '従業員数',
               suffixText: '名',
-              helperText: '10名・50名などの人数で、必要な手続きや研修が変わります',
+              helperText: 'パート・アルバイトを含む事業場の人数。10名・50名などで必要な手続きや研修が変わります',
               helperMaxLines: 2,
               border: OutlineInputBorder(),
             ),

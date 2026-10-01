@@ -10,6 +10,7 @@ class Employee {
   final EmployeeRole role;
   final DateTime createdAt;
   final String? jobRole; // JobRole.id。未設定ならnull
+  final bool deactivated; // 無効化(退職など)されているか。無効化されるとアプリを使えず、席も空く
 
   const Employee({
     required this.id,
@@ -19,6 +20,7 @@ class Employee {
     required this.role,
     required this.createdAt,
     this.jobRole,
+    this.deactivated = false,
   });
 
   factory Employee.fromMap(String id, Map<String, dynamic> map) {
@@ -32,6 +34,7 @@ class Employee {
           : EmployeeRole.member,
       createdAt: parseFirestoreDateTime(map['createdAt']),
       jobRole: map['jobRole'] as String?,
+      deactivated: map['deactivated'] == true,
     );
   }
 
@@ -42,6 +45,7 @@ class Employee {
         'role': role == EmployeeRole.admin ? 'admin' : 'member',
         'createdAt': createdAt,
         if (jobRole != null) 'jobRole': jobRole,
+        if (deactivated) 'deactivated': true,
       };
 
   Employee copyWith({

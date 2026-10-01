@@ -13,6 +13,7 @@ import '../reminder/reminder_screen.dart';
 import '../report_export/report_export_screen.dart';
 import '../company_profile/company_profile_input_screen.dart';
 import '../module_assignment/module_assignment_screen.dart';
+import '../member_management/member_management_screen.dart';
 import '../pass_threshold/pass_threshold_settings_screen.dart';
 import '../deadline_settings/deadline_settings_screen.dart';
 import '../report_email_settings/report_email_settings_screen.dart';
@@ -379,6 +380,10 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const OriginalContentScreen()),
                 );
+              } else if (value == 'members') {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const MemberManagementScreen()),
+                );
               } else if (value == 'assignment') {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const ModuleAssignmentScreen()),
@@ -394,6 +399,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
               }
             },
             itemBuilder: (context) => const [
+              PopupMenuItem(value: 'members', child: Text('メンバー管理')),
               PopupMenuItem(value: 'assignment', child: Text('受講コンテンツの設定')),
               PopupMenuItem(value: 'company_profile', child: Text('会社情報の設定(規模・事業)')),
               PopupMenuItem(value: 'module_plan', child: Text('ご契約について')),

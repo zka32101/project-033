@@ -1928,6 +1928,62 @@ export const registerCompanyAdmin = onCall(async (request) => {
   };
 });
 
+/** 席数の判定に使う、有効な(無効化されていない)社員数。 */
+async function countActiveEmployees(
+  companyRef: FirebaseFirestore.DocumentReference,
+): Promise<number> {
+  const employees = companyRef.collection("employees");
+  const [total, deactivated] = await Promise.all([
+    employees.count().get(),
+    employees.where("deactivated", "==", true).count().get(),
+  ]);
+  return total.data().count - deactivated.data().count;
+}
+
+/**
+ * 無効化(退職など)した社員を、管理者が再有効化する。席数の上限をサーバーで確認するため、
+ * クライアントから無効化フラグを外すことはルールで禁止している。
+ */
+export const reactivateEmployee = onCall({ region: "us-central1" }, async (request) => {
+  const uid = request.auth?.uid;
+  if (!uid) {
+    throw new HttpsError("unauthenticated", "サインインが必要です");
+  }
+  const { companyId, employeeId } = request.data as { companyId?: string; employeeId?: string };
+  if (!companyId || !employeeId) {
+    throw new HttpsError("invalid-argument", "入力内容を確認してください");
+  }
+  const companyRef = db.collection("companies").doc(companyId);
+  const caller = (await companyRef.collection("employees").doc(uid).get()).data();
+  if (caller?.role !== "admin" || caller?.deactivated === true) {
+    throw new HttpsError("permission-denied", "この会社の管理者のみ実行できます");
+  }
+  const company = (await companyRef.get()).data();
+  if (!company) {
+    throw new HttpsError("not-found", "会社情報が見つかりませんでした");
+  }
+  if (company.trialEndsAt && company.trialEndsAt.toMillis() < Date.now()) {
+    throw new HttpsError("failed-precondition", "お試し期間が終了しています");
+  }
+  const targetRef = companyRef.collection("employees").doc(employeeId);
+  const target = await targetRef.get();
+  if (!target.exists) {
+    throw new HttpsError("not-found", "対象の社員が見つかりません");
+  }
+  if (target.data()?.deactivated !== true) {
+    return { reactivated: false };
+  }
+  const count = await countActiveEmployees(companyRef);
+  if (count >= (company.contractedHeadcount ?? 1)) {
+    throw new HttpsError("resource-exhausted", "参加人数の上限に達しています。ほかのメンバーを無効化してください");
+  }
+  await targetRef.update({
+    deactivated: admin.firestore.FieldValue.delete(),
+    deactivatedAt: admin.firestore.FieldValue.delete(),
+  });
+  return { reactivated: true };
+});
+
 /**
  * 招待コードの会社名・チーム名を、参加前に確認するために返す。
  * 会社情報は参加前は直接読めないため、確認に必要な項目だけをサーバーで取得して返す。
@@ -1995,8 +2051,12 @@ export const joinCompanyViaInvite = onCall({ region: "us-central1" }, async (req
 
   const employeeRef = companyRef.collection("employees").doc(uid);
   const existing = await employeeRef.get();
+  if (existing.exists && existing.data()?.deactivated === true) {
+    // 無効化(退職など)された社員は、招待コードでは復帰できない。復帰は管理者が行う。
+    throw new HttpsError("permission-denied", "このアカウントは無効化されています。管理者にお問い合わせください");
+  }
   if (!existing.exists) {
-    const count = (await companyRef.collection("employees").count().get()).data().count;
+    const count = await countActiveEmployees(companyRef);
     if (count >= (company.contractedHeadcount ?? 1)) {
       throw new HttpsError("resource-exhausted", "参加人数の上限に達しています");
     }
