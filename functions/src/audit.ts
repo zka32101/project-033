@@ -158,11 +158,14 @@ export function describeTeamChange(before: Data, after: Data, teamId: string): A
 export const UNKNOWN_ACTOR = "unknown";
 
 /**
- * 操作した人を決める。
- * - アプリ(クライアント)からの書き込み: ルールが本人のuidと一致を強制する lastEditedBy が操作者。
- *   スタンプがなければ不明(UNKNOWN_ACTOR)。
- * - サーバー(Cloud Functions・Admin SDK、サービスアカウント)による書き込み: 原則「システム」(null)。
- *   ただし、関数がこの書き込みで lastEditedBy(と書き込み時刻 lastEditedAt)を更新した場合(再有効化など)はその管理者。
+ * 操作した人を決める。実際のイベントを本番で確認した結果にもとづく:
+ * - アプリ(Firebase Authの利用者)による書き込み: authType が "api_key"、authId が操作者のuid。
+ *   firestore.rulesが lastEditedBy を本人のuidに強制しているため、authId とスタンプは一致する。
+ * - サーバー(Cloud Functions・Admin SDK): authType が "unknown"、authId がサービスアカウントのメール。
+ * - コンソールなど人が直接行った操作: authId がメールアドレス。
+ * アプリの書き込みはauthIdを最優先し(スタンプが前回と同じでも本人と分かる)、なければスタンプ、それも
+ * なければ不明とする。サーバー・コンソールの書き込みは原則「システム」(null)。ただし、関数が
+ * lastEditedBy と書き込み時刻(lastEditedAt)を今回更新した場合(再有効化など)はその管理者とする。
  */
 export function resolveActor(
   authType: string | undefined,
@@ -170,20 +173,19 @@ export function resolveActor(
   before: Data,
   after: Data,
 ): string | null {
-  const isServer =
-    (!!authId && authId.includes("@")) ||
-    authType === "service_account" ||
-    authType === "system" ||
-    authType === "api_key";
   const stampAfter = str(after?.lastEditedBy);
   const stampBefore = str(before?.lastEditedBy);
+  const isEmailLike = !!authId && authId.includes("@");
+  const isServer = isEmailLike || authType === "service_account" || authType === "system";
+
   if (isServer) {
     // 関数が操作した管理者を明示した書き込みだけを、その管理者の操作とする。関数は書き込み時刻(lastEditedAt)も
     // 添えるので、同じ管理者の古いスタンプが残っているだけの場合と区別できる。
     const stampedNow = stampAfter !== stampBefore || !sameValue(before?.lastEditedAt, after?.lastEditedAt);
     return stampAfter && stampedNow ? stampAfter : null;
   }
-  return stampAfter || UNKNOWN_ACTOR;
+  // アプリの利用者: authId(uid)が最優先。なければスタンプ。それもなければ不明。
+  return (authType === "api_key" && authId) || stampAfter || UNKNOWN_ACTOR;
 }
 
 async function writeEntries(companyId: string, actorId: string | null, entries: AuditEntry[]): Promise<void> {
