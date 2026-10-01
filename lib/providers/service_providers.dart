@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_providers.dart';
+import '../services/billing_service.dart';
 import '../services/company_service.dart';
 import '../services/invite_service.dart';
 import '../services/employee_service.dart';
@@ -67,4 +68,8 @@ final customContentServiceProvider = Provider<CustomContentService>((ref) {
 
 final contentGenerationServiceProvider = Provider<ContentGenerationService>((ref) {
   return ContentGenerationService(ref.watch(functionsProvider));
+});
+
+final billingServiceProvider = Provider<BillingService>((ref) {
+  return BillingService(ref.watch(functionsProvider));
 });
