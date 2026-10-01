@@ -7,6 +7,8 @@ class Team {
   final DateTime createdAt;
   // 発行済みの招待コード。チームごとに一度だけ発行でき、再発行はできない。
   final String? inviteCode;
+  // このチームに追加で必須とする研修ID(全社共通の必須に加えて)。
+  final List<String> assignedModuleIds;
 
   const Team({
     required this.id,
@@ -14,6 +16,7 @@ class Team {
     required this.teamName,
     required this.createdAt,
     this.inviteCode,
+    this.assignedModuleIds = const [],
   });
 
   factory Team.fromMap(String id, Map<String, dynamic> map) {
@@ -23,6 +26,7 @@ class Team {
       teamName: map['teamName'] as String? ?? '',
       createdAt: parseFirestoreDateTime(map['createdAt']),
       inviteCode: map['inviteCode'] as String?,
+      assignedModuleIds: List<String>.from((map['assignedModuleIds'] as List?) ?? const []),
     );
   }
 
@@ -31,6 +35,7 @@ class Team {
         'teamName': teamName,
         'createdAt': createdAt,
         if (inviteCode != null) 'inviteCode': inviteCode,
+        if (assignedModuleIds.isNotEmpty) 'assignedModuleIds': assignedModuleIds,
       };
 
   Team copyWith({String? teamName}) {
@@ -40,6 +45,7 @@ class Team {
       teamName: teamName ?? this.teamName,
       createdAt: createdAt,
       inviteCode: inviteCode,
+      assignedModuleIds: assignedModuleIds,
     );
   }
 }

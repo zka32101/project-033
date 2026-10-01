@@ -21,6 +21,8 @@ import '../certificates/my_certificates_screen.dart';
 import '../admin/team_management/team_management_screen.dart';
 import '../paywall/paywall_screen.dart';
 import '../billing/contract_guide_screen.dart';
+import '../../core/required_modules.dart';
+import '../../providers/team_assignment_provider.dart';
 import '../admin/company_profile/company_profile_input_screen.dart';
 import '../training/training_dashboard_screen.dart';
 import '../exam/exam_enrollment_screen.dart';
@@ -421,9 +423,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               overrides: company.categoryPriorityOverride,
                             );
                             // 管理者が受講対象を指定していれば、それを「必須」とする(未指定なら業種の重点分野)。
-                            final assigned = company.assignedModuleIds;
-                            final isRequired =
-                                assigned != null ? assigned.contains(module.id) : priority == 2;
+                            final isRequired = RequiredModules.isRequired(
+                              moduleId: module.id,
+                              companyAssigned: company.assignedModuleIds,
+                              teamExtra: ref.watch(myTeamExtraModulesProvider).valueOrNull ?? const [],
+                              categoryHigh: priority == 2,
+                            );
                             final enrollments = enrollmentSnapshot.data ?? const [];
                             final isCompleted = enrollments.any((e) =>
                                 e.moduleId == module.id &&

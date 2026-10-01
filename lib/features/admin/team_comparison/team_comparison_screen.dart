@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/required_modules.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../data/models/employee_model.dart';
 import '../../../data/models/enrollment_model.dart';
@@ -65,7 +66,7 @@ class _TeamComparisonScreenState extends ConsumerState<TeamComparisonScreen> {
             return const SkeletonList();
           }
           final assigned = company.assignedModuleIds;
-          final totalModules = assigned?.length ?? totalModulesSnapshot.data!;
+          final totalModules = totalModulesSnapshot.data!;
 
           return FutureBuilder<List<Team>>(
             future: _teamsFuture,
@@ -78,6 +79,9 @@ class _TeamComparisonScreenState extends ConsumerState<TeamComparisonScreen> {
               }
               final teamNameById = {
                 for (final team in teamsSnapshot.data!) team.id: team.teamName,
+              };
+              final teamExtras = {
+                for (final team in teamsSnapshot.data!) team.id: team.assignedModuleIds,
               };
 
               return StreamBuilder<List<Employee>>(
@@ -107,7 +111,10 @@ class _TeamComparisonScreenState extends ConsumerState<TeamComparisonScreen> {
                         employees: employees,
                         enrollments: enrollmentSnapshot.data!,
                         totalModuleCount: totalModules,
-                        onlyModuleIds: assigned?.toSet(),
+                        moduleIdsFor: (e) => RequiredModules.forEmployee(
+                          companyAssigned: assigned,
+                          teamExtra: teamExtras[e.teamId] ?? const [],
+                        ),
                       );
 
                       if (teamStats.isEmpty) {

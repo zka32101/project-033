@@ -42,21 +42,23 @@ class DashboardAnalytics {
     required List<Employee> employees,
     required List<Enrollment> enrollments,
     required int totalModuleCount,
-    // 指定すると、その研修の修了だけを数える(管理者が受講対象を絞っている場合)。
-    Set<String>? onlyModuleIds,
+    // 社員ごとの受講対象(必須)の研修ID。nullを返す/未指定なら、全研修(totalModuleCount件)が対象。
+    // 会社全体・所属チームの指定に応じて、社員ごとに分母と数える修了が変わる。
+    Set<String>? Function(Employee employee)? moduleIdsFor,
   }) {
     return employees.map((employee) {
+      final ids = moduleIdsFor?.call(employee);
       final completed = enrollments
           .where((e) =>
               e.employeeId == employee.id &&
               e.status == EnrollmentStatus.completed &&
-              (onlyModuleIds == null || onlyModuleIds.contains(e.moduleId)))
+              (ids == null || ids.contains(e.moduleId)))
           .length;
       return EmployeeCompletionStat(
         employeeId: employee.id,
         displayName: employee.displayName,
         completedCount: completed,
-        totalModuleCount: totalModuleCount,
+        totalModuleCount: ids?.length ?? totalModuleCount,
       );
     }).toList();
   }
@@ -73,7 +75,7 @@ class DashboardAnalytics {
     required List<Employee> employees,
     required List<Enrollment> enrollments,
     required int totalModuleCount,
-    Set<String>? onlyModuleIds,
+    Set<String>? Function(Employee employee)? moduleIdsFor,
   }) {
     final byTeam = <String, List<Employee>>{};
     for (final employee in employees) {
@@ -81,21 +83,23 @@ class DashboardAnalytics {
     }
     return byTeam.entries.map((entry) {
       final teamEmployees = entry.value;
-      final completed = teamEmployees.fold<int>(
-        0,
-        (sum, employee) => sum +
-            enrollments
-                .where((e) =>
-                    e.employeeId == employee.id &&
-                    e.status == EnrollmentStatus.completed &&
-                    (onlyModuleIds == null || onlyModuleIds.contains(e.moduleId)))
-                .length,
-      );
+      var completed = 0;
+      var possible = 0;
+      for (final employee in teamEmployees) {
+        final ids = moduleIdsFor?.call(employee);
+        possible += ids?.length ?? totalModuleCount;
+        completed += enrollments
+            .where((e) =>
+                e.employeeId == employee.id &&
+                e.status == EnrollmentStatus.completed &&
+                (ids == null || ids.contains(e.moduleId)))
+            .length;
+      }
       return TeamCompletionStat(
         teamId: entry.key,
         employeeCount: teamEmployees.length,
         completedCount: completed,
-        totalPossibleCount: teamEmployees.length * totalModuleCount,
+        totalPossibleCount: possible,
       );
     }).toList()
       ..sort((a, b) => b.completionRatePercent.compareTo(a.completionRatePercent));

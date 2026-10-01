@@ -14,6 +14,7 @@ import '../report_export/report_export_screen.dart';
 import '../company_profile/company_profile_input_screen.dart';
 import '../module_assignment/module_assignment_screen.dart';
 import '../member_management/member_management_screen.dart';
+import '../../../core/required_modules.dart';
 import '../pass_threshold/pass_threshold_settings_screen.dart';
 import '../deadline_settings/deadline_settings_screen.dart';
 import '../report_email_settings/report_email_settings_screen.dart';
@@ -433,9 +434,10 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
               if (!totalModulesSnapshot.hasData) {
                 return const SkeletonList();
               }
-              // 管理者が受講対象を指定している場合は、その件数と修了だけで受講率を出す。
+              // 受講対象を指定している場合は、社員ごと(全社共通+所属チームの追加)の必須だけで受講率を出す。
               final assigned = company.assignedModuleIds;
-              final totalModules = assigned?.length ?? totalModulesSnapshot.data!;
+              final totalModules = totalModulesSnapshot.data!;
+              final teamExtras = {for (final t in teams) t.id: t.assignedModuleIds};
 
               return StreamBuilder<List<Employee>>(
             stream: ref.read(employeeServiceProvider).watchCompanyEmployees(company.id),
@@ -465,7 +467,10 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                     employees: employees,
                     enrollments: enrollments,
                     totalModuleCount: totalModules,
-                    onlyModuleIds: assigned?.toSet(),
+                    moduleIdsFor: (e) => RequiredModules.forEmployee(
+                      companyAssigned: assigned,
+                      teamExtra: teamExtras[e.teamId] ?? const [],
+                    ),
                   );
                   final overall = DashboardAnalytics.overallCompletionRatePercent(stats);
                   final churnRisk = ChurnRisk.evaluate(

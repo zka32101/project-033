@@ -119,12 +119,12 @@ void main() {
           status: EnrollmentStatus.completed,
         );
 
-    test('onlyModuleIdsを指定すると、対象外の研修の修了は数えない', () {
+    test('moduleIdsForを指定すると、対象外の研修の修了は数えない', () {
       final stats = DashboardAnalytics.computeEmployeeCompletionStats(
         employees: employees,
         enrollments: [done('m1'), done('m2'), done('other')],
         totalModuleCount: 2,
-        onlyModuleIds: {'m1', 'm2'},
+        moduleIdsFor: (_) => {'m1', 'm2'},
       );
       expect(stats.single.completedCount, 2);
       expect(stats.single.completionRatePercent, 100);
