@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../admin/member_management/member_management_screen.dart';
 import '../billing/contract_guide_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/job_role.dart';
@@ -132,6 +133,14 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
               trailing: const Icon(Icons.chevron_right),
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(builder: (_) => const TeamManagementScreen()),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.manage_accounts_outlined),
+              title: const Text('メンバー管理'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const MemberManagementScreen()),
               ),
             ),
             ListTile(

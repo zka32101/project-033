@@ -129,11 +129,14 @@ class EmployeeService {
             snap.docs.map((d) => Employee.fromMap(d.id, d.data())).toList());
   }
 
+  /// 会社の社員(無効化された社員は含めない。受講率やレポートの対象から外す)。
   Stream<List<Employee>> watchCompanyEmployees(String companyId) {
     return _db
         .collection(FirestorePaths.employees(companyId))
         .snapshots()
-        .map((snap) =>
-            snap.docs.map((d) => Employee.fromMap(d.id, d.data())).toList());
+        .map((snap) => snap.docs
+            .map((d) => Employee.fromMap(d.id, d.data()))
+            .where((e) => !e.deactivated)
+            .toList());
   }
 }

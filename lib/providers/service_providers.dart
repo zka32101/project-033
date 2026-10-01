@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_providers.dart';
 import '../services/billing_service.dart';
+import '../services/member_admin_service.dart';
 import '../services/company_service.dart';
 import '../services/invite_service.dart';
 import '../services/employee_service.dart';
@@ -72,4 +73,8 @@ final contentGenerationServiceProvider = Provider<ContentGenerationService>((ref
 
 final billingServiceProvider = Provider<BillingService>((ref) {
   return BillingService(ref.watch(functionsProvider));
+});
+
+final memberAdminServiceProvider = Provider<MemberAdminService>((ref) {
+  return MemberAdminService(ref.watch(firestoreProvider));
 });

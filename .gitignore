@@ -100,3 +100,6 @@ local.properties
 private_key.pem
 serviceAccountKey.json
 .firebase/
+
+# ルールテスト
+rules_test/node_modules/

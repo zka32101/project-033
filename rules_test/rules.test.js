@@ -1,0 +1,99 @@
+// Firestoreルールの動作テスト(エミュレータで実行)。
+const { initializeTestEnvironment, assertSucceeds, assertFails } = require('@firebase/rules-unit-testing');
+const fs = require('fs');
+const { doc, getDoc, setDoc, updateDoc, deleteDoc } = require('firebase/firestore');
+
+let passed = 0, failed = 0;
+async function check(name, fn) {
+  try { await fn(); passed++; console.log('  PASS ' + name); }
+  catch (e) { failed++; console.log('  FAIL ' + name + ' -> ' + (e.message || e).toString().split('\n')[0]); }
+}
+
+(async () => {
+  const env = await initializeTestEnvironment({
+    projectId: 'rules-test',
+    firestore: { rules: fs.readFileSync(process.env.RULES_PATH || require('path').join(__dirname, '..', 'firestore.rules'), 'utf8'), host: '127.0.0.1', port: 8080 },
+  });
+  const C = 'co1';
+  await env.withSecurityRulesDisabled(async (ctx) => {
+    const db = ctx.firestore();
+    await setDoc(doc(db, `companies/${C}`), {
+      name: 'T', planType: 'trial', contractedHeadcount: 5, trialEndsAt: new Date('2026-12-01'),
+      moduleDeadlines: {}, createdAt: new Date('2026-01-01'),
+    });
+    await setDoc(doc(db, `companies/${C}/employees/admin1`), { companyId: C, role: 'admin', displayName: 'A' });
+    await setDoc(doc(db, `companies/${C}/employees/admin2`), { companyId: C, role: 'admin', displayName: 'A2' });
+    await setDoc(doc(db, `companies/${C}/employees/mem1`), { companyId: C, role: 'member', displayName: 'M1' });
+    await setDoc(doc(db, `companies/${C}/employees/mem3`), { companyId: C, role: 'member', displayName: 'M3' });
+    await setDoc(doc(db, `companies/${C}/employees/mem4`), { companyId: C, role: 'member', displayName: 'M4' });
+    await setDoc(doc(db, `companies/${C}/employees/old1`), { companyId: C, role: 'member', displayName: 'Old', deactivated: true });
+    await setDoc(doc(db, `companies/${C}/subscriptions/company_${C}`), { status: 'active' });
+    await setDoc(doc(db, `companies/${C}/enrollments/e1`), { employeeId: 'mem1', moduleId: 'm1', status: 'completed' });
+  });
+  const as = (uid) => env.authenticatedContext(uid).firestore();
+  const outsider = as('stranger');
+  const admin = as('admin1');
+  const member = as('mem1');
+  const old = as('old1');
+
+  console.log('--- 社員(employees) ---');
+  await check('他人は社員ドキュメントを自分のuidで作れない(招待コード迂回の防止)', () =>
+    assertFails(setDoc(doc(outsider, `companies/${C}/employees/stranger`), { companyId: C, role: 'member', displayName: 'X' })));
+  await check('管理者でも社員を直接作れない', () =>
+    assertFails(setDoc(doc(admin, `companies/${C}/employees/new1`), { companyId: C, role: 'member', displayName: 'X' })));
+  await check('管理者は他の社員を管理者にできる', () =>
+    assertSucceeds(updateDoc(doc(admin, `companies/${C}/employees/mem1`), { role: 'admin' })));
+  await check('管理者は社員を無効化できる', () =>
+    assertSucceeds(updateDoc(doc(admin, `companies/${C}/employees/admin2`), { deactivated: true, deactivatedAt: new Date() })));
+  await check('管理者でも無効化の解除はできない(席数確認のFunctionsだけ)', () =>
+    assertFails(updateDoc(doc(admin, `companies/${C}/employees/old1`), { deactivated: false })));
+  await check('管理者でも社員の会社を付け替えられない', () =>
+    assertFails(updateDoc(doc(admin, `companies/${C}/employees/mem1`), { companyId: 'other' })));
+  await check('無効化された社員は会社の情報を読めない', () =>
+    assertFails(getDoc(doc(old, `companies/${C}`))));
+  await check('無効化された社員は自分の受講記録も読めない', () =>
+    assertFails(getDoc(doc(old, `companies/${C}/enrollments/e1`))));
+  await check('無効化された社員は自分の社員ドキュメントを更新できない(解除の自己操作も不可)', () =>
+    assertFails(updateDoc(doc(old, `companies/${C}/employees/old1`), { deactivated: false })));
+  await check('無効化された管理者は管理者として振る舞えない', async () => {
+    // admin2は上のテストで無効化済み
+    await assertFails(updateDoc(doc(as('admin2'), `companies/${C}/employees/mem1`), { displayName: 'hack' }));
+  });
+  await check('メンバーは自分を管理者にできない', () =>
+    assertFails(updateDoc(doc(as('mem3'), `companies/${C}/employees/mem3`), { role: 'admin' })));
+  await check('メンバーは自分の無効化フラグを操作できない', () =>
+    assertFails(updateDoc(doc(as('mem4'), `companies/${C}/employees/mem4`), { deactivated: true })));
+  await check('メンバーは自分の表示名を更新できる', async () => {
+    // mem1は管理者に昇格済みなので、別のメンバーで確認する
+    await env.withSecurityRulesDisabled(async (ctx) => {
+      await setDoc(doc(ctx.firestore(), `companies/${C}/employees/mem2`), { companyId: C, role: 'member', displayName: 'M2' });
+    });
+    await assertSucceeds(updateDoc(doc(as('mem2'), `companies/${C}/employees/mem2`), { displayName: 'M2改', jobRole: 'sales' }));
+  });
+  await check('会社の外の人は社員一覧を読めない', () =>
+    assertFails(getDoc(doc(outsider, `companies/${C}/employees/admin1`))));
+
+  console.log('--- 会社(companies)・契約(subscriptions) ---');
+  await check('会社は直接作成できない', () =>
+    assertFails(setDoc(doc(outsider, 'companies/fake'), { name: 'X', planType: 'team', contractedHeadcount: 1000 })));
+  await check('管理者はお試し期限を延ばせない', () =>
+    assertFails(updateDoc(doc(admin, `companies/${C}`), { trialEndsAt: new Date('2099-01-01') })));
+  await check('管理者はplanTypeをteamに書き換えられない', () =>
+    assertFails(updateDoc(doc(admin, `companies/${C}`), { planType: 'team' })));
+  await check('管理者は人数上限を引き上げられない', () =>
+    assertFails(updateDoc(doc(admin, `companies/${C}`), { contractedHeadcount: 1000 })));
+  await check('管理者はbillingSourceを書き換えられない', () =>
+    assertFails(updateDoc(doc(admin, `companies/${C}`), { billingSource: 'invoice' })));
+  await check('管理者は会社情報・受講対象の指定を更新できる', () =>
+    assertSucceeds(updateDoc(doc(admin, `companies/${C}`), {
+      profile: { employeeCount: 30, traits: ['vehicles'] }, assignedModuleIds: ['m1'],
+    })));
+  await check('管理者は契約情報(subscriptions)を書き換えられない', () =>
+    assertFails(setDoc(doc(admin, `companies/${C}/subscriptions/company_${C}`), { status: 'active', planTier: 'upper', fullSet: true })));
+  await check('メンバーは契約情報を読める', () =>
+    assertSucceeds(getDoc(doc(as('mem2'), `companies/${C}/subscriptions/company_${C}`))));
+
+  await env.cleanup();
+  console.log(`\n結果: ${passed} PASS / ${failed} FAIL`);
+  process.exit(failed ? 1 : 0);
+})();

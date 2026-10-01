@@ -18,9 +18,11 @@ service cloud.firestore {
       return get(/databases/$(database)/documents/companies/$(companyId)/employees/$(request.auth.uid)).data;
     }
 
+    // 会社のメンバーか。無効化(退職など)された社員はメンバーとして扱わない。
     function isCompanyMember(companyId) {
       return isSignedIn() &&
-        exists(/databases/$(database)/documents/companies/$(companyId)/employees/$(request.auth.uid));
+        exists(/databases/$(database)/documents/companies/$(companyId)/employees/$(request.auth.uid)) &&
+        employeeData(companyId).get('deactivated', false) != true;
     }
 
     function isAdmin(companyId) {
@@ -115,18 +117,22 @@ service cloud.firestore {
 
       match /employees/{employeeId} {
         allow read: if isCompanyMember(companyId);
-        // 招待コード参加・管理者登録は「自分自身のuidをドキュメントIDにして作成」のみ許可。
-        // 自己登録経路(client)では role を常に 'member' 固定にし、admin昇格は
-        // Cloud Functions(Admin SDK)経由でのみ行う想定とする。
-        allow create: if isSelf(employeeId) &&
-          request.resource.data.companyId == companyId &&
-          request.resource.data.role == 'member';
-        // 管理者は全フィールド更新可。本人更新は role/companyId の変更を禁止し、
-        // 自己昇格や他社への付け替えを防ぐ。
-        allow update: if isAdmin(companyId) ||
-          (isSelf(employeeId) &&
-           request.resource.data.role == resource.data.role &&
-           request.resource.data.companyId == resource.data.companyId);
+        // 社員の作成は、招待コード参加(joinCompanyViaInvite)と管理者登録(registerCompanyAdmin)の
+        // Cloud Functions(Admin SDK)だけが行う。クライアントから作れると、会社IDさえ分かれば
+        // 招待コードも人数上限も迂回して参加できてしまう。
+        allow create: if false;
+        // 管理者は役割や無効化(退職など)を更新できる。ただし会社の付け替えと、無効化の解除は不可
+        // (解除は席数を確認するCloud Functions reactivateEmployeeだけが行う)。
+        // 本人は自分のdisplayNameや職種などを更新できるが、role/companyId/無効化は変更できない。
+        allow update:
+          if (isAdmin(companyId) &&
+              request.resource.data.companyId == resource.data.companyId &&
+              !(resource.data.get('deactivated', false) == true &&
+                request.resource.data.get('deactivated', false) != true)) ||
+             (isSelf(employeeId) && isCompanyMember(companyId) &&
+              request.resource.data.role == resource.data.role &&
+              request.resource.data.companyId == resource.data.companyId &&
+              request.resource.data.get('deactivated', false) == resource.data.get('deactivated', false));
         allow delete: if isAdmin(companyId);
       }
 
