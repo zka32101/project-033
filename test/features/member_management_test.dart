@@ -3,6 +3,7 @@ import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:safy/core/editor_stamp.dart';
 import 'package:safy/data/models/company_model.dart';
 import 'package:safy/data/models/employee_model.dart';
 import 'package:safy/features/admin/member_management/member_management_screen.dart';
@@ -94,6 +95,23 @@ void main() {
       final m2 = members.firstWhere((m) => m.id == 'm2');
       expect(m2.deactivated, isTrue);
       expect((await db.doc('companies/c1/employees/m2').get()).data()!['deactivatedAt'], isNotNull);
+    });
+
+    test('管理者の書き込みには、操作者のスタンプ(lastEditedBy)が付く。サインインしていなければ付かない', () async {
+      final db = await _db();
+      final service = MemberAdminService(db);
+      addTearDown(() => EditorStamp.uidProvider = () => null);
+
+      EditorStamp.uidProvider = () => 'a1';
+      await service.setRole(companyId: 'c1', employeeId: 'm1', role: EmployeeRole.admin);
+      await service.deactivate(companyId: 'c1', employeeId: 'm2');
+      expect((await db.doc('companies/c1/employees/m1').get()).data()!['lastEditedBy'], 'a1');
+      expect((await db.doc('companies/c1/employees/m2').get()).data()!['lastEditedBy'], 'a1');
+
+      EditorStamp.uidProvider = () => null;
+      expect(EditorStamp.fields(), isEmpty);
+      EditorStamp.uidProvider = () => 'x';
+      expect(EditorStamp.fields(), {'lastEditedBy': 'x'});
     });
 
     test('受講率などに使う社員一覧(watchCompanyEmployees)は、無効化された社員を含まない', () async {

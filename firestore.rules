@@ -29,6 +29,12 @@ service cloud.firestore {
       return isCompanyMember(companyId) && employeeData(companyId).role == 'admin';
     }
 
+    // 管理者による会社・チーム・メンバーの書き換えは、本人のuidを lastEditedBy に添えること。
+    // 監査ログがこの値から操作者を記録する。他人のuidを書いて偽装することはできない。
+    function stamped() {
+      return request.resource.data.get('lastEditedBy', null) == request.auth.uid;
+    }
+
     function isSelf(employeeId) {
       return isSignedIn() && request.auth.uid == employeeId;
     }
@@ -102,7 +108,7 @@ service cloud.firestore {
       allow create: if false;
       // 管理者は会社の設定(合格ライン・期限・連絡先など)を更新できるが、契約・課金に関わる項目は
       // 書き換えられない(お試し期限の延長や人数上限の引き上げによる決済の迂回を防ぐ)。
-      allow update: if isAdmin(companyId) &&
+      allow update: if isAdmin(companyId) && stamped() &&
         !request.resource.data.diff(resource.data).affectedKeys().hasAny([
           'planType', 'trialEndsAt', 'contractedHeadcount', 'billingSource',
           'stripeCustomerId', 'stripeSubscriptionId', 'stripeStatus',
@@ -112,7 +118,8 @@ service cloud.firestore {
 
       match /teams/{teamId} {
         allow read: if isCompanyMember(companyId);
-        allow write: if isAdmin(companyId);
+        allow create, update: if isAdmin(companyId) && stamped();
+        allow delete: if isAdmin(companyId);
       }
 
       match /employees/{employeeId} {
@@ -125,7 +132,7 @@ service cloud.firestore {
         // (解除は席数を確認するCloud Functions reactivateEmployeeだけが行う)。
         // 本人は自分のdisplayNameや職種などを更新できるが、role/companyId/無効化は変更できない。
         allow update:
-          if (isAdmin(companyId) &&
+          if (isAdmin(companyId) && stamped() &&
               request.resource.data.companyId == resource.data.companyId &&
               !(resource.data.get('deactivated', false) == true &&
                 request.resource.data.get('deactivated', false) != true)) ||

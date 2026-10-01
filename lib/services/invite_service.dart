@@ -1,4 +1,5 @@
 import 'dart:math';
+import '../core/editor_stamp.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../data/models/invite_code_model.dart';
@@ -58,7 +59,7 @@ class InviteService {
         createdAt: DateTime.now(),
       );
       tx.set(codeRef, code.toMap());
-      tx.update(teamRef, {'inviteCode': candidate});
+      tx.update(teamRef, {'inviteCode': candidate, ...EditorStamp.fields()});
       return code;
     });
   }
@@ -94,7 +95,7 @@ class InviteService {
       teamName: teamName,
       createdAt: DateTime.now(),
     );
-    await ref.set(team.toMap());
+    await ref.set({...team.toMap(), ...EditorStamp.fields()});
     return team;
   }
 

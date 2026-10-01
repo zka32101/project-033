@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import '../core/editor_stamp.dart';
 import '../data/models/employee_model.dart';
 import 'firestore_paths.dart';
 
@@ -54,12 +55,14 @@ class MemberAdminService {
     required EmployeeRole role,
   }) async {
     await _db.doc(FirestorePaths.employee(companyId, employeeId)).update({
+      ...EditorStamp.fields(),
       'role': role == EmployeeRole.admin ? 'admin' : 'member',
     });
   }
 
   Future<void> deactivate({required String companyId, required String employeeId}) async {
     await _db.doc(FirestorePaths.employee(companyId, employeeId)).update({
+      ...EditorStamp.fields(),
       'deactivated': true,
       'deactivatedAt': FieldValue.serverTimestamp(),
     });

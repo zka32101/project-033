@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import '../core/editor_stamp.dart';
 import '../data/models/company_model.dart';
 import '../data/models/company_profile.dart';
 import 'firestore_paths.dart';
@@ -48,7 +49,7 @@ class CompanyService {
     required String moduleId,
     required int threshold,
   }) async {
-    await _db.doc(FirestorePaths.company(companyId)).update({
+    await _db.doc(FirestorePaths.company(companyId)).update({...EditorStamp.fields(), 
       'customPassThreshold.$moduleId': threshold,
     });
   }
@@ -58,7 +59,7 @@ class CompanyService {
     required String moduleId,
     required DateTime dueDate,
   }) async {
-    await _db.doc(FirestorePaths.company(companyId)).update({
+    await _db.doc(FirestorePaths.company(companyId)).update({...EditorStamp.fields(), 
       'moduleDeadlines.$moduleId': dueDate,
     });
   }
@@ -67,7 +68,7 @@ class CompanyService {
     required String companyId,
     required String moduleId,
   }) async {
-    await _db.doc(FirestorePaths.company(companyId)).update({
+    await _db.doc(FirestorePaths.company(companyId)).update({...EditorStamp.fields(), 
       'moduleDeadlines.$moduleId': FieldValue.delete(),
     });
   }
@@ -78,7 +79,7 @@ class CompanyService {
   }) async {
     await _db
         .doc(FirestorePaths.company(companyId))
-        .update({'contactEmail': contactEmail});
+        .update({...EditorStamp.fields(), 'contactEmail': contactEmail});
   }
 
   Future<void> updateCategoryPriorityOverride({
@@ -86,7 +87,7 @@ class CompanyService {
     required String categoryId,
     required int priority,
   }) async {
-    await _db.doc(FirestorePaths.company(companyId)).update({
+    await _db.doc(FirestorePaths.company(companyId)).update({...EditorStamp.fields(), 
       'categoryPriorityOverride.$categoryId': priority,
     });
   }
@@ -95,7 +96,7 @@ class CompanyService {
     required String companyId,
     required String categoryId,
   }) async {
-    await _db.doc(FirestorePaths.company(companyId)).update({
+    await _db.doc(FirestorePaths.company(companyId)).update({...EditorStamp.fields(), 
       'categoryPriorityOverride.$categoryId': FieldValue.delete(),
     });
   }
@@ -105,7 +106,7 @@ class CompanyService {
     required String companyId,
     required CompanyProfile profile,
   }) async {
-    await _db.doc(FirestorePaths.company(companyId)).update({'profile': profile.toMap()});
+    await _db.doc(FirestorePaths.company(companyId)).update({...EditorStamp.fields(), 'profile': profile.toMap()});
   }
 
   /// 管理者が受講対象(必須)に指定した研修を保存する。
@@ -113,7 +114,7 @@ class CompanyService {
     required String companyId,
     required List<String> moduleIds,
   }) async {
-    await _db.doc(FirestorePaths.company(companyId)).update({'assignedModuleIds': moduleIds});
+    await _db.doc(FirestorePaths.company(companyId)).update({...EditorStamp.fields(), 'assignedModuleIds': moduleIds});
   }
 
   /// チームに、全社共通の必須に加えて必須とする研修を保存する。
@@ -122,6 +123,6 @@ class CompanyService {
     required String teamId,
     required List<String> moduleIds,
   }) async {
-    await _db.doc('${FirestorePaths.teams(companyId)}/$teamId').update({'assignedModuleIds': moduleIds});
+    await _db.doc('${FirestorePaths.teams(companyId)}/$teamId').update({...EditorStamp.fields(), 'assignedModuleIds': moduleIds});
   }
 }
