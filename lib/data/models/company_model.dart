@@ -2,6 +2,10 @@ import 'firestore_date_parser.dart';
 
 enum PlanType { individual, team, trial }
 
+/// 有料契約の課金元。none=未契約(お試し中を含む)、store=ストア課金、invoice=請求書払い(Web決済)。
+/// 契約状態の反映はサーバー側(Cloud Functions)で行う想定で、クライアントは読み取り専用。
+enum BillingSource { none, store, invoice }
+
 class Company {
   final String id;
   final String name;
@@ -13,6 +17,7 @@ class Company {
   final String contactEmail; // 月次レポート等の送付先(空文字なら未設定)
   final Map<String, int> categoryPriorityOverride; // CategoryId.name -> 優先度(0/1/2)
   final DateTime createdAt;
+  final BillingSource billingSource;
   final DateTime? trialEndsAt; // お試し(14日・5名)の終了日時。お試しでなければnull
 
   const Company({
@@ -26,6 +31,7 @@ class Company {
     this.contactEmail = '',
     this.categoryPriorityOverride = const {},
     required this.createdAt,
+    this.billingSource = BillingSource.none,
     this.trialEndsAt,
   });
 
@@ -84,6 +90,11 @@ class Company {
             {},
       ),
       createdAt: parseFirestoreDateTime(map['createdAt']),
+      billingSource: switch (map['billingSource'] as String?) {
+        'store' => BillingSource.store,
+        'invoice' => BillingSource.invoice,
+        _ => BillingSource.none,
+      },
       trialEndsAt: parseFirestoreDateTimeOrNull(map['trialEndsAt']),
     );
   }
@@ -122,6 +133,7 @@ class Company {
       contactEmail: contactEmail ?? this.contactEmail,
       categoryPriorityOverride: categoryPriorityOverride ?? this.categoryPriorityOverride,
       createdAt: createdAt,
+      billingSource: billingSource,
       trialEndsAt: trialEndsAt,
     );
   }
