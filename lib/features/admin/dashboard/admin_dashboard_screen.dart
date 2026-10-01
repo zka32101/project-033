@@ -16,7 +16,7 @@ import '../deadline_settings/deadline_settings_screen.dart';
 import '../report_email_settings/report_email_settings_screen.dart';
 import '../category_priority_settings/category_priority_settings_screen.dart';
 import '../original_content/original_content_screen.dart';
-import '../../paywall/module_selection_screen.dart';
+import '../../billing/contract_guide_screen.dart';
 import '../employee_detail/employee_detail_screen.dart';
 import '../team_comparison/team_comparison_screen.dart';
 import '../../../widgets/error_retry_view.dart';
@@ -379,12 +379,12 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                 );
               } else if (value == 'module_plan') {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const ModuleSelectionScreen()),
+                  MaterialPageRoute(builder: (_) => const ContractGuideScreen()),
                 );
               }
             },
             itemBuilder: (context) => const [
-              PopupMenuItem(value: 'module_plan', child: Text('受講プラン設定(基本/上位)')),
+              PopupMenuItem(value: 'module_plan', child: Text('ご契約について')),
               PopupMenuItem(value: 'pass_threshold', child: Text('合格ライン設定')),
               PopupMenuItem(value: 'deadline', child: Text('受講期限設定')),
               PopupMenuItem(value: 'report_email', child: Text('月次レポート送付先設定')),

@@ -20,7 +20,6 @@ class OriginalContentScreen extends ConsumerStatefulWidget {
 
 class _OriginalContentScreenState extends ConsumerState<OriginalContentScreen> {
   late Future<Subscription?> _subscriptionFuture;
-  bool _isUpgrading = false;
 
   @override
   void initState() {
@@ -35,29 +34,6 @@ class _OriginalContentScreenState extends ConsumerState<OriginalContentScreen> {
           ownerType: SubscriptionOwnerType.company,
           ownerId: company.id,
         );
-  }
-
-  Future<void> _upgrade(PremiumTier tier) async {
-    setState(() => _isUpgrading = true);
-    try {
-      final company = ref.read(sessionProvider).company!;
-      await ref.read(subscriptionServiceProvider).upsertPremiumTier(
-            companyId: company.id,
-            ownerType: SubscriptionOwnerType.company,
-            ownerId: company.id,
-            premiumTier: tier,
-            headcount: company.contractedHeadcount,
-          );
-      setState(() => _subscriptionFuture = _loadSubscription());
-    } catch (_) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('契約処理に失敗しました。時間をおいて再度お試しください')),
-        );
-      }
-    } finally {
-      if (mounted) setState(() => _isUpgrading = false);
-    }
   }
 
   @override
@@ -192,7 +168,12 @@ class _OriginalContentScreenState extends ConsumerState<OriginalContentScreen> {
               'AIがテーマからレッスン・クイズを自動生成します。自社の実情に合わせたオリジナル研修を作成できます。',
               style: TextStyle(fontSize: 13),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
+            const Text(
+              'プレミアムプランのお申し込みは準備中です。ご利用をご希望の場合は、運営までお問い合わせください。',
+              style: TextStyle(fontSize: 12),
+            ),
+            const SizedBox(height: 8),
             if (!canExtend)
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -200,23 +181,12 @@ class _OriginalContentScreenState extends ConsumerState<OriginalContentScreen> {
                 subtitle: Text(
                   '月額 ¥${SubscriptionService.premiumTierMonthlyPriceYen(PremiumTier.moduleExtension)}(headcount: $headcount名)',
                 ),
-                trailing: FilledButton(
-                  onPressed: _isUpgrading
-                      ? null
-                      : () => _upgrade(PremiumTier.moduleExtension),
-                  child: const Text('契約する'),
-                ),
               ),
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: const Text('新規モジュール作成プラン(おすすめ)'),
               subtitle: Text(
                 '月額 ¥${SubscriptionService.premiumTierMonthlyPriceYen(PremiumTier.moduleCreation)}(既存モジュール追加も含む)',
-              ),
-              trailing: FilledButton(
-                onPressed:
-                    _isUpgrading ? null : () => _upgrade(PremiumTier.moduleCreation),
-                child: const Text('契約する'),
               ),
             ),
           ],
