@@ -60,6 +60,18 @@ class MemberAdminService {
     });
   }
 
+  /// 管理者がメンバーの職種を設定する(職種別の必須研修の対象になる)。nullで未設定に戻す。
+  Future<void> setJobRole({
+    required String companyId,
+    required String employeeId,
+    required String? jobRoleId,
+  }) async {
+    await _db.doc(FirestorePaths.employee(companyId, employeeId)).update({
+      ...EditorStamp.fields(),
+      'jobRole': jobRoleId ?? FieldValue.delete(),
+    });
+  }
+
   Future<void> deactivate({required String companyId, required String employeeId}) async {
     await _db.doc(FirestorePaths.employee(companyId, employeeId)).update({
       ...EditorStamp.fields(),
