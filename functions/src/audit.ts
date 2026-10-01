@@ -162,7 +162,7 @@ export const UNKNOWN_ACTOR = "unknown";
  * - アプリ(クライアント)からの書き込み: ルールが本人のuidと一致を強制する lastEditedBy が操作者。
  *   スタンプがなければ不明(UNKNOWN_ACTOR)。
  * - サーバー(Cloud Functions・Admin SDK、サービスアカウント)による書き込み: 原則「システム」(null)。
- *   ただし、関数がこの書き込みで lastEditedBy を明示的に変更した場合(再有効化など)はその管理者。
+ *   ただし、関数がこの書き込みで lastEditedBy(と書き込み時刻 lastEditedAt)を更新した場合(再有効化など)はその管理者。
  */
 export function resolveActor(
   authType: string | undefined,
@@ -178,7 +178,10 @@ export function resolveActor(
   const stampAfter = str(after?.lastEditedBy);
   const stampBefore = str(before?.lastEditedBy);
   if (isServer) {
-    return stampAfter && stampAfter !== stampBefore ? stampAfter : null;
+    // 関数が操作した管理者を明示した書き込みだけを、その管理者の操作とする。関数は書き込み時刻(lastEditedAt)も
+    // 添えるので、同じ管理者の古いスタンプが残っているだけの場合と区別できる。
+    const stampedNow = stampAfter !== stampBefore || !sameValue(before?.lastEditedAt, after?.lastEditedAt);
+    return stampAfter && stampedNow ? stampAfter : null;
   }
   return stampAfter || UNKNOWN_ACTOR;
 }
