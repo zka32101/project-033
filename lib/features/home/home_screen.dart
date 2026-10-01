@@ -20,6 +20,7 @@ import '../my_growth/my_growth_screen.dart';
 import '../certificates/my_certificates_screen.dart';
 import '../admin/team_management/team_management_screen.dart';
 import '../paywall/paywall_screen.dart';
+import '../billing/contract_guide_screen.dart';
 import '../training/training_dashboard_screen.dart';
 import '../exam/exam_enrollment_screen.dart';
 import '../../widgets/error_retry_view.dart';
@@ -559,15 +560,17 @@ class _TrialBanner extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final text = active
         ? 'お試し期間 残り$days日(全モジュール利用可・最大${company.contractedHeadcount}名)'
-        : 'お試し期間は終了しました。継続するには有料プランをご契約ください';
+        : 'お試し期間は終了しました。タップして、ご契約の方法を確認できます';
     return Material(
       color: active ? colorScheme.primaryContainer : colorScheme.errorContainer,
       child: InkWell(
-        onTap: isAdmin
-            ? () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const TeamManagementScreen()),
-                )
-            : null,
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => active && isAdmin
+                ? const TeamManagementScreen()
+                : const ContractGuideScreen(),
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Row(

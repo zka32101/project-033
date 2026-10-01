@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../billing/contract_guide_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/job_role.dart';
 import '../../data/models/team_model.dart';
@@ -117,6 +118,10 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
                 company.isTrialActive()
                     ? '残り${company.trialDaysLeft()}日(最大${company.contractedHeadcount}名)'
                     : '終了しました',
+              ),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const ContractGuideScreen()),
               ),
             ),
           if (isAdmin) ...[
