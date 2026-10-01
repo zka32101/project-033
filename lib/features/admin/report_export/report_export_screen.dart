@@ -73,6 +73,7 @@ class _ReportExportScreenState extends ConsumerState<ReportExportScreen> {
       requiredFor: (e) => RequiredModules.forEmployee(
         companyAssigned: company.assignedModuleIds,
         teamExtra: teamExtras[e.teamId] ?? const [],
+        roleExtra: company.roleAssignments[e.jobRole] ?? const [],
       ),
       checklistItems: seedComplianceItems,
       checklistStatuses: statuses,

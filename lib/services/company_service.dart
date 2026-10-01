@@ -125,4 +125,16 @@ class CompanyService {
   }) async {
     await _db.doc('${FirestorePaths.teams(companyId)}/$teamId').update({...EditorStamp.fields(), 'assignedModuleIds': moduleIds});
   }
+
+  /// 職種に、全社共通の必須に加えて必須とする研修を保存する。
+  Future<void> updateRoleAssignedModules({
+    required String companyId,
+    required String jobRoleId,
+    required List<String> moduleIds,
+  }) async {
+    await _db.doc(FirestorePaths.company(companyId)).update({
+      ...EditorStamp.fields(),
+      'roleAssignments.$jobRoleId': moduleIds,
+    });
+  }
 }

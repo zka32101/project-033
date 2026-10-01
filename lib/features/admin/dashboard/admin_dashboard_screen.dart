@@ -16,6 +16,7 @@ import '../module_assignment/module_assignment_screen.dart';
 import '../member_management/member_management_screen.dart';
 import '../report_export/certificates_export_screen.dart';
 import '../audit_log/audit_log_screen.dart';
+import '../module_assignment/role_assignment_screen.dart';
 import '../../../core/required_modules.dart';
 import '../pass_threshold/pass_threshold_settings_screen.dart';
 import '../deadline_settings/deadline_settings_screen.dart';
@@ -395,6 +396,10 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const MemberManagementScreen()),
                 );
+              } else if (value == 'role_assignment') {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const RoleAssignmentScreen()),
+                );
               } else if (value == 'assignment') {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const ModuleAssignmentScreen()),
@@ -414,6 +419,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
               PopupMenuItem(value: 'certificates', child: Text('修了証・受講記録の出力')),
               PopupMenuItem(value: 'audit_log', child: Text('操作履歴(監査ログ)')),
               PopupMenuItem(value: 'assignment', child: Text('受講コンテンツの設定')),
+              PopupMenuItem(value: 'role_assignment', child: Text('職種別の必須研修')),
               PopupMenuItem(value: 'company_profile', child: Text('会社情報の設定(規模・事業)')),
               PopupMenuItem(value: 'module_plan', child: Text('ご契約について')),
               PopupMenuItem(value: 'pass_threshold', child: Text('合格ライン設定')),
@@ -482,6 +488,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                     moduleIdsFor: (e) => RequiredModules.forEmployee(
                       companyAssigned: assigned,
                       teamExtra: teamExtras[e.teamId] ?? const [],
+                      roleExtra: company.roleAssignments[e.jobRole] ?? const [],
                     ),
                   );
                   final overall = DashboardAnalytics.overallCompletionRatePercent(stats);

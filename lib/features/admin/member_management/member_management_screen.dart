@@ -64,6 +64,33 @@ class _MemberManagementScreenState extends ConsumerState<MemberManagementScreen>
         if (!await _confirm('メンバーに戻しますか?', '${target.displayName}さんは管理者機能を使えなくなります。', 'メンバーにする')) return;
         await _run(() => service.setRole(companyId: company.id, employeeId: target.id, role: EmployeeRole.member),
             '${target.displayName}さんをメンバーにしました');
+      case 'jobrole':
+        final picked = await showDialog<String?>(
+          context: context,
+          builder: (ctx) => SimpleDialog(
+            title: Text('${target.displayName}さんの職種'),
+            children: [
+              for (final r in JobRole.all)
+                SimpleDialogOption(
+                  onPressed: () => Navigator.of(ctx).pop(r.id),
+                  child: Text(r.label + (target.jobRole == r.id ? '  ✓' : '')),
+                ),
+              SimpleDialogOption(
+                onPressed: () => Navigator.of(ctx).pop(''),
+                child: const Text('未設定に戻す'),
+              ),
+            ],
+          ),
+        );
+        if (picked == null) return;
+        await _run(
+          () => service.setJobRole(
+            companyId: company.id,
+            employeeId: target.id,
+            jobRoleId: picked.isEmpty ? null : picked,
+          ),
+          picked.isEmpty ? '職種を未設定に戻しました' : '${target.displayName}さんの職種を${JobRole.labelOf(picked)}にしました',
+        );
       case 'deactivate':
         final why = MemberGuard.whyCannotDeactivate(members, target, actorId: actorId);
         if (why != null) return _toast(why);
@@ -192,6 +219,7 @@ class _MemberTile extends StatelessWidget {
               const PopupMenuItem(value: 'demote', child: Text('メンバーにする'))
             else
               const PopupMenuItem(value: 'promote', child: Text('管理者にする')),
+            const PopupMenuItem(value: 'jobrole', child: Text('職種を設定する')),
             const PopupMenuItem(value: 'deactivate', child: Text('無効化する(退職など)')),
           ],
         ],

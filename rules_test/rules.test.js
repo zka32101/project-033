@@ -147,6 +147,16 @@ async function check(name, fn) {
   await check('メンバーの自分の更新(表示名・職種)にはスタンプは不要', () =>
     assertSucceeds(updateDoc(doc(as('mem4'), `companies/${C}/employees/mem4`), { jobRole: 'sales' })));
 
+  console.log('--- 職種別の必須研修 ---');
+  await check('管理者は職種別の必須研修を設定できる(スタンプ付き)', () =>
+    assertSucceeds(updateDoc(doc(as('admin3'), `companies/${C}`), { roleAssignments: { sales: ['m1'] }, lastEditedBy: 'admin3' })));
+  await check('メンバーは職種別の必須研修を設定できない', () =>
+    assertFails(updateDoc(doc(as('mem4'), `companies/${C}`), { roleAssignments: { sales: [] }, lastEditedBy: 'mem4' })));
+  await check('管理者は他のメンバーの職種を設定できる(スタンプ付き)', () =>
+    assertSucceeds(updateDoc(doc(as('admin3'), `companies/${C}/employees/mem3`), { jobRole: 'accounting', lastEditedBy: 'admin3' })));
+  await check('メンバーは自分の職種を変更できる(従来どおり)', () =>
+    assertSucceeds(updateDoc(doc(as('mem4'), `companies/${C}/employees/mem4`), { jobRole: 'it' })));
+
   await env.cleanup();
   console.log(`\n結果: ${passed} PASS / ${failed} FAIL`);
   process.exit(failed ? 1 : 0);

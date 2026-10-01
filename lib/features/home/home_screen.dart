@@ -427,6 +427,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               moduleId: module.id,
                               companyAssigned: company.assignedModuleIds,
                               teamExtra: ref.watch(myTeamExtraModulesProvider).valueOrNull ?? const [],
+                              roleExtra: company.roleAssignments[session.employee?.jobRole] ?? const [],
                               categoryHigh: priority == 2,
                             );
                             final enrollments = enrollmentSnapshot.data ?? const [];

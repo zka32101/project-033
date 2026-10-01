@@ -22,6 +22,8 @@ class Company {
   final CompanyProfile? profile; // 規模・事業の特徴(未入力ならnull)
   /// 管理者が受講対象(必須)に指定した研修ID。未設定(null)なら業種の重点分野で必須/任意を決める。
   final List<String>? assignedModuleIds;
+  /// 職種(JobRole.id)ごとに、追加で必須とする研修ID。
+  final Map<String, List<String>> roleAssignments;
   final DateTime? trialEndsAt; // お試し(14日・5名)の終了日時。お試しでなければnull
 
   const Company({
@@ -38,6 +40,7 @@ class Company {
     this.billingSource = BillingSource.none,
     this.profile,
     this.assignedModuleIds,
+    this.roleAssignments = const {},
     this.trialEndsAt,
   });
 
@@ -110,6 +113,12 @@ class Company {
       assignedModuleIds: map['assignedModuleIds'] is List
           ? List<String>.from(map['assignedModuleIds'] as List)
           : null,
+      roleAssignments: map['roleAssignments'] is Map
+          ? {
+              for (final e in (map['roleAssignments'] as Map).entries)
+                e.key as String: List<String>.from((e.value as List?) ?? const []),
+            }
+          : const {},
       trialEndsAt: parseFirestoreDateTimeOrNull(map['trialEndsAt']),
     );
   }
@@ -127,6 +136,7 @@ class Company {
         if (trialEndsAt != null) 'trialEndsAt': trialEndsAt,
         if (profile != null) 'profile': profile!.toMap(),
         if (assignedModuleIds != null) 'assignedModuleIds': assignedModuleIds,
+        if (roleAssignments.isNotEmpty) 'roleAssignments': roleAssignments,
       };
 
   Company copyWith({
@@ -140,6 +150,7 @@ class Company {
     Map<String, int>? categoryPriorityOverride,
     CompanyProfile? profile,
     List<String>? assignedModuleIds,
+    Map<String, List<String>>? roleAssignments,
   }) {
     return Company(
       id: id,
@@ -155,6 +166,7 @@ class Company {
       billingSource: billingSource,
       profile: profile ?? this.profile,
       assignedModuleIds: assignedModuleIds ?? this.assignedModuleIds,
+      roleAssignments: roleAssignments ?? this.roleAssignments,
       trialEndsAt: trialEndsAt,
     );
   }

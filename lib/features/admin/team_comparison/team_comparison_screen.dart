@@ -114,6 +114,7 @@ class _TeamComparisonScreenState extends ConsumerState<TeamComparisonScreen> {
                         moduleIdsFor: (e) => RequiredModules.forEmployee(
                           companyAssigned: assigned,
                           teamExtra: teamExtras[e.teamId] ?? const [],
+                          roleExtra: company.roleAssignments[e.jobRole] ?? const [],
                         ),
                       );
 

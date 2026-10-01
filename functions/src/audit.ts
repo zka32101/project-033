@@ -104,6 +104,9 @@ export function describeCompanyChange(before: Data, after: Data, companyId: stri
   if (changed("categoryPriorityOverride")) {
     entries.push(entry("company.priority_changed", "業種プロファイル(重点分野)の調整を変更しました"));
   }
+  if (changed("roleAssignments")) {
+    entries.push(entry("company.role_assignment_changed", "職種別の必須研修を変更しました"));
+  }
   if (changed("customPassThreshold")) {
     entries.push(entry("company.threshold_changed", "合格ラインを変更しました"));
   }
