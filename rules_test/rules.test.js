@@ -23,6 +23,7 @@ async function check(name, fn) {
     });
     await setDoc(doc(db, `companies/${C}/employees/admin1`), { companyId: C, role: 'admin', displayName: 'A' });
     await setDoc(doc(db, `companies/${C}/employees/admin2`), { companyId: C, role: 'admin', displayName: 'A2' });
+    await setDoc(doc(db, `companies/${C}/employees/admin3`), { companyId: C, role: 'admin', displayName: 'A3' });
     await setDoc(doc(db, `companies/${C}/employees/mem1`), { companyId: C, role: 'member', displayName: 'M1' });
     await setDoc(doc(db, `companies/${C}/employees/mem3`), { companyId: C, role: 'member', displayName: 'M3' });
     await setDoc(doc(db, `companies/${C}/employees/mem4`), { companyId: C, role: 'member', displayName: 'M4' });
@@ -44,13 +45,13 @@ async function check(name, fn) {
   await check('管理者でも社員を直接作れない', () =>
     assertFails(setDoc(doc(admin, `companies/${C}/employees/new1`), { companyId: C, role: 'member', displayName: 'X' })));
   await check('管理者は他の社員を管理者にできる', () =>
-    assertSucceeds(updateDoc(doc(admin, `companies/${C}/employees/mem1`), { role: 'admin' })));
+    assertSucceeds(updateDoc(doc(admin, `companies/${C}/employees/mem1`), { role: 'admin', lastEditedBy: 'admin1' })));
   await check('管理者は社員を無効化できる', () =>
-    assertSucceeds(updateDoc(doc(admin, `companies/${C}/employees/admin2`), { deactivated: true, deactivatedAt: new Date() })));
+    assertSucceeds(updateDoc(doc(admin, `companies/${C}/employees/admin2`), { deactivated: true, deactivatedAt: new Date(), lastEditedBy: 'admin1' })));
   await check('管理者でも無効化の解除はできない(席数確認のFunctionsだけ)', () =>
-    assertFails(updateDoc(doc(admin, `companies/${C}/employees/old1`), { deactivated: false })));
+    assertFails(updateDoc(doc(admin, `companies/${C}/employees/old1`), { deactivated: false, lastEditedBy: 'admin1' })));
   await check('管理者でも社員の会社を付け替えられない', () =>
-    assertFails(updateDoc(doc(admin, `companies/${C}/employees/mem1`), { companyId: 'other' })));
+    assertFails(updateDoc(doc(admin, `companies/${C}/employees/mem1`), { companyId: 'other', lastEditedBy: 'admin1' })));
   await check('無効化された社員は会社の情報を読めない', () =>
     assertFails(getDoc(doc(old, `companies/${C}`))));
   await check('無効化された社員は自分の受講記録も読めない', () =>
@@ -79,16 +80,16 @@ async function check(name, fn) {
   await check('会社は直接作成できない', () =>
     assertFails(setDoc(doc(outsider, 'companies/fake'), { name: 'X', planType: 'team', contractedHeadcount: 1000 })));
   await check('管理者はお試し期限を延ばせない', () =>
-    assertFails(updateDoc(doc(admin, `companies/${C}`), { trialEndsAt: new Date('2099-01-01') })));
+    assertFails(updateDoc(doc(admin, `companies/${C}`), { trialEndsAt: new Date('2099-01-01'), lastEditedBy: 'admin1' })));
   await check('管理者はplanTypeをteamに書き換えられない', () =>
-    assertFails(updateDoc(doc(admin, `companies/${C}`), { planType: 'team' })));
+    assertFails(updateDoc(doc(admin, `companies/${C}`), { planType: 'team', lastEditedBy: 'admin1' })));
   await check('管理者は人数上限を引き上げられない', () =>
-    assertFails(updateDoc(doc(admin, `companies/${C}`), { contractedHeadcount: 1000 })));
+    assertFails(updateDoc(doc(admin, `companies/${C}`), { contractedHeadcount: 1000, lastEditedBy: 'admin1' })));
   await check('管理者はbillingSourceを書き換えられない', () =>
-    assertFails(updateDoc(doc(admin, `companies/${C}`), { billingSource: 'invoice' })));
+    assertFails(updateDoc(doc(admin, `companies/${C}`), { billingSource: 'invoice', lastEditedBy: 'admin1' })));
   await check('管理者は会社情報・受講対象の指定を更新できる', () =>
     assertSucceeds(updateDoc(doc(admin, `companies/${C}`), {
-      profile: { employeeCount: 30, traits: ['vehicles'] }, assignedModuleIds: ['m1'],
+      profile: { employeeCount: 30, traits: ['vehicles'] }, assignedModuleIds: ['m1'], lastEditedBy: 'admin1',
     })));
   await check('管理者は契約情報(subscriptions)を書き換えられない', () =>
     assertFails(setDoc(doc(admin, `companies/${C}/subscriptions/company_${C}`), { status: 'active', planTier: 'upper', fullSet: true })));
@@ -97,7 +98,7 @@ async function check(name, fn) {
 
   console.log('--- チーム別の必須研修 ---');
   await check('管理者はチームの追加の必須研修を設定できる', () =>
-    assertSucceeds(updateDoc(doc(as('admin1'), `companies/${C}/teams/t1`), { assignedModuleIds: ['m1', 'm2'] })));
+    assertSucceeds(updateDoc(doc(as('admin1'), `companies/${C}/teams/t1`), { assignedModuleIds: ['m1', 'm2'], lastEditedBy: 'admin1' })));
   await check('メンバーはチームの追加の必須研修を読める(ホームの必須表示に使う)', () =>
     assertSucceeds(getDoc(doc(as('mem4'), `companies/${C}/teams/t1`))));
   await check('メンバーはチームの設定を書き換えられない', () =>
@@ -120,6 +121,31 @@ async function check(name, fn) {
     assertFails(setDoc(doc(as('admin1'), `companies/${C}/auditLogs/fake`), { summary: '偽の履歴' })));
   await check('無効化された社員は操作履歴を読めない', () =>
     assertFails(getDoc(doc(old, `companies/${C}/auditLogs/l1`))));
+
+  console.log('--- 実行者スタンプ(lastEditedBy) ---');
+  // 注: ドキュメントには前回のスタンプが残る。同じ管理者がスタンプなしで書いても、結果のスタンプは本人のuidのままで、
+  // 監査ログの操作者は正しく本人になる。別の管理者(残っているスタンプが他人)は、必ず自分のスタンプが必要。
+  await check('別の管理者がスタンプなしで書くと拒否される(操作者が他人のまま記録されるため)', () =>
+    assertFails(updateDoc(doc(as('admin3'), `companies/${C}`), { assignedModuleIds: ['m1'] })));
+  await check('他人のuidを書いた偽装スタンプは拒否される', () =>
+    assertFails(updateDoc(doc(as('admin3'), `companies/${C}`), { assignedModuleIds: ['m1'], lastEditedBy: 'admin1' })));
+  await check('自分のuidのスタンプがあれば許可される', () =>
+    assertSucceeds(updateDoc(doc(as('admin3'), `companies/${C}`), { assignedModuleIds: ['m1'], lastEditedBy: 'admin3' })));
+  await check('社員の役割変更も、スタンプがなければ拒否される', () =>
+    assertFails(updateDoc(doc(as('admin1'), `companies/${C}/employees/mem3`), { role: 'admin' })));
+  await check('社員の役割変更で他人のuidを書いた偽装は拒否される', () =>
+    assertFails(updateDoc(doc(as('admin1'), `companies/${C}/employees/mem3`), { role: 'admin', lastEditedBy: 'mem4' })));
+  await check('チームの設定もスタンプが必要(なし・偽装は拒否、本人のuidは許可)', async () => {
+    await assertFails(updateDoc(doc(as('admin3'), `companies/${C}/teams/t1`), { assignedModuleIds: ['m1'] }));
+    await assertFails(updateDoc(doc(as('admin3'), `companies/${C}/teams/t1`), { assignedModuleIds: ['m1'], lastEditedBy: 'x' }));
+    await assertSucceeds(updateDoc(doc(as('admin3'), `companies/${C}/teams/t1`), { assignedModuleIds: ['m1'], lastEditedBy: 'admin3' }));
+  });
+  await check('チームの作成にもスタンプが必要', async () => {
+    await assertFails(setDoc(doc(as('admin1'), `companies/${C}/teams/t9`), { companyId: C, teamName: '新' }));
+    await assertSucceeds(setDoc(doc(as('admin1'), `companies/${C}/teams/t9`), { companyId: C, teamName: '新', lastEditedBy: 'admin1' }));
+  });
+  await check('メンバーの自分の更新(表示名・職種)にはスタンプは不要', () =>
+    assertSucceeds(updateDoc(doc(as('mem4'), `companies/${C}/employees/mem4`), { jobRole: 'sales' })));
 
   await env.cleanup();
   console.log(`\n結果: ${passed} PASS / ${failed} FAIL`);

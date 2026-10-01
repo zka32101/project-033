@@ -154,24 +154,42 @@ export function describeTeamChange(before: Data, after: Data, teamId: string): A
   return entries;
 }
 
-/** 操作した人の識別。アプリの利用者(Firebase Auth)ならそのuid、サーバー(関数)による変更ならnull。 */
-export function actorOf(authType: string | undefined, authId: string | undefined): string | null {
-  if (!authId) return null;
-  if (authType === "service_account" || authType === "system" || authType === "api_key") return null;
-  return authId;
-}
+/** 実行者の不明(アプリから書かれたが、操作者のスタンプがない)。 */
+export const UNKNOWN_ACTOR = "unknown";
 
-async function writeEntries(
-  companyId: string,
+/**
+ * 操作した人を決める。
+ * - アプリ(クライアント)からの書き込み: ルールが本人のuidと一致を強制する lastEditedBy が操作者。
+ *   スタンプがなければ不明(UNKNOWN_ACTOR)。
+ * - サーバー(Cloud Functions・Admin SDK、サービスアカウント)による書き込み: 原則「システム」(null)。
+ *   ただし、関数がこの書き込みで lastEditedBy を明示的に変更した場合(再有効化など)はその管理者。
+ */
+export function resolveActor(
   authType: string | undefined,
   authId: string | undefined,
-  entries: AuditEntry[],
-): Promise<void> {
+  before: Data,
+  after: Data,
+): string | null {
+  const isServer =
+    (!!authId && authId.includes("@")) ||
+    authType === "service_account" ||
+    authType === "system" ||
+    authType === "api_key";
+  const stampAfter = str(after?.lastEditedBy);
+  const stampBefore = str(before?.lastEditedBy);
+  if (isServer) {
+    return stampAfter && stampAfter !== stampBefore ? stampAfter : null;
+  }
+  return stampAfter || UNKNOWN_ACTOR;
+}
+
+async function writeEntries(companyId: string, actorId: string | null, entries: AuditEntry[]): Promise<void> {
   if (entries.length === 0) return;
   const db = admin.firestore();
-  const actorId = actorOf(authType, authId);
   let actorName = "システム";
-  if (actorId) {
+  if (actorId === UNKNOWN_ACTOR) {
+    actorName = "不明な利用者";
+  } else if (actorId) {
     const actor = await db.doc(`companies/${companyId}/employees/${actorId}`).get();
     actorName = str(actor.data()?.displayName) || "不明な利用者";
   }
@@ -197,12 +215,14 @@ export const auditEmployeeChanges = onDocumentWrittenWithAuthContext(
     const change = event.data;
     if (!change) return;
     try {
-      const entries = describeEmployeeChange(
-        change.before.data(),
-        change.after.data(),
-        event.params.employeeId,
+      const before = change.before.data();
+      const after = change.after.data();
+      const entries = describeEmployeeChange(before, after, event.params.employeeId);
+      await writeEntries(
+        event.params.companyId,
+        resolveActor(event.authType, event.authId, before, after),
+        entries,
       );
-      await writeEntries(event.params.companyId, event.authType, event.authId, entries);
     } catch (error) {
       logger.error("監査ログ(メンバー)の記録に失敗しました", error);
     }
@@ -213,8 +233,14 @@ export const auditCompanyChanges = onDocumentWrittenWithAuthContext("companies/{
   const change = event.data;
   if (!change) return;
   try {
-    const entries = describeCompanyChange(change.before.data(), change.after.data(), event.params.companyId);
-    await writeEntries(event.params.companyId, event.authType, event.authId, entries);
+    const before = change.before.data();
+    const after = change.after.data();
+    const entries = describeCompanyChange(before, after, event.params.companyId);
+    await writeEntries(
+      event.params.companyId,
+      resolveActor(event.authType, event.authId, before, after),
+      entries,
+    );
   } catch (error) {
     logger.error("監査ログ(会社設定)の記録に失敗しました", error);
   }
@@ -226,8 +252,14 @@ export const auditTeamChanges = onDocumentWrittenWithAuthContext(
     const change = event.data;
     if (!change) return;
     try {
-      const entries = describeTeamChange(change.before.data(), change.after.data(), event.params.teamId);
-      await writeEntries(event.params.companyId, event.authType, event.authId, entries);
+      const before = change.before.data();
+      const after = change.after.data();
+      const entries = describeTeamChange(before, after, event.params.teamId);
+      await writeEntries(
+        event.params.companyId,
+        resolveActor(event.authType, event.authId, before, after),
+        entries,
+      );
     } catch (error) {
       logger.error("監査ログ(チーム)の記録に失敗しました", error);
     }
