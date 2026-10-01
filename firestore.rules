@@ -180,6 +180,13 @@ service cloud.firestore {
         allow write: if false;
       }
 
+      // 監査ログ(管理者の操作履歴)。記録はCloud Functions(Admin SDK)だけが行い、
+      // 管理者であってもクライアントからは書き換え・削除できない。
+      match /auditLogs/{logId} {
+        allow read: if isAdmin(companyId);
+        allow write: if false;
+      }
+
       match /subscriptions/{subscriptionId} {
         allow read: if isCompanyMember(companyId);
         // 契約状態は決済(Stripe Webhook)を受けたCloud Functions(Admin SDK)だけが書く。
