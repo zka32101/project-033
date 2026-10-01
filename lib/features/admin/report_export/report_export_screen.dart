@@ -8,6 +8,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../../core/report_data.dart';
 import '../../../core/report_writers.dart';
 import '../../../core/required_modules.dart';
+import 'certificates_export_screen.dart';
 import '../../../data/models/team_model.dart';
 import '../../../providers/firebase_providers.dart';
 import '../../../services/firestore_paths.dart';
@@ -194,6 +195,14 @@ class _ReportExportScreenState extends ConsumerState<ReportExportScreen> {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: 24),
+              OutlinedButton.icon(
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const CertificatesExportScreen()),
+                ),
+                icon: const Icon(Icons.verified_outlined),
+                label: const Text('修了証・受講記録の出力へ'),
+              ),
+              const SizedBox(height: 16),
               FilledButton.icon(
                 onPressed: _busy ? null : () => _export(data, 'xlsx'),
                 icon: const Icon(Icons.grid_on),

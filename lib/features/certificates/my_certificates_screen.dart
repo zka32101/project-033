@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import '../../core/certificate_book.dart';
+import '../../core/certificate_pdf.dart';
 import '../../data/models/completion_certificate_model.dart';
 import '../../data/models/module_model.dart';
 import '../../providers/service_providers.dart';
@@ -23,50 +23,26 @@ class MyCertificatesScreen extends ConsumerWidget {
     required String companyName,
     required String moduleTitle,
   }) async {
-    final dateFormat = DateFormat('yyyy年MM月dd日');
-    final doc = pw.Document();
-    doc.addPage(
-      pw.Page(
-        pageFormat: PdfPageFormat.a4,
-        build: (context) => pw.Center(
-          child: pw.Container(
-            padding: const pw.EdgeInsets.all(48),
-            decoration: pw.BoxDecoration(
-              border: pw.Border.all(width: 2, color: PdfColor.fromHex('#2D5F7C')),
-            ),
-            child: pw.Column(
-              mainAxisAlignment: pw.MainAxisAlignment.center,
-              crossAxisAlignment: pw.CrossAxisAlignment.center,
-              children: [
-                pw.Text('修了証', style: const pw.TextStyle(fontSize: 32)),
-                pw.SizedBox(height: 32),
-                pw.Text('$employeeName 様', style: const pw.TextStyle(fontSize: 20)),
-                pw.SizedBox(height: 24),
-                pw.Text(
-                  '上記の方は「$moduleTitle」研修を修了し、',
-                  style: const pw.TextStyle(fontSize: 14),
-                ),
-                pw.Text(
-                  '合格ライン${certificate.thresholdApplied}点に対しスコア${certificate.score}点を獲得したことを証します。',
-                  style: const pw.TextStyle(fontSize: 14),
-                ),
-                pw.SizedBox(height: 40),
-                pw.Text(dateFormat.format(certificate.issuedAt),
-                    style: const pw.TextStyle(fontSize: 12)),
-                pw.SizedBox(height: 8),
-                pw.Text(companyName, style: const pw.TextStyle(fontSize: 12)),
-                pw.SizedBox(height: 24),
-                pw.Text('安心企業研修Safy', style: const pw.TextStyle(fontSize: 10)),
-              ],
-            ),
-          ),
+    // 日本語フォントは初回のみネットワークから取得して端末にキャッシュされる。
+    final base = await PdfGoogleFonts.notoSansJPRegular();
+    final bold = await PdfGoogleFonts.notoSansJPBold();
+    final bytes = await buildCertificatesPdf(
+      [
+        CertificateEntry(
+          employeeId: certificate.employeeId,
+          employeeName: employeeName,
+          teamId: '',
+          moduleTitle: moduleTitle,
+          score: certificate.score,
+          thresholdApplied: certificate.thresholdApplied,
+          issuedAt: certificate.issuedAt,
         ),
-      ),
+      ],
+      companyName: companyName,
+      base: base,
+      bold: bold,
     );
-    await Printing.sharePdf(
-      bytes: await doc.save(),
-      filename: 'certificate_${certificate.moduleId}.pdf',
-    );
+    await Printing.sharePdf(bytes: bytes, filename: 'certificate_${certificate.moduleId}.pdf');
   }
 
   @override
