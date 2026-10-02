@@ -23,8 +23,11 @@ firebase functions:secrets:set STRIPE_WEBHOOK_SECRET --project safy-15db7
 `functions/.env`(コミットしない)に、決済後の戻り先を書く。
 
 ```
-BILLING_RETURN_URL=https://(戻り先のURL)
+BILLING_RETURN_URL=https://safy-15db7.web.app/billing-return/
 ```
+
+戻り先のページは `hosting/billing-return/index.html`(Firebase Hosting)。決済の成功・取消で、関数が `?checkout=success` / `?checkout=cancel` を付けて遷移させ、ページが文面を切り替える。
+公開は `firebase deploy --only hosting --project safy-15db7`。
 
 ## 2. デプロイ
 
