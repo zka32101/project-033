@@ -6,6 +6,7 @@ import '../../../data/models/module_model.dart';
 import '../../../providers/service_providers.dart';
 import '../../../providers/session_provider.dart';
 import '../../../widgets/error_retry_view.dart';
+import 'draft_editor.dart';
 
 enum ContentGenerationMode { extend, create }
 
@@ -177,7 +178,7 @@ class _AiContentGeneratorScreenState extends ConsumerState<AiContentGeneratorScr
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               const SizedBox(height: 16),
-              _buildDraftEditor(_draft!),
+              DraftEditor(draft: _draft!, showModuleFields: !_isExtend),
               const SizedBox(height: 24),
               SizedBox(
                 width: double.infinity,
@@ -250,115 +251,6 @@ class _AiContentGeneratorScreenState extends ConsumerState<AiContentGeneratorScr
             border: const OutlineInputBorder(),
           ),
         ),
-      ],
-    );
-  }
-
-  Widget _buildDraftEditor(GeneratedContentDraft draft) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (!_isExtend) ...[
-          TextFormField(
-            key: const ValueKey('module_title'),
-            initialValue: draft.moduleTitle,
-            decoration: const InputDecoration(labelText: 'モジュールタイトル'),
-            onChanged: (v) => draft.moduleTitle = v,
-          ),
-          const SizedBox(height: 12),
-          TextFormField(
-            key: const ValueKey('module_description'),
-            initialValue: draft.moduleDescription,
-            decoration: const InputDecoration(labelText: 'モジュールの説明'),
-            maxLines: 2,
-            onChanged: (v) => draft.moduleDescription = v,
-          ),
-          const SizedBox(height: 20),
-        ],
-        Text('レッスン(${draft.lessons.length}本)',
-            style: Theme.of(context).textTheme.titleSmall),
-        for (var i = 0; i < draft.lessons.length; i++)
-          Card(
-            margin: const EdgeInsets.symmetric(vertical: 6),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    key: ValueKey('lesson_title_$i'),
-                    initialValue: draft.lessons[i].title,
-                    decoration: InputDecoration(labelText: 'レッスン${i + 1} タイトル'),
-                    onChanged: (v) => draft.lessons[i].title = v,
-                  ),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    key: ValueKey('lesson_body_$i'),
-                    initialValue: draft.lessons[i].body,
-                    decoration: const InputDecoration(labelText: '本文'),
-                    maxLines: 5,
-                    onChanged: (v) => draft.lessons[i].body = v,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        const SizedBox(height: 12),
-        Text('クイズ(${draft.quizQuestions.length}問)',
-            style: Theme.of(context).textTheme.titleSmall),
-        for (var i = 0; i < draft.quizQuestions.length; i++)
-          Card(
-            margin: const EdgeInsets.symmetric(vertical: 6),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    key: ValueKey('quiz_question_$i'),
-                    initialValue: draft.quizQuestions[i].question,
-                    decoration: InputDecoration(labelText: '問題${i + 1}'),
-                    onChanged: (v) => draft.quizQuestions[i].question = v,
-                  ),
-                  const SizedBox(height: 8),
-                  RadioGroup<int>(
-                    groupValue: draft.quizQuestions[i].correctIndex,
-                    onChanged: (v) =>
-                        setState(() => draft.quizQuestions[i].correctIndex = v!),
-                    child: Column(
-                      children: [
-                        for (var c = 0; c < draft.quizQuestions[i].choices.length; c++)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 6),
-                            child: Row(
-                              children: [
-                                Radio<int>(value: c),
-                                Expanded(
-                                  child: TextFormField(
-                                    key: ValueKey('quiz_choice_${i}_$c'),
-                                    initialValue: draft.quizQuestions[i].choices[c],
-                                    decoration: InputDecoration(labelText: '選択肢${c + 1}'),
-                                    onChanged: (v) =>
-                                        draft.quizQuestions[i].choices[c] = v,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  TextFormField(
-                    key: ValueKey('quiz_explanation_$i'),
-                    initialValue: draft.quizQuestions[i].explanation,
-                    decoration: const InputDecoration(labelText: '解説'),
-                    maxLines: 2,
-                    onChanged: (v) => draft.quizQuestions[i].explanation = v,
-                  ),
-                ],
-              ),
-            ),
-          ),
       ],
     );
   }

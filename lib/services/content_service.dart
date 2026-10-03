@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../data/models/industry_model.dart';
+import '../data/models/custom_module_model.dart';
 import '../data/models/module_model.dart';
 import '../data/models/lesson_model.dart';
 import '../data/models/quiz_question_model.dart';
@@ -41,15 +42,21 @@ class ContentService {
 
   /// 業種の優先度順(高→中→低)にモジュール一覧を並べる。
   /// [categoryPriorityOverride]が指定されていれば、会社ごとの個別調整をそちらで優先する。
+  /// [companyId]を渡すと、その会社が作成したオリジナル研修(customModules)も合流させる。
   Future<List<Module>> listModulesForIndustry(
     Industry industry, {
     Map<String, int> categoryPriorityOverride = const {},
+    String? companyId,
   }) async {
     final snap = await _db.collection(FirestorePaths.modules).get();
     final modules = snap.docs
         .map((d) => Module.fromMap(d.id, d.data()))
         .where((m) => m.isAvailableForIndustry(industry.id))
         .toList();
+    if (companyId != null) {
+      final custom = await _db.collection(FirestorePaths.customModules(companyId)).get();
+      modules.addAll(custom.docs.map((d) => CustomModule.fromMap(d.id, d.data()).toModule()));
+    }
     sortModulesByPriority(modules, industry, categoryPriorityOverride);
     return modules;
   }

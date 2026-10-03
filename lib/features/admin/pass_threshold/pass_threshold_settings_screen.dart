@@ -31,7 +31,7 @@ class _PassThresholdSettingsScreenState
         .getIndustry(company.industryId)
         .then((industry) {
       if (industry == null) return <Module>[];
-      return ref.read(contentServiceProvider).listModulesForIndustry(industry);
+      return ref.read(contentServiceProvider).listModulesForIndustry(industry, companyId: company.id);
     });
   }
 

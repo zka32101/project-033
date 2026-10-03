@@ -53,6 +53,7 @@ class _ReportExportScreenState extends ConsumerState<ReportExportScreen> {
         : await content.listModulesForIndustry(
             industry,
             categoryPriorityOverride: company.categoryPriorityOverride,
+            companyId: company.id,
           );
     final teams = await ref
         .read(firestoreProvider)
