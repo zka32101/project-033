@@ -54,6 +54,7 @@ class _ExtraModulesScreenState extends ConsumerState<ExtraModulesScreen> {
     return content.listModulesForIndustry(
       industry,
       categoryPriorityOverride: company.categoryPriorityOverride,
+      companyId: company.id,
     );
   }
 

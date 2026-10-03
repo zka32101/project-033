@@ -48,6 +48,7 @@ class _ModuleAssignmentScreenState extends ConsumerState<ModuleAssignmentScreen>
     final modules = await content.listModulesForIndustry(
       industry,
       categoryPriorityOverride: company.categoryPriorityOverride,
+      companyId: company.id,
     );
     return _Loaded(industry, modules);
   }

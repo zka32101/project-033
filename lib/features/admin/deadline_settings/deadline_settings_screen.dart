@@ -30,7 +30,7 @@ class _DeadlineSettingsScreenState extends ConsumerState<DeadlineSettingsScreen>
         .getIndustry(company.industryId)
         .then((industry) {
       if (industry == null) return <Module>[];
-      return ref.read(contentServiceProvider).listModulesForIndustry(industry);
+      return ref.read(contentServiceProvider).listModulesForIndustry(industry, companyId: company.id);
     });
   }
 

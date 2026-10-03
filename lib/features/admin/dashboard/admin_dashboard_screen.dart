@@ -433,7 +433,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
               PopupMenuItem(value: 'report_email', child: Text('月次レポート送付先設定')),
               PopupMenuItem(value: 'category_priority', child: Text('業種プロファイル調整')),
               PopupMenuItem(
-                  value: 'original_content', child: Text('オリジナルコンテンツ管理(プレミアム)')),
+                  value: 'original_content', child: Text('オリジナル研修・問題の作成')),
             ],
           ),
         ],
