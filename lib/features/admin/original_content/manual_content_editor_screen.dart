@@ -8,6 +8,7 @@ import '../../../providers/service_providers.dart';
 import '../../../providers/session_provider.dart';
 import '../../../widgets/error_retry_view.dart';
 import 'draft_editor.dart';
+import 'quiz_import_screen.dart';
 
 /// 自社の研修・問題を、手で作成・編集する画面(AIなし。管理者なら契約にかかわらず使える)。
 /// - [ManualContentEditorScreen.create]: 新しいオリジナル研修を作る
@@ -45,6 +46,7 @@ class _ManualContentEditorScreenState extends ConsumerState<ManualContentEditorS
   bool _saving = false;
   bool _loadFailed = false;
   List<String> _errors = const [];
+  int _editorVersion = 0;
 
   bool get _isExtend => widget._extend;
   bool get _isEdit => widget.module != null;
@@ -142,6 +144,21 @@ class _ManualContentEditorScreenState extends ConsumerState<ManualContentEditorS
     }
   }
 
+  Future<void> _importQuestions() async {
+    final draft = _draft;
+    if (draft == null) return;
+    final imported = await Navigator.of(context).push<List<DraftQuizQuestion>>(
+      MaterialPageRoute(builder: (_) => const QuizImportScreen()),
+    );
+    if (imported == null || imported.isEmpty || !mounted) return;
+    setState(() {
+      draft.quizQuestions.addAll(imported);
+      _editorVersion++;
+      _errors = const [];
+    });
+    _toast('${imported.length}問を追加しました。内容を確認して、保存してください');
+  }
+
   Future<void> _delete() async {
     final ok = await showDialog<bool>(
       context: context,
@@ -233,10 +250,19 @@ class _ManualContentEditorScreenState extends ConsumerState<ManualContentEditorS
                 ),
               ),
             DraftEditor(
-              key: ValueKey('${_target?.id}_${widget.module?.id}'),
+              key: ValueKey('${_target?.id}_${widget.module?.id}_$_editorVersion'),
               draft: draft,
               showModuleFields: !_isExtend,
               allowAddRemove: true,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                key: const ValueKey('import_open'),
+                onPressed: _importQuestions,
+                icon: const Icon(Icons.table_chart_outlined),
+                label: const Text('Excelの表から問題を取り込む'),
+              ),
             ),
             const SizedBox(height: 16),
             if (_errors.isNotEmpty)
