@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:safy/core/dashboard_analytics.dart';
+import 'package:safy/data/models/category_model.dart';
+import 'package:safy/data/models/generated_content_draft.dart';
+import 'package:safy/services/custom_content_service.dart';
 import 'package:safy/data/models/company_model.dart';
 import 'package:safy/data/models/company_profile.dart';
 import 'package:safy/data/models/employee_model.dart';
@@ -160,6 +163,42 @@ void main() {
       expect(checked('SNSの利用'), isFalse); // 任意
       expect(find.text('選択中: 2件 / 全3件'), findsOneWidget);
       expect(find.text('必須'), findsOneWidget);
+    });
+
+    testWidgets('自社で作ったオリジナル研修も選択肢に出て、必須に選んで保存できる', (tester) async {
+      tester.view.physicalSize = const Size(900, 3000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final db = await _seededDb();
+      final custom = await CustomContentService(db).saveManualModule(
+        companyId: 'c1',
+        categoryId: CategoryId.infoMorals,
+        createdByEmployeeId: 'e1',
+        draft: GeneratedContentDraft(
+          moduleTitle: '自社の持ち出しルール',
+          moduleDescription: '',
+          lessons: [DraftLesson(title: 'ルール', body: '本文')],
+          quizQuestions: [],
+        ),
+      );
+      final company = _company(profile: const CompanyProfile(employeeCount: 20, traits: {}));
+
+      await tester.pumpWidget(_app(db, company, () => _Session(company)));
+      await tester.pumpAndSettle();
+
+      // 既存の3件 + オリジナル研修1件
+      expect(find.text('選択中: 1件 / 全4件'), findsOneWidget);
+      expect(
+        tester.widget<CheckboxListTile>(find.widgetWithText(CheckboxListTile, '自社の持ち出しルール', skipOffstage: false)).value,
+        isFalse,
+      );
+      await tester.tap(find.widgetWithText(CheckboxListTile, '自社の持ち出しルール'));
+      await tester.pump();
+      await tester.tap(find.widgetWithText(FilledButton, 'この内容で保存する(2件)'));
+      await tester.pumpAndSettle();
+
+      final saved = (await db.doc('companies/c1').get()).data()!['assignedModuleIds'] as List;
+      expect(saved, contains(custom.id));
     });
 
     testWidgets('必須の研修を外すと確認が出て、保存すると会社に指定が保存される', (tester) async {
