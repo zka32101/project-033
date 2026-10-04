@@ -57,6 +57,19 @@ void main() {
       expect(r.questions.single.explanation, '解説\n2行目');
     });
 
+    test('日本語キーボードの全角カンマ(、，)と全角数字の正解に対応する', () {
+      final a = QuizImport.parse('設問、甲、乙、、、２');
+      expect(a.errors, isEmpty);
+      expect(a.questions.single.choices, ['甲', '乙', '', '']);
+      expect(a.questions.single.correctIndex, 1);
+      final b = QuizImport.parse('設問，甲，乙，，，1，解説');
+      expect(b.errors, isEmpty);
+      expect(b.questions.single.explanation, '解説');
+      // 半角カンマがあれば、文中の「、」では分けない
+      final c = QuizImport.parse('なぜ、必要?,甲,乙,,,1');
+      expect(c.questions.single.question, 'なぜ、必要?');
+    });
+
     test('エラーは行番号つきで、1件でもあれば1問も取り込まない', () {
       final r = QuizImport.parse(
         '\t甲\t乙\t\t\t1\n' // 問題文なし
