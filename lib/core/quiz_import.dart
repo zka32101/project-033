@@ -27,7 +27,16 @@ class QuizImport {
         .replaceAll(RegExp(r'^\n+|\n+$'), '');
     if (body.trim().isEmpty) return const QuizParseResult([], ['取り込む行がありません']);
 
-    final delimiter = body.contains('\t') ? '\t' : ',';
+    // Excelからの貼り付けはタブ。手入力では、日本語キーボードの全角カンマ(，・、)も使えるようにする。
+    final delimiter = body.contains('\t')
+        ? '\t'
+        : body.contains(',')
+            ? ','
+            : body.contains('，')
+                ? '，'
+                : body.contains('、')
+                    ? '、'
+                    : ',';
     final rows = CsvToListConverter(
       fieldDelimiter: delimiter,
       eol: '\n',
@@ -74,9 +83,13 @@ class QuizImport {
     return QuizParseResult(errors.isEmpty ? questions : const [], errors);
   }
 
+  /// 全角の数字(０〜９)を半角にする(日本語キーボードで入力した正解の番号に対応)。
+  static String _halfWidthDigits(String s) =>
+      s.replaceAllMapped(RegExp('[０-９]'), (m) => String.fromCharCode(m[0]!.codeUnitAt(0) - 0xFEE0));
+
   static int? _correctIndex(String value, List<String> choices) {
     if (value.isEmpty) return null;
-    final number = int.tryParse(value);
+    final number = int.tryParse(_halfWidthDigits(value));
     if (number != null) {
       final idx = number - 1;
       return idx >= 0 && idx < choices.length && choices[idx].isNotEmpty ? idx : null;
