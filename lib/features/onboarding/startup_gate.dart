@@ -58,7 +58,28 @@ class _StartupGateState extends ConsumerState<StartupGate> {
       future: _destination,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+          // 起動中の読み込み画面。下部に組織（Your Wish）のロゴを出す。
+          return Scaffold(
+            body: Column(
+              children: [
+                const Expanded(child: Center(child: CircularProgressIndicator())),
+                SafeArea(
+                  top: false,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 24),
+                    child: Semantics(
+                      label: 'Your Wish',
+                      child: Image.asset(
+                        'assets/images/branding/yourwish_logo.png',
+                        height: 72,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
         }
         return snapshot.data!;
       },
